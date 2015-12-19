@@ -24,4 +24,8 @@ $(function() {
   buttonSelectors.forEach(function(className) {
     $(className).addClass('mdl-js-button mdl-js-ripple-effect');
   });
+
+  $('div.field input').addClass('mdl-textfield__input');
+  $('div.field label').addClass('mdl-textfield__label');
+  $('div.field').addClass('mdl-js-textfield');
 });

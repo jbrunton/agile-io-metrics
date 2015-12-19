@@ -1,0 +1,11 @@
+div.field {
+  @extend .mdl-textfield;
+}
+
+input[type=text] {
+  @extend .mdl-textfield__input;
+}
+
+label {
+  @extend .mdl-textfield__label;
+}
