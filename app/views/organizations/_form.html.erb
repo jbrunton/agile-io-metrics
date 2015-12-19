@@ -13,5 +13,8 @@
     <button type="submit" class="accent">
       Submit
     </button>
+    <% unless @organization.new_record? %>
+        <%= link_to 'Cancel', @organization, class: 'flat-button' %>
+    <% end %>
   </div>
 <% end %>
