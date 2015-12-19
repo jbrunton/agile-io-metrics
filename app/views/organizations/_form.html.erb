@@ -1,0 +1,17 @@
+<%= form_for(@organization) do |f| %>
+  <div class="field">
+    <%= f.text_field :name %>
+    <%= f.label :name %>
+    <span class="field-error">
+        <% @organization.errors[:name].each do |message| %>
+          <%= message %>
+        <% end %>
+    </span>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="accent">
+      Submit
+    </button>
+  </div>
+<% end %>

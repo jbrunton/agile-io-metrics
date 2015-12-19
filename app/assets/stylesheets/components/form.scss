@@ -1,0 +1,17 @@
+div.field {
+  @extend .mdl-textfield;
+  margin: 0 0 20px 0;
+}
+
+input[type=text] {
+  @extend .mdl-textfield__input;
+}
+
+label {
+  @extend .mdl-textfield__label;
+}
+
+.field-error {
+  @extend .mdl-textfield__error;
+  visibility: visible;
+}

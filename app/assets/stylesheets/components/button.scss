@@ -1,0 +1,23 @@
+@mixin button() {
+  @extend .mdl-button;
+}
+
+@mixin colored-button() {
+  @include button;
+  @extend .mdl-button--colored;
+}
+
+.fab {
+  @include colored-button;
+  @extend .mdl-button--fab;
+}
+
+
+button {
+  @include colored-button;
+  @extend .mdl-button--raised;
+
+  &.accent {
+    @extend .mdl-button--accent;
+  }
+}
