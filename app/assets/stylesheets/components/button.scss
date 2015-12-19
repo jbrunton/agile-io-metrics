@@ -8,7 +8,8 @@
 }
 
 .fab {
-  @extend .mdl-button, .mdl-button--fab, .mdl-button--colored;
+  @include colored-button;
+  @extend .mdl-button--fab;
 }
 
 
