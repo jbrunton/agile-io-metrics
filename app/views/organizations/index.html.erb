@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Organizations</h1>
+<h1>
+  Listing Organizations
+  <%= fab_link_to 'add', new_organization_path, class: 'float-right' %>
+</h1>
 
 <table>
   <thead>
@@ -22,6 +25,3 @@
   </tbody>
 </table>
 
-<br>
-
-<%= fab_link_to 'add', new_organization_path %>

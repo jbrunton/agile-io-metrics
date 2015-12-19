@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<h3><%= @organization.name %>
+  <%= link_to 'Edit', edit_organization_path(@organization), class: 'flat-button float-right' %>
+</h3>
+
 <p>
   <strong>Name:</strong>
   <%= @organization.name %>
 </p>
 
-<%= link_to 'Edit', edit_organization_path(@organization) %> |

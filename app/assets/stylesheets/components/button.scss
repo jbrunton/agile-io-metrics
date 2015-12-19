@@ -13,10 +13,17 @@
 }
 
 
-button {
+button, .button {
   @include colored-button;
   @extend .mdl-button--raised;
 
+  &.accent {
+    @extend .mdl-button--accent;
+  }
+}
+
+.flat-button {
+  @include colored-button;
   &.accent {
     @extend .mdl-button--accent;
   }
