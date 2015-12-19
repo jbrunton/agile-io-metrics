@@ -1,19 +1,12 @@
 <%= form_for(@organization) do |f| %>
-  <% if @organization.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
-
-      <ul>
-      <% @organization.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <%= f.text_field :name %>
     <%= f.label :name %>
+    <span class="field-error">
+        <% @organization.errors[:name].each do |message| %>
+          <%= message %>
+        <% end %>
+    </span>
   </div>
 
   <div class="actions">
