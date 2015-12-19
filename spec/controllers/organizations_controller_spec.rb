@@ -24,11 +24,11 @@ RSpec.describe OrganizationsController, type: :controller do
   # Organization. As you add validations to Organization, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: 'My Organization'}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: ''}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,14 @@ RSpec.describe OrganizationsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {name: 'New Organization'}
       }
 
       it "updates the requested organization" do
         organization = Organization.create! valid_attributes
         put :update, {:id => organization.to_param, :organization => new_attributes}, valid_session
         organization.reload
-        skip("Add assertions for updated state")
+        expect(organization.name).to eq(new_attributes[:name])
       end
 
       it "assigns the requested organization as @organization" do
