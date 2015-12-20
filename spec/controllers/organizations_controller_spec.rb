@@ -31,6 +31,12 @@ RSpec.describe OrganizationsController, type: :controller do
     {name: ''}
   }
 
+  let(:current_user) { create(:user) }
+
+  before do
+    sign_in current_user
+  end
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # OrganizationsController. Be sure to keep this updated too.
