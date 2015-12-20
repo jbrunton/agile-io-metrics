@@ -12,3 +12,17 @@
   <%= @organization.name %>
 </p>
 
+<table>
+  <tr>
+    <th>Admins</th>
+  </tr>
+
+  <% @admins.each do |user| %>
+      <tr>
+        <td>
+          <%= user.email %>
+        </td>
+      </tr>
+  <% end %>
+</table>
+
