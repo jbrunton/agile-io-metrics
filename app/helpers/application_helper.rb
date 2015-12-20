@@ -7,11 +7,8 @@ module ApplicationHelper
   end
 
   def form_input(object, method)
-    object_name = object.class.table_name.singularize # e.g. organization
-    input_id = "#{object_name}_#{method}" # e.g. organization_name
-
-    input_tag = form_input_tag(input_id, "#{object_name}[#{method}]", object.send(method))
-    label_tag = form_label_tag(input_id, method)
+    input_tag = form_input_tag(object, method)
+    label_tag = form_label_tag(object, method)
 
     [input_tag, label_tag].join.html_safe
   end
@@ -27,15 +24,29 @@ module ApplicationHelper
   end
 
 private
-  def form_input_tag(input_id, field_name, value)
-    tag(:input, :id => input_id,
-        :name => field_name,
+  def form_input_tag(object, method)
+    object_name = object_name_for(object)
+    classes = 'validate'
+    classes += ' invalid' if object.errors[method].any?
+    tag(:input, :id => input_id_for(object, method),
+        :name =>  "#{object_name}[#{method}]",
         :type => 'text',
-        :class => 'validate',
-        :value => value)
+        :class => classes,
+        :value => object.send(method))
   end
 
-  def form_label_tag(input_id, method)
-    content_tag(:label, method.capitalize, :for => input_id)
+  def form_label_tag(object, method)
+    attributes = { :for => input_id_for(object, method) }
+    attributes.merge!('data-error' => object.errors[method][0]) if object.errors[method].any?
+    content_tag(:label, method.capitalize, attributes)
+  end
+
+  def input_id_for(object, method)
+    object_name = object_name_for(object)
+    "#{object_name}_#{method}" # e.g. organization_name
+  end
+
+  def object_name_for(object)
+    object_name = object.class.table_name.singularize # e.g. organization
   end
 end

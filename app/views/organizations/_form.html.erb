@@ -1,17 +1,3 @@
-<script>
-    var organization = <%= @organization.errors.to_json.html_safe %>;
-    $(function () {
-        $('input').removeClass('invalid').addClass('valid');
-        for (var field in organization) {
-            var id = "organization_" + field;
-            var input = $('#' + id);
-            var label = $('label[for=' + id + ']');
-            label.attr('data-error', organization[field][0]);
-            input.removeClass('valid').addClass('invalid');
-        }
-    });
-</script>
-
 <%= form_for(@organization) do |f| %>
     <div class="row">
       <div class="input-field col s12">
