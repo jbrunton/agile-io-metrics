@@ -106,6 +106,8 @@ GEM
     nenv (0.2.0)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
+    non-stupid-digest-assets (1.0.6)
+      sprockets (>= 2.0)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -227,6 +229,7 @@ DEPENDENCIES
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
+  non-stupid-digest-assets
   pg
   puma
   rails (= 4.2.5)
