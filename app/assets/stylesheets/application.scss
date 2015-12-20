@@ -8,8 +8,10 @@ $icons-font-path: 'materialize/font/material-design-icons/';
 
 @import 'materialize/sass/materialize';
 
+@import 'layout/util';
 @import 'layout/nav';
 @import 'layout/page';
 
 @import 'components/button';
 @import 'components/form';
+@import 'components/panel';

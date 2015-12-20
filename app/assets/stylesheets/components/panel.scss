@@ -1,0 +1,11 @@
+.panel {
+  @extend .card-panel, .clearfix;
+
+  .material-icons, .content {
+    vertical-align: middle;
+  }
+
+  button.close {
+    @extend .btn-flat, .right;
+  }
+}

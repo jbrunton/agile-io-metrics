@@ -14,3 +14,11 @@
 //= require jquery_ujs
 //= require materialize
 //= require_tree .
+
+$(function() {
+  $('button.close').on('click', function() {
+    $(this).closest('.panel').fadeOut('normal', function() {
+      $(this).remove();
+    });
+  });
+});
