@@ -7,8 +7,7 @@
 
 <p>
   <strong>Organization:</strong>
-  <%= @team.organization %>
+  <%= link_to @team.organization.name, @team.organization %>
 </p>
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
