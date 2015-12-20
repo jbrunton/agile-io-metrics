@@ -1,6 +1,5 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized
 
   # GET /organizations
   # GET /organizations.json
