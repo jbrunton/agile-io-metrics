@@ -20,11 +20,11 @@
       </div>
     </div>
     <div class="actions">
-      <button type="submit" class="accent">
+      <button type="submit" class="btn waves-effect waves">
         Submit
       </button>
       <% unless @organization.new_record? %>
-          <%= link_to 'Cancel', @organization, class: 'flat-button' %>
+          <%= link_to 'Cancel', @organization, class: 'btn-flat waves-effect waves-teal' %>
       <% end %>
     </div>
 <% end %>
