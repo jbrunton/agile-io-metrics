@@ -15,16 +15,13 @@
 <%= form_for(@organization) do |f| %>
     <div class="row">
       <div class="input-field col s12">
-        <input id="organization_name" name="organization[name]" type="text" class="validate" value="<%= @organization.name %>">
-        <label for="organization_name">Name</label>
+        <%= form_input(@organization, :name) %>
       </div>
     </div>
     <div class="actions">
-      <button type="submit" class="btn waves-effect waves">
-        Submit
-      </button>
+      <%= submit_button %>
       <% unless @organization.new_record? %>
-          <%= link_to 'Cancel', @organization, class: 'btn-flat waves-effect waves-teal' %>
+          <%= cancel_button @organization %>
       <% end %>
     </div>
 <% end %>
