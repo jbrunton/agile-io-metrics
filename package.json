@@ -1,0 +1,22 @@
+{
+  "name": "agileplanning-io-metrics",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/jbrunton/agileplanning-io-metrics.png)](https://travis-ci.org/jbrunton/agileplanning-io-metrics) [![Code Climate](https://codeclimate.com/github/jbrunton/agileplanning-io-metrics/badges/gpa.svg)](https://codeclimate.com/github/jbrunton/agileplanning-io-metrics) [![Test Coverage](https://codeclimate.com/github/jbrunton/agileplanning-io-metrics/badges/coverage.svg)](https://codeclimate.com/github/jbrunton/agileplanning-io-metrics/coverage) [![Dependency Status](https://gemnasium.com/jbrunton/agileplanning-io-metrics.svg)](https://gemnasium.com/jbrunton/agileplanning-io-metrics)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbrunton/agileplanning-io-metrics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbrunton/agileplanning-io-metrics/issues"
+  },
+  "homepage": "https://github.com/jbrunton/agileplanning-io-metrics#readme",
+  "dependencies": {
+    "bower": "^1.7.1"
+  }
+}
