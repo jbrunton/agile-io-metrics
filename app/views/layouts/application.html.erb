@@ -20,6 +20,25 @@
     </nav>
 
     <div class="container">
+      <% if notice %>
+          <div class="panel">
+            <i class="material-icons">info_outline</i>
+            <span class="content"><%= notice %></span>
+            <button class="close waves-effect waves-teal">
+              <i class="material-icons">done</i>
+            </button>
+          </div>
+      <% end %>
+      <% if alert %>
+          <div class="panel">
+            <i class="material-icons">error_outline</i>
+            <span class="content"><%= alert %></span>
+            <button class="close waves-effect waves-teal">
+              <i class="material-icons">done</i>
+            </button>
+          </div>
+      <% end %>
+
       <div class="page-content">
         <%= yield %>
       </div>
