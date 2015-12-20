@@ -32,9 +32,11 @@ RSpec.describe OrganizationsController, type: :controller do
   }
 
   let(:current_user) { create(:user) }
+  let(:organization) { create(:organization) }
 
   before do
     sign_in current_user
+    current_user.add_role :admin, organization
   end
 
   # This should return the minimal set of values that should be in the session
@@ -44,7 +46,6 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all organizations as @organizations" do
-      organization = create(:organization)
       get :index, {}, valid_session
       expect(assigns(:organizations)).to eq([organization])
     end
@@ -52,7 +53,6 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested organization as @organization" do
-      organization = create(:organization)
       get :show, {:id => organization.to_param}, valid_session
       expect(assigns(:organization)).to eq(organization)
     end
@@ -67,7 +67,6 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested organization as @organization" do
-      organization = create(:organization)
       get :edit, {:id => organization.to_param}, valid_session
       expect(assigns(:organization)).to eq(organization)
     end
@@ -85,6 +84,11 @@ RSpec.describe OrganizationsController, type: :controller do
         post :create, {:organization => valid_attributes}, valid_session
         expect(assigns(:organization)).to be_a(Organization)
         expect(assigns(:organization)).to be_persisted
+      end
+
+      it "makes the current user an admin of the organization" do
+        post :create, {:organization => valid_attributes}, valid_session
+        expect(current_user.has_role?(:admin, assigns(:organization))).to eq(true)
       end
 
       it "redirects to the created organization" do
@@ -113,20 +117,17 @@ RSpec.describe OrganizationsController, type: :controller do
       }
 
       it "updates the requested organization" do
-        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => new_attributes}, valid_session
         organization.reload
         expect(organization.name).to eq(new_attributes[:name])
       end
 
       it "assigns the requested organization as @organization" do
-        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => valid_attributes}, valid_session
         expect(assigns(:organization)).to eq(organization)
       end
 
       it "redirects to the organization" do
-        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => valid_attributes}, valid_session
         expect(response).to redirect_to(organization)
       end
@@ -134,13 +135,11 @@ RSpec.describe OrganizationsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the organization as @organization" do
-        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => invalid_attributes}, valid_session
         expect(assigns(:organization)).to eq(organization)
       end
 
       it "re-renders the 'edit' template" do
-        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
@@ -149,14 +148,12 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested organization" do
-      organization = create(:organization)
       expect {
         delete :destroy, {:id => organization.to_param}, valid_session
       }.to change(Organization, :count).by(-1)
     end
 
     it "redirects to the organizations list" do
-      organization = create(:organization)
       delete :destroy, {:id => organization.to_param}, valid_session
       expect(response).to redirect_to(organizations_url)
     end

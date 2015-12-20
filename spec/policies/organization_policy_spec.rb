@@ -11,7 +11,7 @@ describe OrganizationPolicy do
     admin_user.add_role :admin, organization
   end
 
-  permissions :show?, :update?, :create? do
+  permissions :show?, :update?, :destroy? do
     it "denies access if the user doesn't have admin rights" do
       expect(subject).not_to permit(another_user, organization)
     end

@@ -7,7 +7,7 @@ class OrganizationPolicy < ApplicationPolicy
     user.has_role?(:admin, record)
   end
 
-  def create?
+  def destroy?
     user.has_role?(:admin, record)
   end
 end
