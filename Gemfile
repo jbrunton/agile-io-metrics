@@ -4,11 +4,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 
-gem 'pg', group: :production
+group :production do
+  gem 'puma'
+  gem 'pg'
+end
+
 group :development, :test do
   gem 'sqlite3'
   gem 'rails_12factor'
-  gem 'puma'
 end
 
 # Use SCSS for stylesheets
