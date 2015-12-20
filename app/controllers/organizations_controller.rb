@@ -1,5 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  # after_action :verify_authorized
 
   # GET /organizations
   # GET /organizations.json
@@ -10,6 +12,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    @admins = User.with_role(:admin, @organization)
   end
 
   # GET /organizations/new
@@ -28,6 +31,7 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.save
+        current_user.add_role :admin, @organization
         format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: @organization }
       else
@@ -65,6 +69,7 @@ class OrganizationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_organization
       @organization = Organization.find(params[:id])
+      authorize @organization
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

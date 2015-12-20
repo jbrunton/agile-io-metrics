@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    authorize @user, :show?
+    authorize @user
   end
 
   private
