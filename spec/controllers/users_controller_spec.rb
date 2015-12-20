@@ -25,11 +25,15 @@ RSpec.describe UsersController, type: :controller do
   # UsersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:current_user) { create(:user) }
+  before do
+    sign_in current_user
+  end
+
   describe "GET #show" do
     it "assigns the requested user as @user" do
-      user = create(:user)
-      get :show, {:id => user.to_param}, valid_session
-      expect(assigns(:user)).to eq(user)
+      get :show, {:id => current_user.to_param}, valid_session
+      expect(assigns(:user)).to eq(current_user)
     end
   end
 

@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
+  after_action :verify_authorized
 
   # GET /users/1
   # GET /users/1.json
   def show
+    authorize @user, :show?
   end
 
   private
