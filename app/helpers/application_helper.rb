@@ -18,11 +18,12 @@ module ApplicationHelper
 
 
   def submit_button
-    '<button type="submit" class="btn waves-effect waves">Submit</button>'.html_safe
+    content_tag :button, 'Submit', :class => 'btn waves-effect waves'
   end
 
   def cancel_button(object)
-    "<a href='#{url_for(object)}' class='btn-flat waves-effect waves-teal'>Cancel</a>".html_safe
+    content_tag :a, 'Cancel', :href => url_for(object),
+        :class => 'btn-flat waves-effect waves-teal'
   end
 
 private
