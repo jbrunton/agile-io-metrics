@@ -1,20 +1,30 @@
-<%= form_for(@organization) do |f| %>
-  <div class="field">
-    <%= f.text_field :name %>
-    <%= f.label :name %>
-    <span class="field-error">
-        <% @organization.errors[:name].each do |message| %>
-          <%= message %>
-        <% end %>
-    </span>
-  </div>
+<script>
+    var organization = <%= @organization.errors.to_json.html_safe %>;
+    $(function () {
+        $('input').removeClass('invalid').addClass('valid');
+        for (var field in organization) {
+            var id = "organization_" + field;
+            var input = $('#' + id);
+            var label = $('label[for=' + id + ']');
+            label.attr('data-error', organization[field][0]);
+            input.removeClass('valid').addClass('invalid');
+        }
+    });
+</script>
 
-  <div class="actions">
-    <button type="submit" class="accent">
-      Submit
-    </button>
-    <% unless @organization.new_record? %>
-        <%= link_to 'Cancel', @organization, class: 'flat-button' %>
-    <% end %>
-  </div>
+<%= form_for(@organization) do |f| %>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="organization_name" name="organization[name]" type="text" class="validate" value="<%= @organization.name %>">
+        <label for="organization_name">Name</label>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="submit" class="accent">
+        Submit
+      </button>
+      <% unless @organization.new_record? %>
+          <%= link_to 'Cancel', @organization, class: 'flat-button' %>
+      <% end %>
+    </div>
 <% end %>

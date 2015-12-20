@@ -1,17 +1,8 @@
-div.field {
-  @extend .mdl-textfield;
-  margin: 0 0 20px 0;
+.input-field input.invalid + label {
+  width:100%
 }
-
-input[type=text] {
-  @extend .mdl-textfield__input;
-}
-
-label {
-  @extend .mdl-textfield__label;
-}
-
-.field-error {
-  @extend .mdl-textfield__error;
-  visibility: visible;
+.input-field input.invalid:not(:focus) + label:after {
+  font-size: 0.8rem;
+  position: absolute;
+  top: 40px;
 }

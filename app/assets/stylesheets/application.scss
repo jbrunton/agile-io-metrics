@@ -4,6 +4,7 @@ $primary-color: color("purple", "base") !default;
 $secondary-color: color("orange", "base") !default;
 
 $roboto-font-path: 'materialize/font/roboto/';
+$icons-font-path: 'materialize/font/material-design-icons/';
 
 @import 'materialize/sass/materialize';
 
@@ -19,6 +20,6 @@ $roboto-font-path: 'materialize/font/roboto/';
 
 //
 //@import 'components/callout';
-//@import 'components/button';
-//@import 'components/form';
+@import 'components/button';
+@import 'components/form';
 //@import 'components/float';
