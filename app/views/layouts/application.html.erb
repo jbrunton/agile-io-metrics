@@ -14,7 +14,19 @@
       <div class="nav-wrapper">
         <a href="/" class="brand-logo">agileplanning.io | metrics</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="#">About</a></li>
+          <% if user_signed_in? %>
+              <li>
+                <%= link_to 'Profile', current_user %>
+              </li>
+              <li>
+                <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+              </li>
+          <% else %>
+              <li>
+                <%= link_to 'Sign in', new_user_session_path %>
+              </li>
+          <% end %>
+          </li>
         </ul>
       </div>
     </nav>
