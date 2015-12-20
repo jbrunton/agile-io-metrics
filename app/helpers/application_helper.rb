@@ -6,13 +6,16 @@ module ApplicationHelper
     link_to(text, path, options)
   end
 
-  def form_input(object, field_name)
+  def form_input(object, method)
     object_name = object.class.table_name.singularize # e.g. organization
-    id = "#{object_name}_#{field_name}" # e.g. organization_name
-    value = object.send(field_name)
-    ("<input id='#{id}' name='#{object_name}[#{field_name}]' type='text' class='validate' value='#{value}'>" +
-      "<label for='#{id}'>#{field_name.capitalize}</label>").html_safe
+    input_id = "#{object_name}_#{method}" # e.g. organization_name
+
+    input_tag = form_input_tag(input_id, "#{object_name}[#{method}]", object.send(method))
+    label_tag = form_label_tag(input_id, method)
+
+    [input_tag, label_tag].join.html_safe
   end
+
 
   def submit_button
     '<button type="submit" class="btn waves-effect waves">Submit</button>'.html_safe
@@ -20,5 +23,18 @@ module ApplicationHelper
 
   def cancel_button(object)
     "<a href='#{url_for(object)}' class='btn-flat waves-effect waves-teal'>Cancel</a>".html_safe
+  end
+
+private
+  def form_input_tag(input_id, field_name, value)
+    tag(:input, :id => input_id,
+        :name => field_name,
+        :type => 'text',
+        :class => 'validate',
+        :value => value)
+  end
+
+  def form_label_tag(input_id, method)
+    content_tag(:label, method.capitalize, :for => input_id)
   end
 end
