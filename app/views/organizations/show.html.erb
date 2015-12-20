@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h3><%= @organization.name %>
-  <%= link_to 'Edit', edit_organization_path(@organization), class: 'flat-button float-right' %>
-</h3>
+<div class="row">
+  <div class="col s10">
+    <h3><%= @organization.name %></h3>
+  </div>
+  <div class="col s2">
+    <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn-flat right waves-effect waves-teal' %>
+  </div>
+</div>
 
 <p>
   <strong>Name:</strong>

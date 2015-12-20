@@ -2,9 +2,7 @@
 
 <h1>
   Listing Organizations
-  <%= fab_link_to 'add', new_organization_path, class: 'float-right' %>
 </h1>
-
 <table>
   <thead>
     <tr>
@@ -25,3 +23,6 @@
   </tbody>
 </table>
 
+<div class="fixed-action-btn">
+  <%= fab_link_to('add', new_organization_path) %>
+</div>

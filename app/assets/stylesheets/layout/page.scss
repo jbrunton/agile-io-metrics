@@ -1,8 +1,8 @@
-.page-margin {
-  @extend .mdl-cell, .mdl-cell--2-col;
+body {
+  background-color: color("grey", "lighten-2");
 }
 
 .page-content {
-  @extend .mdl-color--white, .mdl-shadow--4dp, .mdl-color-text--grey-800, .mdl-cell, .mdl-cell--8-col;
-  padding: 40px;
+  @extend .card, .card-content;
+  padding: 20px 40px;
 }
