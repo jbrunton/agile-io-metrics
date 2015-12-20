@@ -24,7 +24,7 @@ RSpec.describe OrganizationsController, type: :controller do
   # Organization. As you add validations to Organization, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {name: 'My Organization'}
+    attributes_for(:organization)
   }
 
   let(:invalid_attributes) {
@@ -38,7 +38,7 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all organizations as @organizations" do
-      organization = Organization.create! valid_attributes
+      organization = create(:organization)
       get :index, {}, valid_session
       expect(assigns(:organizations)).to eq([organization])
     end
@@ -46,7 +46,7 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested organization as @organization" do
-      organization = Organization.create! valid_attributes
+      organization = create(:organization)
       get :show, {:id => organization.to_param}, valid_session
       expect(assigns(:organization)).to eq(organization)
     end
@@ -61,7 +61,7 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested organization as @organization" do
-      organization = Organization.create! valid_attributes
+      organization = create(:organization)
       get :edit, {:id => organization.to_param}, valid_session
       expect(assigns(:organization)).to eq(organization)
     end
@@ -71,7 +71,7 @@ RSpec.describe OrganizationsController, type: :controller do
     context "with valid params" do
       it "creates a new Organization" do
         expect {
-          post :create, {:organization => valid_attributes}, valid_session
+          post :create, {:organization => attributes_for(:organization)}, valid_session
         }.to change(Organization, :count).by(1)
       end
 
@@ -103,24 +103,24 @@ RSpec.describe OrganizationsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        {name: 'New Organization'}
+        attributes_for(:organization)
       }
 
       it "updates the requested organization" do
-        organization = Organization.create! valid_attributes
+        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => new_attributes}, valid_session
         organization.reload
         expect(organization.name).to eq(new_attributes[:name])
       end
 
       it "assigns the requested organization as @organization" do
-        organization = Organization.create! valid_attributes
+        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => valid_attributes}, valid_session
         expect(assigns(:organization)).to eq(organization)
       end
 
       it "redirects to the organization" do
-        organization = Organization.create! valid_attributes
+        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => valid_attributes}, valid_session
         expect(response).to redirect_to(organization)
       end
@@ -128,13 +128,13 @@ RSpec.describe OrganizationsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the organization as @organization" do
-        organization = Organization.create! valid_attributes
+        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => invalid_attributes}, valid_session
         expect(assigns(:organization)).to eq(organization)
       end
 
       it "re-renders the 'edit' template" do
-        organization = Organization.create! valid_attributes
+        organization = create(:organization)
         put :update, {:id => organization.to_param, :organization => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +143,14 @@ RSpec.describe OrganizationsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested organization" do
-      organization = Organization.create! valid_attributes
+      organization = create(:organization)
       expect {
         delete :destroy, {:id => organization.to_param}, valid_session
       }.to change(Organization, :count).by(-1)
     end
 
     it "redirects to the organizations list" do
-      organization = Organization.create! valid_attributes
+      organization = create(:organization)
       delete :destroy, {:id => organization.to_param}, valid_session
       expect(response).to redirect_to(organizations_url)
     end
