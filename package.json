@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jbrunton/agileplanning-io-metrics/issues"
   },
-  "homepage": "https://github.com/jbrunton/agileplanning-io-metrics#readme"
+  "homepage": "https://github.com/jbrunton/agileplanning-io-metrics#readme",
+  "dependencies": {
+    "bower": "^1.7.1"
+  }
 }
