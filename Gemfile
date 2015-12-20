@@ -5,13 +5,13 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.5'
 
 group :production do
+  gem 'rails_12factor'
   gem 'puma'
   gem 'pg'
 end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'rails_12factor'
 end
 
 # Use SCSS for stylesheets
