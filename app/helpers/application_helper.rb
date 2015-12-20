@@ -14,8 +14,8 @@ module ApplicationHelper
   end
 
 
-  def submit_button
-    content_tag :button, 'Submit', :class => 'btn waves-effect waves'
+  def submit_button(text = 'Submit')
+    content_tag :button, text, :class => 'btn waves-effect waves'
   end
 
   def cancel_button(object)
