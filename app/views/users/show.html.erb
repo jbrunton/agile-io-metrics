@@ -1,16 +1,69 @@
-<div class="row">
-  <div class="col s10">
-    My Profile
+<div class="page-content">
+  <div class="row">
+    <div class="col s10">
+      My Profile
+    </div>
+    <div class="col s2">
+      <%= link_to 'Edit', edit_user_registration_path, class: 'btn-flat right waves-effect waves-teal' %>
+    </div>
   </div>
-  <div class="col s2">
-    <%= link_to 'Edit', edit_user_registration_path, class: 'btn-flat right waves-effect waves-teal' %>
-  </div>
+
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
 </div>
+<div class="page-content">
+  <ul class="tabs">
+    <li class="tab"><a href="#teams">My Teams</a></li>
+    <li class="tab"><a href="#organizations">My Organisations</a></li>
+  </ul>
+  <div id="teams">
+    <table>
+      <tr>
+        <th>Team</th>
+        <th>Permissions</th>
+      </tr>
+      <% @user.teams.each do |team| %>
+        <tr>
+          <td>
+            <%= link_to team.name, team %>
+          </td>
+          <td>
+            <% @user.roles_on(team).each do |role| %>
+                <div class="chip">
+                  <%= role.to_s %>
+                </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div id="organizations">
+    <table>
+      <tr>
+        <th>Organization</th>
+        <th>Permissions</th>
+      </tr>
+      <% @user.organizations.each do |organization| %>
+          <tr>
+            <td>
+              <%= link_to organization.name, organization %>
+            </td>
+            <td>
+              <% @user.roles_on(organization).each do |role| %>
+                  <div class="chip">
+                    <%= role.to_s %>
+                  </div>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+</div>
