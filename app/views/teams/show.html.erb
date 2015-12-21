@@ -1,3 +1,18 @@
+<script>
+  function addUser() {
+    var data = {
+      email: $('#add-users #email').val(),
+      roles: $('#add-users #roles').val()
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: '<%= add_user_to_team_path(@team) %>',
+      data: data,
+      async:false
+    });
+  }
+</script>
 <div class="page-content">
   <div class="row">
     <div class="col s10">
@@ -17,6 +32,7 @@
   <ul class="tabs">
     <li class="tab"><a href="#members">Members</a></li>
     <li class="tab"><a href="#admins">Admins</a></li>
+    <li class="tab"><a href="#add-users">Add Users</a></li>
   </ul>
   <div id="members" class="chip-container">
     <% @team.members.each do |user| %>
@@ -47,6 +63,27 @@
         <div class="user">
           <%= link_to user.email, user %>
         </div>
+    <% end %>
+  </div>
+  <div id="add-users" class="row">
+    <%= form_tag(add_user_to_team_path(@team)) do %>
+    <div class="row">
+      <div class="input-field col s8">
+        <input id="email" type="email" class="validate" name="email">
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field col s4">
+        <select multiple name="roles" id="roles">
+          <option value="" disabled selected>Role</option>
+          <option value="admin">Admin</option>
+          <option value="member">Member</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" onclick="addUser();">
+      Add
+    </button>
     <% end %>
   </div>
 </div>

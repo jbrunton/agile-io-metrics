@@ -75,9 +75,42 @@ class TeamsController < ApplicationController
 
     @user = User.find(params[:user_id])
     @user.remove_role :member, @team
+
     respond_to do |format|
       format.html { redirect_to @team, notice: 'User was successfully removed as member.' }
       format.json { head :no_content }
+    end
+  end
+
+  # POST /teams/1/add_user
+  # POST /teams/1/add_user.json
+  def add_user
+    params[:roles] ||= []
+
+    @team = Team.find(params[:id])
+    authorize @team, :update?
+
+    @user = User.find_by_email(params[:email])
+    unless @user.nil?
+      roles = []
+      roles << :admin if params[:roles].include? 'admin'
+      roles << :member if params[:roles].include? 'member'
+      roles.each do |role|
+        @user.add_role role, @team
+      end
+    end
+
+    respond_to do |format|
+      if @user.nil?
+        format.html { redirect_to @team, notice: 'Could not find user' }
+        format.json { render status: :unprocessable_entity }
+      elsif roles.empty?
+        format.html { redirect_to @team, notice: 'Please select at least one role' }
+        format.json { render status: :unprocessable_entity }
+      else
+        format.html { redirect_to @team, notice: 'User was successfully added.' }
+        format.json { head :no_content }
+      end
     end
   end
 

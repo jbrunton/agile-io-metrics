@@ -21,4 +21,6 @@ $(function() {
       $(this).remove();
     });
   });
+
+  $('select').material_select();
 });
