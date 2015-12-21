@@ -71,6 +71,7 @@ class TeamsController < ApplicationController
     def set_team
       @team = Team.find(params[:id])
       @organization = @team.organization
+      authorize @team
     end
 
   def set_organization

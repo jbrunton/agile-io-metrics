@@ -1,4 +1,4 @@
-class OrganizationPolicy < ApplicationPolicy
+class TeamPolicy < ApplicationPolicy
   def show?
     user.member_of?(record) || user.admin_of?(record)
   end
