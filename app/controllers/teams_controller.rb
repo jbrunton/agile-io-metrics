@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  layout 'blank', only: [:show]
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_organization, only: [:new, :create, :index]
   #before_action :authenticate_user!
@@ -62,6 +63,20 @@ class TeamsController < ApplicationController
     @team.destroy
     respond_to do |format|
       format.html { redirect_to organization_teams_url(@organization), notice: 'Team was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  # DELETE /teams/1/remove_member/2
+  # DELETE /teams/1/remove_member/2.json
+  def remove_member
+    @team = Team.find(params[:id])
+    authorize @team, :update?
+
+    @user = User.find(params[:user_id])
+    @user.remove_role :member, @team
+    respond_to do |format|
+      format.html { redirect_to @team, notice: 'User was successfully removed as member.' }
       format.json { head :no_content }
     end
   end
