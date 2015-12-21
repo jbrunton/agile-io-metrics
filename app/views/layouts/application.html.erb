@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>AgileplanningIoMetrics</title>
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-  </head>
-  <body>
-
-    <nav>
-      <div class="nav-wrapper">
-        <a href="/" class="brand-logo">agileplanning.io | metrics</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <% if user_signed_in? %>
-              <li>
-                <%= link_to 'Profile', current_user %>
-              </li>
-              <li>
-                <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-              </li>
-          <% else %>
-              <li>
-                <%= link_to 'Sign in', new_user_session_path %>
-              </li>
-          <% end %>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div class="container">
-      <% if notice %>
-          <div class="panel">
-            <i class="material-icons">info_outline</i>
-            <span class="content"><%= notice %></span>
-            <button class="close waves-effect waves-teal">
-              <i class="material-icons">done</i>
-            </button>
-          </div>
-      <% end %>
-      <% if alert %>
-          <div class="panel">
-            <i class="material-icons">error_outline</i>
-            <span class="content"><%= alert %></span>
-            <button class="close waves-effect waves-teal">
-              <i class="material-icons">done</i>
-            </button>
-          </div>
-      <% end %>
-
+<% content_for(:content) do %>
+    <div class="page-content">
       <%= yield %>
-
     </div>
-
-  </body>
-</html>
+<% end %>
+<%= render template: 'layouts/blank' %>

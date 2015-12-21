@@ -1,4 +1,6 @@
 class OrganizationsController < ApplicationController
+  layout 'blank', only: [:show]
+
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   # after_action :verify_authorized

@@ -1,28 +1,26 @@
-<div class="page-content">
-  <h1>
-    Listing Organizations
-  </h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+<h1>
+  Listing Organizations
+</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <% @organizations.each do |organization| %>
-          <tr>
-            <td><%= organization.name %></td>
-            <td><%= link_to 'Show', organization %></td>
-            <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-            <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <tbody>
+    <% @organizations.each do |organization| %>
+        <tr>
+          <td><%= organization.name %></td>
+          <td><%= link_to 'Show', organization %></td>
+          <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+          <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
 
-  <div class="fixed-action-btn">
-    <%= fab_link_to('add', new_organization_path) %>
-  </div>
- </div>
+<div class="fixed-action-btn">
+  <%= fab_link_to('add', new_organization_path) %>
+</div>

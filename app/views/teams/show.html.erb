@@ -1,14 +1,11 @@
-<div class="page-content">
+<p>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @team.name %>
-  </p>
+<p>
+  <strong>Organization:</strong>
+  <%= link_to @team.organization.name, @team.organization %>
+</p>
 
-  <p>
-    <strong>Organization:</strong>
-    <%= link_to @team.organization.name, @team.organization %>
-  </p>
-
-  <%= link_to 'Edit', edit_team_path(@team) %> |
-</div>
+<%= link_to 'Edit', edit_team_path(@team) %> |
