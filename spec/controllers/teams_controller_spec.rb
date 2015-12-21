@@ -81,6 +81,11 @@ RSpec.describe TeamsController, type: :controller do
         expect(assigns(:team)).to be_persisted
       end
 
+      it "makes the current user an admin of the team" do
+        post :create, {:team => valid_attributes}, valid_session
+        expect(current_user.has_role?(:admin, assigns(:team))).to eq(true)
+      end
+
       it "redirects to the created team" do
         post :create, {:team => valid_attributes}, valid_session
         expect(response).to redirect_to(Team.last)
