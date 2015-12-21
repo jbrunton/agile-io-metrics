@@ -6,6 +6,7 @@ RSpec.describe "teams/edit", type: :view do
       :name => "MyString",
       :organization => nil
     ))
+    @record = @team
   end
 
   it "renders the edit team form" do
@@ -14,8 +15,6 @@ RSpec.describe "teams/edit", type: :view do
     assert_select "form[action=?][method=?]", team_path(@team), "post" do
 
       assert_select "input#team_name[name=?]", "team[name]"
-
-      assert_select "input#team_organization_id[name=?]", "team[organization_id]"
     end
   end
 end
