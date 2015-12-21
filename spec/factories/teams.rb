@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :team do
-    name "MyString"
-organization nil
+    sequence(:name) { |k| "Team #{k}" }
+    organization
   end
 
 end

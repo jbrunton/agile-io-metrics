@@ -1,11 +1,12 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_organization, only: [:new, :create, :index]
+  #before_action :authenticate_user!
 
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all
+    @teams = @organization.teams
   end
 
   # GET /teams/1
@@ -15,7 +16,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/new
   def new
-    @team = Team.new
+    @team = @organization.teams.new
     @record = [@organization, @team]
   end
 
@@ -60,7 +61,7 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to organization_url(@organization), notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to organization_teams_url(@organization), notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
