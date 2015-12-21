@@ -54,7 +54,6 @@
               <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
           </div>
-
         </div>
     <% end %>
   </div>
@@ -62,6 +61,22 @@
     <% @team.admins.each do |user| %>
         <div class="user">
           <%= link_to user.email, user %>
+          <!-- Modal Trigger -->
+          <a href="#" class="modal-trigger" onclick="$('#modal-remove-admin-<%= user.id %>').openModal();">
+            <i class="material-icons">delete</i>
+          </a>
+
+          <!-- Modal Structure -->
+          <div id="modal-remove-admin-<%= user.id %>" class="modal">
+            <div class="modal-content">
+              <h4>Remove admin?</h4>
+              <p>Remove <%= user.email %> as admin from <%= @team.name %>?</p>
+            </div>
+            <div class="modal-footer">
+              <%= link_to 'Remove', remove_admin_from_team_path(@team, user), method: :delete, class: 'modal-action modal-close waves-effect waves-green btn-flat' %>
+              <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
+          </div>
         </div>
     <% end %>
   </div>

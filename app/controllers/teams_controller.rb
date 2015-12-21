@@ -82,6 +82,21 @@ class TeamsController < ApplicationController
     end
   end
 
+  # DELETE /teams/1/remove_admin/2
+  # DELETE /teams/1/remove_admin/2.json
+  def remove_admin
+    @team = Team.find(params[:id])
+    authorize @team, :update?
+
+    @user = User.find(params[:user_id])
+    @user.remove_role :admin, @team
+
+    respond_to do |format|
+      format.html { redirect_to @team, notice: 'User was successfully removed as admin.' }
+      format.json { head :no_content }
+    end
+  end
+
   # POST /teams/1/add_user
   # POST /teams/1/add_user.json
   def add_user

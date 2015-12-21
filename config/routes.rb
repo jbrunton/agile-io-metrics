@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :teams, shallow: true do
       member do
         delete 'remove_member/:user_id', action: 'remove_member', as: 'remove_member_from'
+        delete 'remove_admin/:user_id', action: 'remove_admin', as: 'remove_admin_from'
         post 'add_user', as: 'add_user_to'
       end
     end
