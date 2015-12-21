@@ -4,11 +4,11 @@ RSpec.describe TeamsController, type: :routing do
   describe "routing" do
 
     it "routes to #index" do
-      expect(:get => "/teams").to route_to("teams#index")
+      expect(:get => "/organizations/1/teams").to route_to("teams#index", :organization_id => "1")
     end
 
     it "routes to #new" do
-      expect(:get => "/teams/new").to route_to("teams#new")
+      expect(:get => "/organizations/1/teams/new").to route_to("teams#new", :organization_id => "1")
     end
 
     it "routes to #show" do
@@ -20,7 +20,7 @@ RSpec.describe TeamsController, type: :routing do
     end
 
     it "routes to #create" do
-      expect(:post => "/teams").to route_to("teams#create")
+      expect(:post => "/organizations/1/teams").to route_to("teams#create", :organization_id => "1")
     end
 
     it "routes to #update via PUT" do
