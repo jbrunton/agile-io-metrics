@@ -89,14 +89,14 @@
           </td>
           <td>
             <% team.members.each do |user| %>
-                <div class="user">
+                <div class="chip">
                   <span class="token"><%= link_to user.email, user %></span>
                 </div>
             <% end %>
           </td>
           <td>
             <% team.admins.each do |user| %>
-                <div class="user">
+                <div class="chip">
                   <span class="token"><%= link_to user.email, user %></span>
                 </div>
             <% end %>
