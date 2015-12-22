@@ -24,11 +24,11 @@ RSpec.describe SurveysController, type: :controller do
   # Survey. As you add validations to Survey, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:survey)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: '' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -36,9 +36,11 @@ RSpec.describe SurveysController, type: :controller do
   # SurveysController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:user) { create(:user) }
+  let!(:survey) { create(:survey) }
+  
   describe "GET #index" do
     it "assigns all surveys as @surveys" do
-      survey = Survey.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:surveys)).to eq([survey])
     end
@@ -46,7 +48,6 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested survey as @survey" do
-      survey = Survey.create! valid_attributes
       get :show, {:id => survey.to_param}, valid_session
       expect(assigns(:survey)).to eq(survey)
     end
@@ -61,7 +62,6 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested survey as @survey" do
-      survey = Survey.create! valid_attributes
       get :edit, {:id => survey.to_param}, valid_session
       expect(assigns(:survey)).to eq(survey)
     end
@@ -103,24 +103,22 @@ RSpec.describe SurveysController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        attributes_for(:survey)
       }
 
       it "updates the requested survey" do
-        survey = Survey.create! valid_attributes
         put :update, {:id => survey.to_param, :survey => new_attributes}, valid_session
+
         survey.reload
-        skip("Add assertions for updated state")
+        expect(survey.name).to eq(new_attributes[:name])
       end
 
       it "assigns the requested survey as @survey" do
-        survey = Survey.create! valid_attributes
         put :update, {:id => survey.to_param, :survey => valid_attributes}, valid_session
         expect(assigns(:survey)).to eq(survey)
       end
 
       it "redirects to the survey" do
-        survey = Survey.create! valid_attributes
         put :update, {:id => survey.to_param, :survey => valid_attributes}, valid_session
         expect(response).to redirect_to(survey)
       end
@@ -128,13 +126,11 @@ RSpec.describe SurveysController, type: :controller do
 
     context "with invalid params" do
       it "assigns the survey as @survey" do
-        survey = Survey.create! valid_attributes
         put :update, {:id => survey.to_param, :survey => invalid_attributes}, valid_session
         expect(assigns(:survey)).to eq(survey)
       end
 
       it "re-renders the 'edit' template" do
-        survey = Survey.create! valid_attributes
         put :update, {:id => survey.to_param, :survey => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +139,12 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested survey" do
-      survey = Survey.create! valid_attributes
       expect {
         delete :destroy, {:id => survey.to_param}, valid_session
       }.to change(Survey, :count).by(-1)
     end
 
     it "redirects to the surveys list" do
-      survey = Survey.create! valid_attributes
       delete :destroy, {:id => survey.to_param}, valid_session
       expect(response).to redirect_to(surveys_url)
     end

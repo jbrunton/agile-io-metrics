@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :survey do
-    name "MyString"
-description "MyText"
-organization nil
+    sequence(:name) { |k| "Survey #{k}" }
+    description { Forgery(:lorem_ipsum).words(12) }
+    organization
   end
 
 end
