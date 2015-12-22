@@ -1,33 +1,49 @@
 <script>
   $(function () {
     $('#search').on('keyup', function (e) {
-      if (e.keyCode == 27) {
-        $('#search').val('');
+      var $search = $('#search');
+      if (escapePressed(e)) {
+        $search.val('');
       }
-      var query = $('#search').val().toLowerCase();
+
+      var query = $search.val().toLowerCase();
       if (query.length == 0) {
-        $('.token').removeClass('match');
-        $('.team').show();
+        clearSearch();
         return;
       }
+
       $('.team').each(function (index, team) {
-        var tokens = $(team).find('.token');
-        var match = false;
-        tokens.each(function (index, token) {
-          if ($(token).text().toLowerCase().includes(query)) {
-            $(token).addClass('match');
-            match = true;
-          } else {
-            $(token).removeClass('match');
-          }
+        var $tokens = $(team).find('.token');
+        var matches = $tokens.filter(function(index, token) {
+          return matchToken(query, token);
         });
-        if (match) {
-          $(team).show();
-        } else {
-          $(team).hide();
-        }
+        $(team).toggle(matches.length > 0);
       });
     });
+
+    function escapePressed(e) {
+      return e.keyCode == 27;
+    }
+
+    function clearSearch() {
+      $('.token').removeClass('match');
+      $('.team').show();
+    }
+
+    function queryMatches(query, text) {
+      return text.toLowerCase().includes(query);
+    }
+
+    function matchToken(query, token) {
+      var $token = $(token);
+      if (queryMatches(query, $token.text())) {
+        $token.addClass('match');
+        return true;
+      } else {
+        $token.removeClass('match');
+        return false;
+      }
+    }
   });
 </script>
 
