@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
 
   resources :organizations do
+    resources :surveys, shallow: true
     resources :teams, shallow: true do
       member do
         delete 'remove_member/:user_id', action: 'remove_member', as: 'remove_member_from'
