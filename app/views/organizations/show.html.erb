@@ -1,3 +1,36 @@
+<script>
+  $(function () {
+    $('#search').on('keyup', function (e) {
+      if (e.keyCode == 27) {
+        $('#search').val('');
+      }
+      var query = $('#search').val().toLowerCase();
+      if (query.length == 0) {
+        $('.token').removeClass('match');
+        $('.team').show();
+        return;
+      }
+      $('.team').each(function (index, team) {
+        var tokens = $(team).find('.token');
+        var match = false;
+        tokens.each(function (index, token) {
+          if ($(token).text().toLowerCase().includes(query)) {
+            $(token).addClass('match');
+            match = true;
+          } else {
+            $(token).removeClass('match');
+          }
+        });
+        if (match) {
+          $(team).show();
+        } else {
+          $(team).hide();
+        }
+      });
+    });
+  });
+</script>
+
 <div class="page-content">
   <div class="row">
     <div class="col s10">
@@ -14,34 +47,46 @@
   </p>
 </div>
 <div class="page-content">
-  <ul class="tabs">
-    <li class="tab"><a href="#teams">Teams</a></li>
-    <li class="tab"><a href="#admins">Admins</a></li>
-    <li class="tab"><a href="#members">Members</a></li>
-  </ul>
-  <div id="teams">
-    <table>
-      <% @organization.teams.each do |team| %>
-          <tr>
-            <td>
-              <%= link_to team.name, team %>
-            </td>
-          </tr>
-      <% end %>
-    </table>
+
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12 search">
+          <i class="material-icons prefix">search</i>
+          <input id="search" type="text" required>
+          <label for="search">Search</label>
+        </div>
+      </div>
+    </form>
   </div>
-  <div id="admins">
-    <table>
-      <% @admins.each do |user| %>
-          <tr>
-            <td>
-              <%= user.email %>
-            </td>
-          </tr>
-      <% end %>
-    </table>
-  </div>
-  <div id="members">Test 3
-  </div>
+
+  <table class="bordered">
+    <tr>
+      <th width="20%">Team</th>
+      <th width="60%">Members</th>
+      <th width="20%">Admins</th>
+    </tr>
+    <% @organization.teams.each do |team| %>
+        <tr class="team">
+          <td>
+            <span class="token"><%= link_to team.name, team %></span>
+          </td>
+          <td>
+            <% team.members.each do |user| %>
+                <div class="user">
+                  <span class="token"><%= link_to user.email, user %></span>
+                </div>
+            <% end %>
+          </td>
+          <td>
+            <% team.admins.each do |user| %>
+                <div class="user">
+                  <span class="token"><%= link_to user.email, user %></span>
+                </div>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
 
 </div>
