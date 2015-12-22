@@ -29,6 +29,12 @@ RSpec.describe User, type: :model do
         user.add_role(:member, team)
         expect(user.member_of?(organization)).to eq(true)
       end
+
+      it "returns true if the user an adminn of any teams in the organization" do
+        team = create(:team, organization: organization)
+        user.add_role :admin, team
+        expect(user.member_of?(organization)).to eq(true)
+      end
     end
   end
 

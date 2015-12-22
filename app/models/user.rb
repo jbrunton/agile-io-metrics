@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   def member_of?(record)
     if record.class == Organization
-      record.teams.any?{ |team| member_of?(team) }
+      record.teams.any?{ |team| member_of?(team) || admin_of?(team) }
     else
       has_role?(:member, record)
     end
