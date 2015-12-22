@@ -1,18 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "surveys/show", type: :view do
+  let(:organization) { create(:organization) }
+  let(:survey) { create(:survey, organization: organization) }
+
   before(:each) do
-    @survey = assign(:survey, Survey.create!(
-      :name => "Name",
-      :description => "MyText",
-      :organization => nil
-    ))
+    assign(:survey, survey)
+    assign(:record, survey)
   end
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Name/)
-    expect(rendered).to match(/MyText/)
-    expect(rendered).to match(//)
+    expect(rendered).to match(/#{survey.name}/)
+    expect(rendered).to match(/#{survey.description}/)
   end
 end
