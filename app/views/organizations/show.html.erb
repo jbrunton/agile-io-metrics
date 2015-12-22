@@ -14,7 +14,7 @@
 
       $('.team').each(function (index, team) {
         var $tokens = $(team).find('.token');
-        var matches = $tokens.filter(function(index, token) {
+        var matches = $tokens.filter(function (index, token) {
           return matchToken(query, token);
         });
         $(team).toggle(matches.length > 0);
@@ -64,45 +64,67 @@
 </div>
 <div class="page-content">
 
-  <div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12 search">
-          <i class="material-icons prefix">search</i>
-          <input id="search" type="text" required>
-          <label for="search">Search</label>
+  <ul class="tabs">
+    <li class="tab"><a href="#teams">Teams</a></li>
+    <li class="tab"><a href="#surveys">Surveys</a></li>
+  </ul>
+
+  <div id="teams">
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12 search">
+            <i class="material-icons prefix">search</i>
+            <input id="search" type="text" required>
+            <label for="search">Search</label>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
+
+    <table class="bordered">
+      <tr>
+        <th width="20%">Team</th>
+        <th width="60%">Members</th>
+        <th width="20%">Admins</th>
+      </tr>
+      <% @organization.teams.each do |team| %>
+          <tr class="team">
+            <td>
+              <span class="token"><%= link_to team.name, team %></span>
+            </td>
+            <td>
+              <% team.members.each do |user| %>
+                  <div class="chip">
+                    <span class="token"><%= link_to user.email, user %></span>
+                  </div>
+              <% end %>
+            </td>
+            <td>
+              <% team.admins.each do |user| %>
+                  <div class="chip">
+                    <span class="token"><%= link_to user.email, user %></span>
+                  </div>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
   </div>
 
-  <table class="bordered">
-    <tr>
-      <th width="20%">Team</th>
-      <th width="60%">Members</th>
-      <th width="20%">Admins</th>
-    </tr>
-    <% @organization.teams.each do |team| %>
-        <tr class="team">
-          <td>
-            <span class="token"><%= link_to team.name, team %></span>
-          </td>
-          <td>
-            <% team.members.each do |user| %>
-                <div class="chip">
-                  <span class="token"><%= link_to user.email, user %></span>
-                </div>
-            <% end %>
-          </td>
-          <td>
-            <% team.admins.each do |user| %>
-                <div class="chip">
-                  <span class="token"><%= link_to user.email, user %></span>
-                </div>
-            <% end %>
-          </td>
-        </tr>
-    <% end %>
-  </table>
+  <div id="surveys">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      <% @organization.surveys.each do |survey| %>
+          <tr>
+            <td><%= link_to survey.name, survey %></td>
+            <td><%= survey.description %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
 
 </div>
