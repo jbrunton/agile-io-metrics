@@ -1,28 +1,108 @@
-<div class="row">
-  <div class="col s10">
-    <h3><%= @organization.name %></h3>
+<script>
+  $(function () {
+    $('#search').on('keyup', function (e) {
+      var $search = $('#search');
+      if (escapePressed(e)) {
+        $search.val('');
+      }
+
+      var query = $search.val().toLowerCase();
+      if (query.length == 0) {
+        clearSearch();
+        return;
+      }
+
+      $('.team').each(function (index, team) {
+        var $tokens = $(team).find('.token');
+        var matches = $tokens.filter(function(index, token) {
+          return matchToken(query, token);
+        });
+        $(team).toggle(matches.length > 0);
+      });
+    });
+
+    function escapePressed(e) {
+      return e.keyCode == 27;
+    }
+
+    function clearSearch() {
+      $('.token').removeClass('match');
+      $('.team').show();
+    }
+
+    function queryMatches(query, text) {
+      return text.toLowerCase().includes(query);
+    }
+
+    function matchToken(query, token) {
+      var $token = $(token);
+      if (queryMatches(query, $token.text())) {
+        $token.addClass('match');
+        return true;
+      } else {
+        $token.removeClass('match');
+        return false;
+      }
+    }
+  });
+</script>
+
+<div class="page-content">
+  <div class="row">
+    <div class="col s10">
+      <h3><%= @organization.name %></h3>
+    </div>
+    <div class="col s2">
+      <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn-flat right waves-effect waves-teal' %>
+    </div>
   </div>
-  <div class="col s2">
-    <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn-flat right waves-effect waves-teal' %>
-  </div>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @organization.name %>
+  </p>
 </div>
+<div class="page-content">
 
-<p>
-  <strong>Name:</strong>
-  <%= @organization.name %>
-</p>
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12 search">
+          <i class="material-icons prefix">search</i>
+          <input id="search" type="text" required>
+          <label for="search">Search</label>
+        </div>
+      </div>
+    </form>
+  </div>
 
-<table>
-  <tr>
-    <th>Admins</th>
-  </tr>
+  <table class="bordered">
+    <tr>
+      <th width="20%">Team</th>
+      <th width="60%">Members</th>
+      <th width="20%">Admins</th>
+    </tr>
+    <% @organization.teams.each do |team| %>
+        <tr class="team">
+          <td>
+            <span class="token"><%= link_to team.name, team %></span>
+          </td>
+          <td>
+            <% team.members.each do |user| %>
+                <div class="chip">
+                  <span class="token"><%= link_to user.email, user %></span>
+                </div>
+            <% end %>
+          </td>
+          <td>
+            <% team.admins.each do |user| %>
+                <div class="chip">
+                  <span class="token"><%= link_to user.email, user %></span>
+                </div>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
 
-  <% @admins.each do |user| %>
-      <tr>
-        <td>
-          <%= user.email %>
-        </td>
-      </tr>
-  <% end %>
-</table>
-
+</div>

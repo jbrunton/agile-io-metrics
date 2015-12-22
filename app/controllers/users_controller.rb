@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout 'blank'
+
   before_action :set_user, only: [:show]
   after_action :verify_authorized
 

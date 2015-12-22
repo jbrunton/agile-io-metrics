@@ -2,15 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "organizations/show", type: :view do
   before(:each) do
-    @organization = assign(:organization, Organization.create!(
-      :name => "Name"
-    ))
-    @admins = assign(:admins, [create(:user, email: 'email@example.com')])
+    @organization = assign(:organization, create(:organization))
+    @team = create(:team, organization: @organization)
   end
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Name/)
-    expect(rendered).to match(/email@example.com/)
+    expect(rendered).to match(/#{@organization.name}/)
+    expect(rendered).to match(/#{@team.name}/)
   end
 end

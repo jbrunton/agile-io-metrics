@@ -15,3 +15,8 @@ $icons-font-path: 'materialize/font/material-design-icons/';
 @import 'components/button';
 @import 'components/form';
 @import 'components/panel';
+@import 'components/chips';
+
+.token.match {
+  background-color: $secondary-color;
+}
