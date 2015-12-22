@@ -19,10 +19,10 @@
     <li class="tab"><a href="#organizations">My Organisations</a></li>
   </ul>
   <div id="teams">
-    <table>
+    <table class="bordered">
       <tr>
-        <th>Team</th>
-        <th>Permissions</th>
+        <th width="60%">Team</th>
+        <th width="40%">Roles</th>
       </tr>
       <% @user.teams.each do |team| %>
         <tr>
@@ -31,7 +31,7 @@
           </td>
           <td>
             <% @user.roles_on(team).each do |role| %>
-                <div class="chip">
+                <div class="role">
                   <%= role.to_s %>
                 </div>
             <% end %>
@@ -41,10 +41,10 @@
     </table>
   </div>
   <div id="organizations">
-    <table>
+    <table class="bordered">
       <tr>
-        <th>Organization</th>
-        <th>Permissions</th>
+        <th width="60%">Organization</th>
+        <th width="40%">Roles</th>
       </tr>
       <% @user.organizations.each do |organization| %>
           <tr>

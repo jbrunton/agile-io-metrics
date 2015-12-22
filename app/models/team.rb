@@ -10,4 +10,8 @@ class Team < ActiveRecord::Base
   def admins
     User.with_role(:admin, self)
   end
+
+  def users
+    (members + admins).uniq
+  end
 end

@@ -1,4 +1,7 @@
 <script>
+  var team = <%= @team.to_json.html_safe %>;
+  var users = <%= @team.users.map{ |u| [u.id, u] }.to_h.to_json.html_safe %>;
+
   function addUser() {
     var data = {
       email: $('#add-users #email').val(),
@@ -9,9 +12,18 @@
       type: 'POST',
       url: '<%= add_user_to_team_path(@team) %>',
       data: data,
-      async:false
+      async: false
     });
   }
+
+    function removeRole(userId, role) {
+      var user = users[userId];
+      var $modal = $('#modal-remove-role');
+      $modal.find('#header').text('Remove ' + role + '?');
+      $modal.find('#content').text('Are you sure you wish to remove the ' + role + ' role from ' + user.email + ' for team ' + team.name + '?');
+      $modal.find('#remove').attr('href', '<%= team_path(@team) %>/remove_' + role + '/' + userId);
+      $modal.openModal();
+    }
 </script>
 <div class="page-content">
   <div class="row">
@@ -30,75 +42,64 @@
 </div>
 <div class="page-content">
   <ul class="tabs">
-    <li class="tab"><a href="#members">Members</a></li>
-    <li class="tab"><a href="#admins">Admins</a></li>
+    <li class="tab"><a href="#members">Users</a></li>
     <li class="tab"><a href="#add-users">Add Users</a></li>
   </ul>
   <div id="members" class="chip-container">
-    <% @team.members.each do |user| %>
-        <div class="user">
-          <%= link_to user.email, user %>
-          <!-- Modal Trigger -->
-          <a href="#" class="modal-trigger" onclick="$('#modal-remove-member-<%= user.id %>').openModal();">
-            <i class="material-icons">delete</i>
-          </a>
-
-          <!-- Modal Structure -->
-          <div id="modal-remove-member-<%= user.id %>" class="modal">
-            <div class="modal-content">
-              <h4>Remove member?</h4>
-              <p>Remove <%= user.email %> as member from <%= @team.name %>?</p>
-            </div>
-            <div class="modal-footer">
-              <%= link_to 'Remove', remove_member_from_team_path(@team, user), method: :delete, class: 'modal-action modal-close waves-effect waves-green btn-flat' %>
-              <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-            </div>
-          </div>
-        </div>
-    <% end %>
-  </div>
-  <div id="admins" class="chip-container">
-    <% @team.admins.each do |user| %>
-        <div class="user">
-          <%= link_to user.email, user %>
-          <!-- Modal Trigger -->
-          <a href="#" class="modal-trigger" onclick="$('#modal-remove-admin-<%= user.id %>').openModal();">
-            <i class="material-icons">delete</i>
-          </a>
-
-          <!-- Modal Structure -->
-          <div id="modal-remove-admin-<%= user.id %>" class="modal">
-            <div class="modal-content">
-              <h4>Remove admin?</h4>
-              <p>Remove <%= user.email %> as admin from <%= @team.name %>?</p>
-            </div>
-            <div class="modal-footer">
-              <%= link_to 'Remove', remove_admin_from_team_path(@team, user), method: :delete, class: 'modal-action modal-close waves-effect waves-green btn-flat' %>
-              <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-            </div>
-          </div>
-        </div>
-    <% end %>
+    <table class="bordered">
+      <tr>
+        <th width="60%">User</th>
+        <th width="40%">Roles</th>
+      </tr>
+      <% @team.users.each do |user| %>
+          <tr>
+            <td>
+              <%= link_to user.email, user %>
+            </td>
+            <td>
+              <% user.roles_on(@team).each do |role| %>
+                  <div class="role">
+                    <%= role.to_s %>
+                    <a href="#" onclick="removeRole(<%= user.id %>, '<%= role %>');">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </div>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
   </div>
   <div id="add-users" class="row">
     <%= form_tag(add_user_to_team_path(@team)) do %>
-    <div class="row">
-      <div class="input-field col s8">
-        <input id="email" type="email" class="validate" name="email">
-        <label for="email">Email</label>
-      </div>
-      <div class="input-field col s4">
-        <select multiple name="roles" id="roles">
-          <option value="" disabled selected>Role</option>
-          <option value="admin">Admin</option>
-          <option value="member">Member</option>
-        </select>
-      </div>
-    </div>
+        <div class="row">
+          <div class="input-field col s8">
+            <input id="email" type="email" class="validate" name="email">
+            <label for="email">Email</label>
+          </div>
+          <div class="input-field col s4">
+            <select multiple name="roles" id="roles">
+              <option value="" disabled selected>Role</option>
+              <option value="admin">Admin</option>
+              <option value="member">Member</option>
+            </select>
+          </div>
+        </div>
 
-    <button class="btn" onclick="addUser();">
-      Add
-    </button>
+        <button class="btn" onclick="addUser();">
+          Add
+        </button>
     <% end %>
+  </div>
+</div>
+
+<div id="modal-remove-role" class="modal">
+  <div class="modal-content">
+    <h4 id="header"></h4>
+    <p id="content"></p>
+  </div>
+  <div class="modal-footer">
+    <%= link_to 'Remove', '#', id: 'remove', method: :delete, class: 'modal-action modal-close waves-effect waves-green btn-flat' %>
+    <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
   </div>
 </div>
