@@ -14,7 +14,6 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    @admins = User.with_role(:admin, @organization)
   end
 
   # GET /organizations/new
