@@ -19,8 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe SurveyQuestionsController, type: :controller do
-  render_views
-
   # This should return the minimal set of attributes required to create a valid
   # SurveyQuestion. As you add validations to SurveyQuestion, be sure to
   # adjust the attributes here as well.
