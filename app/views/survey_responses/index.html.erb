@@ -14,8 +14,8 @@
   <tbody>
     <% @survey_responses.each do |survey_response| %>
       <tr>
-        <td><%= survey_response.user %></td>
-        <td><%= survey_response.survey_instance %></td>
+        <td><%= survey_response.user.email %></td>
+        <td><%= survey_response.survey_instance.name %></td>
       </tr>
     <% end %>
   </tbody>
