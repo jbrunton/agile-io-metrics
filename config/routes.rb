@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  resources :survey_questions, only: [:create, :update, :destroy]
-
   resources :organizations do
-    resources :surveys, shallow: true
+    resources :surveys, shallow: true do
+      resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
+    end
     resources :teams, shallow: true do
       member do
         delete 'remove_member/:user_id', action: 'remove_member', as: 'remove_member_from'

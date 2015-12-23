@@ -4,7 +4,7 @@ RSpec.describe SurveyQuestionsController, type: :routing do
   describe "routing" do
 
     it "routes to #create" do
-      expect(:post => "/survey_questions").to route_to("survey_questions#create")
+      expect(:post => "/surveys/1/survey_questions").to route_to("survey_questions#create", :survey_id => "1")
     end
 
     it "routes to #update via PUT" do

@@ -32,7 +32,8 @@ RSpec.describe SurveyQuestionsController, type: :controller do
     { text: '' }
   }
 
-  let!(:survey_question) { create(:survey_question) }
+  let(:survey) { create(:survey) }
+  let!(:survey_question) { create(:survey_question, survey: survey) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -43,30 +44,30 @@ RSpec.describe SurveyQuestionsController, type: :controller do
     context "with valid params" do
       it "creates a new SurveyQuestion" do
         expect {
-          post :create, {:survey_question => valid_attributes, :format => 'json'}, valid_session
+          post :create, {:survey_id => survey.to_param, :survey_question => valid_attributes, :format => 'json'}, valid_session
         }.to change(SurveyQuestion, :count).by(1)
       end
 
       it "assigns a newly created survey_question as @survey_question" do
-        post :create, {:survey_question => valid_attributes, :format => 'json'}, valid_session
+        post :create, {:survey_id => survey.to_param, :survey_question => valid_attributes, :format => 'json'}, valid_session
         expect(assigns(:survey_question)).to be_a(SurveyQuestion)
         expect(assigns(:survey_question)).to be_persisted
       end
 
       it "returns a 201" do
-        post :create, {:survey_question => valid_attributes, :format => 'json'}, valid_session
+        post :create, {:survey_id => survey.to_param, :survey_question => valid_attributes, :format => 'json'}, valid_session
         expect(response.status).to eq(201)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey_question as @survey_question" do
-        post :create, {:survey_question => invalid_attributes, :format => 'json'}, valid_session
+        post :create, {:survey_id => survey.to_param, :survey_question => invalid_attributes, :format => 'json'}, valid_session
         expect(assigns(:survey_question)).to be_a_new(SurveyQuestion)
       end
 
       it "responds with a 422" do
-        post :create, {:survey_question => invalid_attributes, :format => 'json'}, valid_session
+        post :create, {:survey_id => survey.to_param, :survey_question => invalid_attributes, :format => 'json'}, valid_session
         expect(response.status).to eq(422)
       end
     end
