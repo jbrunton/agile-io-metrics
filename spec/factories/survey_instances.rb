@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :survey_instance do
-    name "MyString"
-survey nil
+    sequence(:name) { |k| "Survey Instance #{k}" }
+    survey
   end
 
 end

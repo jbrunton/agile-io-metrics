@@ -24,12 +24,14 @@ RSpec.describe SurveyInstancesController, type: :controller do
   # SurveyInstance. As you add validations to SurveyInstance, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:survey_instance)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: '' }
   }
+
+  let!(:survey_instance) { create(:survey_instance) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -38,7 +40,6 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "GET #index" do
     it "assigns all survey_instances as @survey_instances" do
-      survey_instance = SurveyInstance.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:survey_instances)).to eq([survey_instance])
     end
@@ -46,7 +47,6 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested survey_instance as @survey_instance" do
-      survey_instance = SurveyInstance.create! valid_attributes
       get :show, {:id => survey_instance.to_param}, valid_session
       expect(assigns(:survey_instance)).to eq(survey_instance)
     end
@@ -61,7 +61,6 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested survey_instance as @survey_instance" do
-      survey_instance = SurveyInstance.create! valid_attributes
       get :edit, {:id => survey_instance.to_param}, valid_session
       expect(assigns(:survey_instance)).to eq(survey_instance)
     end
@@ -103,24 +102,22 @@ RSpec.describe SurveyInstancesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        attributes_for(:survey_instance)
       }
 
       it "updates the requested survey_instance" do
-        survey_instance = SurveyInstance.create! valid_attributes
         put :update, {:id => survey_instance.to_param, :survey_instance => new_attributes}, valid_session
+
         survey_instance.reload
-        skip("Add assertions for updated state")
+        expect(survey_instance.name).to eq(new_attributes[:name])
       end
 
       it "assigns the requested survey_instance as @survey_instance" do
-        survey_instance = SurveyInstance.create! valid_attributes
         put :update, {:id => survey_instance.to_param, :survey_instance => valid_attributes}, valid_session
         expect(assigns(:survey_instance)).to eq(survey_instance)
       end
 
       it "redirects to the survey_instance" do
-        survey_instance = SurveyInstance.create! valid_attributes
         put :update, {:id => survey_instance.to_param, :survey_instance => valid_attributes}, valid_session
         expect(response).to redirect_to(survey_instance)
       end
@@ -128,13 +125,11 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
     context "with invalid params" do
       it "assigns the survey_instance as @survey_instance" do
-        survey_instance = SurveyInstance.create! valid_attributes
         put :update, {:id => survey_instance.to_param, :survey_instance => invalid_attributes}, valid_session
         expect(assigns(:survey_instance)).to eq(survey_instance)
       end
 
       it "re-renders the 'edit' template" do
-        survey_instance = SurveyInstance.create! valid_attributes
         put :update, {:id => survey_instance.to_param, :survey_instance => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +138,12 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested survey_instance" do
-      survey_instance = SurveyInstance.create! valid_attributes
       expect {
         delete :destroy, {:id => survey_instance.to_param}, valid_session
       }.to change(SurveyInstance, :count).by(-1)
     end
 
     it "redirects to the survey_instances list" do
-      survey_instance = SurveyInstance.create! valid_attributes
       delete :destroy, {:id => survey_instance.to_param}, valid_session
       expect(response).to redirect_to(survey_instances_url)
     end
