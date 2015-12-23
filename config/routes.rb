@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :survey_instances
   root 'home#index'
 
   devise_for :users
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :surveys, shallow: true do
       resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
+      resources :survey_instances, shallow: true
     end
     resources :teams, shallow: true do
       member do
