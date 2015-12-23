@@ -1,0 +1,2 @@
+module SurveyInstancesHelper
+end
