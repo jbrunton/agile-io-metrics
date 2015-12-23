@@ -1,10 +1,11 @@
 class SurveyInstancesController < ApplicationController
   before_action :set_survey_instance, only: [:show, :edit, :update, :destroy]
+  before_action :set_survey, only: [:index, :create, :new]
 
   # GET /survey_instances
   # GET /survey_instances.json
   def index
-    @survey_instances = SurveyInstance.all
+    @survey_instances = @survey.survey_instances
   end
 
   # GET /survey_instances/1
@@ -15,16 +16,18 @@ class SurveyInstancesController < ApplicationController
   # GET /survey_instances/new
   def new
     @survey_instance = SurveyInstance.new
+    @record = [@survey, @survey_instance]
   end
 
   # GET /survey_instances/1/edit
   def edit
+    @record = @survey_instance
   end
 
   # POST /survey_instances
   # POST /survey_instances.json
   def create
-    @survey_instance = SurveyInstance.new(survey_instance_params)
+    @survey_instance = @survey.survey_instances.build(survey_instance_params)
 
     respond_to do |format|
       if @survey_instance.save
@@ -66,6 +69,10 @@ class SurveyInstancesController < ApplicationController
     def set_survey_instance
       @survey_instance = SurveyInstance.find(params[:id])
     end
+
+  def set_survey
+    @survey = Survey.find(params[:survey_id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_instance_params
