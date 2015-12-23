@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
+  resources :survey_questions, only: [:create, :update, :destroy]
+
   resources :organizations do
     resources :surveys, shallow: true
     resources :teams, shallow: true do
