@@ -32,7 +32,8 @@ RSpec.describe SurveyResponsesController, type: :controller do
     skip("Add a hash of attributes invalid for your model")
   }
 
-  let!(:survey_response) { create(:survey_response) }
+  let(:survey_instance) { create(:survey_instance) }
+  let!(:survey_response) { create(:survey_response, survey_instance: survey_instance) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -41,29 +42,15 @@ RSpec.describe SurveyResponsesController, type: :controller do
 
   describe "GET #index" do
     it "assigns all survey_responses as @survey_responses" do
-      get :index, {}, valid_session
+      get :index, {survey_instance_id: survey_instance.to_param}, valid_session
       expect(assigns(:survey_responses)).to eq([survey_response])
-    end
-  end
-
-  describe "GET #show" do
-    it "assigns the requested survey_response as @survey_response" do
-      get :show, {:id => survey_response.to_param}, valid_session
-      expect(assigns(:survey_response)).to eq(survey_response)
     end
   end
 
   describe "GET #new" do
     it "assigns a new survey_response as @survey_response" do
-      get :new, {}, valid_session
+      get :new, {survey_instance_id: survey_instance.to_param}, valid_session
       expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested survey_response as @survey_response" do
-      get :edit, {:id => survey_response.to_param}, valid_session
-      expect(assigns(:survey_response)).to eq(survey_response)
     end
   end
 
@@ -71,82 +58,32 @@ RSpec.describe SurveyResponsesController, type: :controller do
     context "with valid params" do
       it "creates a new SurveyResponse" do
         expect {
-          post :create, {:survey_response => valid_attributes}, valid_session
+          post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
         }.to change(SurveyResponse, :count).by(1)
       end
 
       it "assigns a newly created survey_response as @survey_response" do
-        post :create, {:survey_response => valid_attributes}, valid_session
+        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
         expect(assigns(:survey_response)).to be_a(SurveyResponse)
         expect(assigns(:survey_response)).to be_persisted
       end
 
-      it "redirects to the created survey_response" do
-        post :create, {:survey_response => valid_attributes}, valid_session
-        expect(response).to redirect_to(SurveyResponse.last)
+      it "redirects to the list of responses" do
+        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
+        expect(response).to redirect_to(survey_instance_survey_responses_path(survey_instance))
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey_response as @survey_response" do
-        post :create, {:survey_response => invalid_attributes}, valid_session
+        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes}, valid_session
         expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:survey_response => invalid_attributes}, valid_session
+        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
   end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested survey_response" do
-        put :update, {:id => survey_response.to_param, :survey_response => new_attributes}, valid_session
-        survey_response.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "assigns the requested survey_response as @survey_response" do
-        put :update, {:id => survey_response.to_param, :survey_response => valid_attributes}, valid_session
-        expect(assigns(:survey_response)).to eq(survey_response)
-      end
-
-      it "redirects to the survey_response" do
-        put :update, {:id => survey_response.to_param, :survey_response => valid_attributes}, valid_session
-        expect(response).to redirect_to(survey_response)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the survey_response as @survey_response" do
-        put :update, {:id => survey_response.to_param, :survey_response => invalid_attributes}, valid_session
-        expect(assigns(:survey_response)).to eq(survey_response)
-      end
-
-      it "re-renders the 'edit' template" do
-        put :update, {:id => survey_response.to_param, :survey_response => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested survey_response" do
-      expect {
-        delete :destroy, {:id => survey_response.to_param}, valid_session
-      }.to change(SurveyResponse, :count).by(-1)
-    end
-
-    it "redirects to the survey_responses list" do
-      delete :destroy, {:id => survey_response.to_param}, valid_session
-      expect(response).to redirect_to(survey_responses_url)
-    end
-  end
-
 end

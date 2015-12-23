@@ -16,14 +16,8 @@
       <tr>
         <td><%= survey_response.user %></td>
         <td><%= survey_response.survey_instance %></td>
-        <td><%= link_to 'Show', survey_response %></td>
-        <td><%= link_to 'Edit', edit_survey_response_path(survey_response) %></td>
-        <td><%= link_to 'Destroy', survey_response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Survey response', new_survey_response_path %>
