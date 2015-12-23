@@ -4,11 +4,11 @@ RSpec.describe SurveyInstancesController, type: :routing do
   describe "routing" do
 
     it "routes to #index" do
-      expect(:get => "/survey_instances").to route_to("survey_instances#index")
+      expect(:get => "/surveys/1/survey_instances").to route_to("survey_instances#index", :survey_id => "1")
     end
 
     it "routes to #new" do
-      expect(:get => "/survey_instances/new").to route_to("survey_instances#new")
+      expect(:get => "/surveys/1/survey_instances/new").to route_to("survey_instances#new", :survey_id => "1")
     end
 
     it "routes to #show" do
@@ -20,7 +20,7 @@ RSpec.describe SurveyInstancesController, type: :routing do
     end
 
     it "routes to #create" do
-      expect(:post => "/survey_instances").to route_to("survey_instances#create")
+      expect(:post => "/surveys/1/survey_instances").to route_to("survey_instances#create", :survey_id => "1")
     end
 
     it "routes to #update via PUT" do

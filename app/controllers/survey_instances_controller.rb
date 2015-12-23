@@ -59,7 +59,7 @@ class SurveyInstancesController < ApplicationController
   def destroy
     @survey_instance.destroy
     respond_to do |format|
-      format.html { redirect_to survey_instances_url, notice: 'Survey instance was successfully destroyed.' }
+      format.html { redirect_to survey_survey_instances_path(@survey), notice: 'Survey instance was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,6 +68,7 @@ class SurveyInstancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey_instance
       @survey_instance = SurveyInstance.find(params[:id])
+      @survey = @survey_instance.survey
     end
 
   def set_survey
