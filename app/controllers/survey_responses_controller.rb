@@ -1,5 +1,6 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey_instance
+  before_action :authenticate_user!
 
   # GET /survey_responses
   # GET /survey_responses.json
@@ -17,6 +18,7 @@ class SurveyResponsesController < ApplicationController
   # POST /survey_responses.json
   def create
     @survey_response = @survey_instance.survey_responses.build(survey_response_params)
+    @survey_response.user_id = current_user.id
 
     respond_to do |format|
       if @survey_response.save
@@ -41,6 +43,7 @@ class SurveyResponsesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_response_params
-      params.require(:survey_response).permit(:user_id, :survey_instance_id)
+      {}
+      #params.require(:survey_response).permit(:user_id, :survey_instance_id)
     end
 end

@@ -19,13 +19,17 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe SurveyResponsesController, type: :controller do
-  let(:user) { create(:user) }
+  let(:current_user) { create(:user) }
+
+  before(:each) do
+    sign_in current_user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # SurveyResponse. As you add validations to SurveyResponse, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {user_id: user.id}
+    {}
   }
 
   let(:invalid_attributes) {
@@ -71,6 +75,11 @@ RSpec.describe SurveyResponsesController, type: :controller do
       it "redirects to the list of responses" do
         post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
         expect(response).to redirect_to(survey_instance_survey_responses_path(survey_instance))
+      end
+
+      it "assigns the current user id" do
+        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
+        expect(assigns(:survey_response).user_id).to eq(current_user.id)
       end
     end
 
