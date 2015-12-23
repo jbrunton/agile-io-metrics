@@ -1,4 +1,5 @@
 class SurveysController < ApplicationController
+  layout 'blank', only: [:show]
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
   before_action :set_organization, only: [:new, :create, :index]
 
