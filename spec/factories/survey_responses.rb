@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :survey_response do
-    user nil
-survey_instance nil
+    user
+    survey_instance
   end
 
 end

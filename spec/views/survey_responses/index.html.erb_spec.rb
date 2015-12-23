@@ -16,7 +16,6 @@ RSpec.describe "survey_responses/index", type: :view do
 
   it "renders a list of survey_responses" do
     render
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
+    assert_select "tr>td", :text => nil.to_s, :count => 4
   end
 end
