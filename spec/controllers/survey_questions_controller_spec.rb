@@ -27,7 +27,7 @@ RSpec.describe SurveyQuestionsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    { text: '' }
+    { title: '' }
   }
 
   let(:survey) { create(:survey) }

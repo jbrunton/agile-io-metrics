@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20151223102753) do
   add_index "roles", ["name"], name: "index_roles_on_name"
 
   create_table "survey_questions", force: :cascade do |t|
+    t.string   "title"
     t.text     "text"
     t.integer  "survey_id"
     t.datetime "created_at", null: false
