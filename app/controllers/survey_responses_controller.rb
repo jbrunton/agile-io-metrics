@@ -5,7 +5,6 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses
   # GET /survey_responses.json
   def index
-    @survey_responses = @survey_instance.survey_responses
   end
 
   # GET /survey_responses/new
