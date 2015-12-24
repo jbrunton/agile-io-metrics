@@ -13,7 +13,7 @@
     <% end %>
 
     <table>
-      <% @survey_response.survey_answers.each do |answer| %>
+      <% @survey_response.survey_answers.each_with_index do |answer, index| %>
           <tr>
             <td>
               <%= answer.survey_question.title %>
@@ -27,11 +27,12 @@
                       <td><img src="/moods/bad.png"></img></td>
                     </tr>
                     <tr>
-                      <% [Mood::GOOD, Mood::MEH, Mood::BAD].each do |mood| %>
+                      <% [Mood::GOOD, Mood::MEH, Mood::BAD].each_with_index do |mood| %>
                           <td>
                             <% button_id = "mood-#{mood.name}-#{answer.survey_question.id}" %>
-                            <%= a.radio_button :mood_id, mood.id, id: button_id %>
-                            <label for="<%= button_id %>"><%= mood.name %></label>
+                            <% button_name = "survey_response[survey_answers_attributes][#{index}][mood_id]" %>
+                            <input id="<%= button_id %>" type="radio" value="<%= mood.id %>" name="<%= button_name %>" <%= answer.mood == mood ? 'checked="checked"' : '' %>">
+                            <label for="<%= button_id %>"></label>
                           </td>
                       <% end %>
                     </tr>
@@ -42,6 +43,8 @@
           </tr>
       <% end %>
     </table>
+
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
     <div class="actions">
       <%= f.submit %>
