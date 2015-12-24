@@ -8,7 +8,7 @@ class SurveyResponse < ActiveRecord::Base
 
   def self.build_for(survey_instance, user)
     survey_response = survey_instance.survey_responses.build(user_id: user.id)
-    survey_response.survey_instance.survey.survey_questions.each do |question|
+    survey_response.survey_instance.survey_template.survey_questions.each do |question|
       survey_response.survey_answers.build(survey_question: question)
     end
     survey_response

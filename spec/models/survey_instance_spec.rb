@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SurveyInstance, type: :model do
-  let(:survey) { create(:survey) }
-  let(:question) { create(:survey_question, survey: survey) }
-  let(:survey_instance) { create(:survey_instance, survey: survey) }
+  let(:survey_template) { create(:survey_template) }
+  let(:question) { create(:survey_question, survey_template: survey_template) }
+  let(:survey_instance) { create(:survey_instance, survey_template: survey_template) }
 
   let(:good_response) { create(:survey_response, survey_answers: [
       create(:survey_answer, survey_question: question, mood: Mood::GOOD)

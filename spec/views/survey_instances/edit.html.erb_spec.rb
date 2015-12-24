@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "survey_instances/edit", type: :view do
-  let(:survey) { create(:survey) }
-  let(:survey_instance) { create(:survey_instance, survey: survey) }
+  let(:survey_template) { create(:survey_template) }
+  let(:survey_instance) { create(:survey_instance, survey_template: survey_template) }
 
   before(:each) do
-    assign(:survey, survey)
+    assign(:survey_template, survey_template)
     assign(:survey_instance, survey_instance)
     assign(:record, survey_instance)
   end

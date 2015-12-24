@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223230403) do
+ActiveRecord::Schema.define(version: 20151224213312) do
 
   create_table "moods", force: :cascade do |t|
     t.string   "name"
@@ -52,22 +52,22 @@ ActiveRecord::Schema.define(version: 20151223230403) do
 
   create_table "survey_instances", force: :cascade do |t|
     t.string   "name"
-    t.integer  "survey_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  add_index "survey_instances", ["survey_id"], name: "index_survey_instances_on_survey_id"
+  add_index "survey_instances", ["survey_template_id"], name: "index_survey_instances_on_survey_template_id"
 
   create_table "survey_questions", force: :cascade do |t|
     t.string   "title"
     t.text     "text"
-    t.integer  "survey_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  add_index "survey_questions", ["survey_id"], name: "index_survey_questions_on_survey_id"
+  add_index "survey_questions", ["survey_template_id"], name: "index_survey_questions_on_survey_template_id"
 
   create_table "survey_responses", force: :cascade do |t|
     t.integer  "user_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20151223230403) do
   add_index "survey_responses", ["survey_instance_id"], name: "index_survey_responses_on_survey_instance_id"
   add_index "survey_responses", ["user_id"], name: "index_survey_responses_on_user_id"
 
-  create_table "surveys", force: :cascade do |t|
+  create_table "survey_templates", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "organization_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20151223230403) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "surveys", ["organization_id"], name: "index_surveys_on_organization_id"
+  add_index "survey_templates", ["organization_id"], name: "index_survey_templates_on_organization_id"
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"

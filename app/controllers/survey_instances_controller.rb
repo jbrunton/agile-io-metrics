@@ -1,11 +1,11 @@
 class SurveyInstancesController < ApplicationController
   before_action :set_survey_instance, only: [:show, :edit, :update, :destroy]
-  before_action :set_survey, only: [:index, :create, :new]
+  before_action :set_survey_template, only: [:index, :create, :new]
 
   # GET /survey_instances
   # GET /survey_instances.json
   def index
-    @survey_instances = @survey.survey_instances
+    @survey_instances = @survey_template.survey_instances
   end
 
   # GET /survey_instances/1
@@ -16,7 +16,7 @@ class SurveyInstancesController < ApplicationController
   # GET /survey_instances/new
   def new
     @survey_instance = SurveyInstance.new
-    @record = [@survey, @survey_instance]
+    @record = [@survey_template, @survey_instance]
   end
 
   # GET /survey_instances/1/edit
@@ -27,7 +27,7 @@ class SurveyInstancesController < ApplicationController
   # POST /survey_instances
   # POST /survey_instances.json
   def create
-    @survey_instance = @survey.survey_instances.build(survey_instance_params)
+    @survey_instance = @survey_template.survey_instances.build(survey_instance_params)
 
     respond_to do |format|
       if @survey_instance.save
@@ -59,7 +59,7 @@ class SurveyInstancesController < ApplicationController
   def destroy
     @survey_instance.destroy
     respond_to do |format|
-      format.html { redirect_to survey_survey_instances_path(@survey), notice: 'Survey instance was successfully destroyed.' }
+      format.html { redirect_to survey_template_survey_instances_path(@survey_template), notice: 'Survey instance was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,15 +68,15 @@ class SurveyInstancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey_instance
       @survey_instance = SurveyInstance.find(params[:id])
-      @survey = @survey_instance.survey
+      @survey_template = @survey_instance.survey_template
     end
 
-  def set_survey
-    @survey = Survey.find(params[:survey_id])
+  def set_survey_template
+    @survey_template = SurveyTemplate.find(params[:survey_template_id])
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_instance_params
-      params.require(:survey_instance).permit(:name, :survey_id)
+      params.require(:survey_instance).permit(:name, :survey_template_id)
     end
 end

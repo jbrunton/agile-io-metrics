@@ -44,8 +44,8 @@ RSpec.describe SurveyResponsesController, type: :controller do
   }
 
   let(:survey_question) { build(:survey_question, title: 'Some Question') }
-  let(:survey) { create(:survey, survey_questions: [survey_question]) }
-  let(:survey_instance) { create(:survey_instance, survey: survey) }
+  let(:survey_template) { create(:survey_template, survey_questions: [survey_question]) }
+  let(:survey_instance) { create(:survey_instance, survey_template: survey_template) }
   let!(:survey_response) { create(:survey_response, survey_instance: survey_instance) }
 
   before(:each) do

@@ -42,20 +42,20 @@
 
   <p>
     <strong>Name:</strong>
-    <%= @survey.name %>
+    <%= @survey_template.name %>
   </p>
 
   <p>
     <strong>Description:</strong>
-    <%= @survey.description %>
+    <%= @survey_template.description %>
   </p>
 
   <p>
     <strong>Organization:</strong>
-    <%= @survey.organization %>
+    <%= @survey_template.organization %>
   </p>
 
-  <%= link_to 'Edit', edit_survey_path(@survey) %> |
+  <%= link_to 'Edit', edit_survey_template_path(@survey_template) %> |
 </div>
 
 <div class="page-content">
@@ -64,7 +64,7 @@
       <th>Question</th>
       <th>Summary</th>
     </tr>
-    <% @survey.survey_questions.each do |question| %>
+    <% @survey_template.survey_questions.each do |question| %>
         <tr class="show-question">
           <td width="33%">
             <%= question.title %>
@@ -108,7 +108,7 @@
 
 <!-- Modal Structure -->
 <div id="modal-add-question" class="modal">
-  <%= form_tag(survey_survey_questions_path(@survey, format: :json), method: :post) do %>
+  <%= form_tag(survey_template_survey_questions_path(@survey_template, format: :json), method: :post) do %>
   <div class="modal-content">
     <h4>Add Question</h4>
     <div class="row">

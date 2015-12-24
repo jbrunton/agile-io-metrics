@@ -4,7 +4,7 @@ RSpec.describe "survey_instances/show", type: :view do
   before(:each) do
     @survey_instance = assign(:survey_instance, SurveyInstance.create!(
       :name => "Name",
-      :survey => nil
+      :survey_template => nil
     ))
   end
 

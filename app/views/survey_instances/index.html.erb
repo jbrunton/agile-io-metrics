@@ -15,7 +15,7 @@
     <% @survey_instances.each do |survey_instance| %>
       <tr>
         <td><%= survey_instance.name %></td>
-        <td><%= survey_instance.survey %></td>
+        <td><%= survey_instance.survey_template %></td>
         <td><%= link_to 'Show', survey_instance %></td>
         <td><%= link_to 'Edit', edit_survey_instance_path(survey_instance) %></td>
         <td><%= link_to 'Destroy', survey_instance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Survey instance', new_survey_survey_instance_path(@survey) %>
+<%= link_to 'New Survey instance', new_survey_template_survey_instance_path(@survey_template) %>

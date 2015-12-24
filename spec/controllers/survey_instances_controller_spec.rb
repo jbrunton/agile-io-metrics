@@ -31,8 +31,8 @@ RSpec.describe SurveyInstancesController, type: :controller do
     { name: '' }
   }
 
-  let(:survey) { create(:survey) }
-  let!(:survey_instance) { create(:survey_instance, survey: survey) }
+  let(:survey_template) { create(:survey_template) }
+  let!(:survey_instance) { create(:survey_instance, survey_template: survey_template) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -41,7 +41,7 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "GET #index" do
     it "assigns all survey_instances as @survey_instances" do
-      get :index, {:survey_id => survey.to_param}, valid_session
+      get :index, {:survey_template_id => survey_template.to_param}, valid_session
       expect(assigns(:survey_instances)).to eq([survey_instance])
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new survey_instance as @survey_instance" do
-      get :new, {:survey_id => survey.to_param}, valid_session
+      get :new, {:survey_template_id => survey_template.to_param}, valid_session
       expect(assigns(:survey_instance)).to be_a_new(SurveyInstance)
     end
   end
@@ -71,30 +71,30 @@ RSpec.describe SurveyInstancesController, type: :controller do
     context "with valid params" do
       it "creates a new SurveyInstance" do
         expect {
-          post :create, {:survey_id => survey.to_param, :survey_instance => valid_attributes}, valid_session
+          post :create, {:survey_template_id => survey_template.to_param, :survey_instance => valid_attributes}, valid_session
         }.to change(SurveyInstance, :count).by(1)
       end
 
       it "assigns a newly created survey_instance as @survey_instance" do
-        post :create, {:survey_id => survey.to_param, :survey_instance => valid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey_instance => valid_attributes}, valid_session
         expect(assigns(:survey_instance)).to be_a(SurveyInstance)
         expect(assigns(:survey_instance)).to be_persisted
       end
 
       it "redirects to the created survey_instance" do
-        post :create, {:survey_id => survey.to_param, :survey_instance => valid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey_instance => valid_attributes}, valid_session
         expect(response).to redirect_to(SurveyInstance.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey_instance as @survey_instance" do
-        post :create, {:survey_id => survey.to_param, :survey_instance => invalid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey_instance => invalid_attributes}, valid_session
         expect(assigns(:survey_instance)).to be_a_new(SurveyInstance)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:survey_id => survey.to_param, :survey_instance => invalid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey_instance => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -146,7 +146,7 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
     it "redirects to the survey_instances list" do
       delete :destroy, {:id => survey_instance.to_param}, valid_session
-      expect(response).to redirect_to(survey_survey_instances_path(survey))
+      expect(response).to redirect_to(survey_template_survey_instances_path(survey_template))
     end
   end
 

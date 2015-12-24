@@ -15,7 +15,7 @@
   <tbody>
     <% analysis = @survey_instance.analyze %>
 
-    <% @survey_instance.survey.survey_questions.each do |question| %>
+    <% @survey_instance.survey_template.survey_questions.each do |question| %>
         <% rating = analysis[question] %>
         <tr>
           <td><%= question.title %></td>

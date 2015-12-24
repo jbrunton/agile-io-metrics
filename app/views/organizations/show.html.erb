@@ -118,7 +118,7 @@
         <th>Name</th>
         <th>Description</th>
       </tr>
-      <% @organization.surveys.each do |survey| %>
+      <% @organization.survey_templates.each do |survey| %>
           <tr>
             <td><%= link_to survey.name, survey %></td>
             <td><%= survey.description %></td>
