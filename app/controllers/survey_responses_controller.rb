@@ -1,5 +1,5 @@
 class SurveyResponsesController < ApplicationController
-  before_action :set_survey_instance
+  before_action :set_survey
   before_action :authenticate_user!
 
   # GET /survey_responses
@@ -9,21 +9,21 @@ class SurveyResponsesController < ApplicationController
 
   # GET /survey_responses/new
   def new
-    @survey_response = SurveyResponse.build_for(@survey_instance, current_user)
-    @record = [@survey_instance, @survey_response]
+    @survey_response = SurveyResponse.build_for(@survey, current_user)
+    @record = [@survey, @survey_response]
   end
 
   # POST /survey_responses
   # POST /survey_responses.json
   def create
-    @survey_response = SurveyResponse.build_from(@survey_instance, survey_response_params, current_user)
+    @survey_response = SurveyResponse.build_from(@survey, survey_response_params, current_user)
 
     respond_to do |format|
       if @survey_response.save
-        format.html { redirect_to survey_instance_survey_responses_path(@survey_instance), notice: 'Survey response was successfully created.' }
+        format.html { redirect_to survey_survey_responses_path(@survey), notice: 'Survey response was successfully created.' }
         format.json { render status: :created, location: @survey_response }
       else
-        @record = [@survey_instance, @survey_response]
+        @record = [@survey, @survey_response]
         format.html { render :new }
         format.json { render json: @survey_response.errors, status: :unprocessable_entity }
       end
@@ -36,8 +36,8 @@ class SurveyResponsesController < ApplicationController
       @survey_response = SurveyResponse.find(params[:id])
     end
 
-  def set_survey_instance
-    @survey_instance = SurveyInstance.find(params[:survey_instance_id])
+  def set_survey
+    @survey = Survey.find(params[:survey_id])
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -45,6 +45,6 @@ class SurveyResponsesController < ApplicationController
       params.require(:survey_response).permit(
           :survey_answers_attributes => [:mood_id, :survey_question_id]
       )
-      #params.require(:survey_response).permit(:user_id, :survey_instance_id)
+      #params.require(:survey_response).permit(:user_id, :survey_id)
     end
 end

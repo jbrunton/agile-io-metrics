@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151224213312) do
+ActiveRecord::Schema.define(version: 20151224220558) do
 
   create_table "moods", force: :cascade do |t|
     t.string   "name"
@@ -50,15 +50,6 @@ ActiveRecord::Schema.define(version: 20151224213312) do
   add_index "survey_answers", ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
   add_index "survey_answers", ["survey_response_id"], name: "index_survey_answers_on_survey_response_id"
 
-  create_table "survey_instances", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "survey_template_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "survey_instances", ["survey_template_id"], name: "index_survey_instances_on_survey_template_id"
-
   create_table "survey_questions", force: :cascade do |t|
     t.string   "title"
     t.text     "text"
@@ -71,12 +62,12 @@ ActiveRecord::Schema.define(version: 20151224213312) do
 
   create_table "survey_responses", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "survey_instance_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "survey_responses", ["survey_instance_id"], name: "index_survey_responses_on_survey_instance_id"
+  add_index "survey_responses", ["survey_id"], name: "index_survey_responses_on_survey_id"
   add_index "survey_responses", ["user_id"], name: "index_survey_responses_on_user_id"
 
   create_table "survey_templates", force: :cascade do |t|
@@ -88,6 +79,15 @@ ActiveRecord::Schema.define(version: 20151224213312) do
   end
 
   add_index "survey_templates", ["organization_id"], name: "index_survey_templates_on_organization_id"
+
+  create_table "surveys", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "surveys", ["survey_template_id"], name: "index_surveys_on_survey_template_id"
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"

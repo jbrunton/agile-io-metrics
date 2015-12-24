@@ -1,4 +1,4 @@
-class SurveyInstance < ActiveRecord::Base
+class Survey < ActiveRecord::Base
   belongs_to :survey_template
   has_many :survey_responses
   has_many :survey_answers, through: :survey_responses

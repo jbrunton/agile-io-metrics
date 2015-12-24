@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :survey_templates, shallow: true do
       resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
-      resources :survey_instances, shallow: true do
+      resources :surveys, shallow: true do
         resources :survey_responses, shallow: true, only: [:index, :new, :create]
       end
     end

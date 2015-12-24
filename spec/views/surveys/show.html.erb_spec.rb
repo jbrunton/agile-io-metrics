@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "survey_instances/show", type: :view do
+RSpec.describe "surveys/show", type: :view do
   before(:each) do
-    @survey_instance = assign(:survey_instance, SurveyInstance.create!(
+    survey = assign(:survey, Survey.create!(
       :name => "Name",
       :survey_template => nil
     ))
