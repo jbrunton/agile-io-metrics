@@ -30,7 +30,7 @@
                       <% [Mood::GOOD, Mood::MEH, Mood::BAD].each do |mood| %>
                           <td>
                             <% button_id = "mood-#{mood.name}-#{answer.survey_question.id}" %>
-                            <%= a.radio_button :mood_id, mood.name, id: button_id %>
+                            <%= a.radio_button :mood_id, mood.id, id: button_id %>
                             <label for="<%= button_id %>"><%= mood.name %></label>
                           </td>
                       <% end %>
