@@ -23,4 +23,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(html).to eq(expected_html)
     end
   end
+
+  describe "#mood_img" do
+    it "returns an empty string when passed nil" do
+      expect(helper.mood_img(nil)).to eq('')
+    end
+
+    it "returns a mood image when given a mood" do
+      expect(helper.mood_img(Mood::GOOD)).to eq('<img src="/moods/good.png" />')
+    end
+
+    it "returns a mood image based on a rating" do
+      expect(helper.mood_img(0.5)).to eq('<img src="/moods/meh.png" />')
+    end
+  end
 end

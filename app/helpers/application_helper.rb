@@ -23,6 +23,12 @@ module ApplicationHelper
         :class => 'btn-flat waves-effect waves-teal'
   end
 
+  def mood_img(mood)
+    return '' if mood.nil?
+    mood = Mood.classify(mood) unless mood.class == Mood
+    tag :img, src: "/moods/#{mood.name}.png"
+  end
+
 private
   def form_input_tag(object, method)
     object_name = object_name_for(object)
