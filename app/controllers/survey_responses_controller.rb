@@ -10,18 +10,14 @@ class SurveyResponsesController < ApplicationController
 
   # GET /survey_responses/new
   def new
-    @survey_response = SurveyResponse.new(survey_instance: @survey_instance)
-    @survey_response.survey_answers = @survey_response.survey_instance.survey.survey_questions.map do |question|
-      SurveyAnswer.new(survey_question: question)
-    end
+    @survey_response = SurveyResponse.build_for(@survey_instance, current_user)
     @record = [@survey_instance, @survey_response]
   end
 
   # POST /survey_responses
   # POST /survey_responses.json
   def create
-    @survey_response = @survey_instance.survey_responses.build(survey_response_params)
-    @survey_response.user_id = current_user.id
+    @survey_response = SurveyResponse.build_from(@survey_instance, survey_response_params, current_user)
 
     respond_to do |format|
       if @survey_response.save

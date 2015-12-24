@@ -21,23 +21,36 @@ require 'rails_helper'
 RSpec.describe SurveyResponsesController, type: :controller do
   let(:current_user) { create(:user) }
 
-  before(:each) do
-    sign_in current_user
-  end
+  let(:expected_mood) { Mood::GOOD }
 
   # This should return the minimal set of attributes required to create a valid
   # SurveyResponse. As you add validations to SurveyResponse, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {survey_response: {survey_answers_attributes: {}}}
+    {
+        survey_answers_attributes: {
+            '0' => { :mood_id => expected_mood.id, :survey_question_id => survey_question.id }
+        }
+
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+        survey_answers_attributes: {
+            '0' => { :survey_question_id => survey_question.id }
+        }
+    }
   }
 
-  let(:survey_instance) { create(:survey_instance) }
+  let(:survey_question) { build(:survey_question, title: 'Some Question') }
+  let(:survey) { create(:survey, survey_questions: [survey_question]) }
+  let(:survey_instance) { create(:survey_instance, survey: survey) }
   let!(:survey_response) { create(:survey_response, survey_instance: survey_instance) }
+
+  before(:each) do
+    sign_in current_user
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -46,14 +59,14 @@ RSpec.describe SurveyResponsesController, type: :controller do
 
   describe "GET #index" do
     it "assigns all survey_responses as @survey_responses" do
-      get :index, {survey_instance_id: survey_instance.to_param}, valid_session
+      get :index, { survey_instance_id: survey_instance.to_param }, valid_session
       expect(assigns(:survey_responses)).to eq([survey_response])
     end
   end
 
   describe "GET #new" do
     it "assigns a new survey_response as @survey_response" do
-      get :new, {survey_instance_id: survey_instance.to_param}, valid_session
+      get :new, { survey_instance_id: survey_instance.to_param }, valid_session
       expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
     end
   end
@@ -62,35 +75,40 @@ RSpec.describe SurveyResponsesController, type: :controller do
     context "with valid params" do
       it "creates a new SurveyResponse" do
         expect {
-          post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
+          post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
         }.to change(SurveyResponse, :count).by(1)
       end
 
       it "assigns a newly created survey_response as @survey_response" do
-        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
         expect(assigns(:survey_response)).to be_a(SurveyResponse)
         expect(assigns(:survey_response)).to be_persisted
       end
 
-      it "redirects to the list of responses" do
-        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
-        expect(response).to redirect_to(survey_instance_survey_responses_path(survey_instance))
+      it "assigns the current user id" do
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        expect(assigns(:survey_response).user_id).to eq(current_user.id)
       end
 
-      it "assigns the current user id" do
-        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes}, valid_session
-        expect(assigns(:survey_response).user_id).to eq(current_user.id)
+      it "creates answers for each question" do
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        expect(assigns(:survey_response).survey_answers.first.mood).to eq(expected_mood)
+      end
+
+      it "redirects to the list of responses" do
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        expect(response).to redirect_to(survey_instance_survey_responses_path(survey_instance))
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey_response as @survey_response" do
-        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes}, valid_session
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes }, valid_session
         expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes}, valid_session
+        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
