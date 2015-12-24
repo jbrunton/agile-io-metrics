@@ -146,7 +146,7 @@ RSpec.describe SurveyInstancesController, type: :controller do
 
     it "redirects to the survey_instances list" do
       delete :destroy, {:id => survey_instance.to_param}, valid_session
-      expect(response).to redirect_to(survey_instances_url)
+      expect(response).to redirect_to(survey_survey_instances_path(survey))
     end
   end
 
