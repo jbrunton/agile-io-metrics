@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :survey do
-    sequence(:name) { |k| "Survey Instance #{k}" }
+    sequence(:name) { |k| "Survey #{k}" }
     survey_template
   end
 

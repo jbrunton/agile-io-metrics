@@ -58,7 +58,7 @@ RSpec.describe SurveyResponsesController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns the survey instance" do
+    it "assigns the survey" do
       get :index, { survey_id: survey.to_param }, valid_session
       expect(assigns(:survey)).to eq(survey)
     end
