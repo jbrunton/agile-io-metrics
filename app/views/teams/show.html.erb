@@ -1,3 +1,5 @@
+<% breadcrumb :team, @team %>
+
 <script>
   var team = <%= @team.to_json.html_safe %>;
   var users = <%= @team.users.map{ |u| [u.id, u] }.to_h.to_json.html_safe %>;
