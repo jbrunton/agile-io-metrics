@@ -21,7 +21,7 @@ require 'rails_helper'
 RSpec.describe SurveysController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Survey. As you add validations to Survey, be sure to
+  # SurveyInstance. As you add validations to SurveyInstance, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     attributes_for(:survey)
@@ -31,18 +31,17 @@ RSpec.describe SurveysController, type: :controller do
     { name: '' }
   }
 
+  let(:survey_template) { create(:survey_template) }
+  let!(:survey) { create(:survey, survey_template: survey_template) }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # SurveysController. Be sure to keep this updated too.
+  # SurveyInstancesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-
-  let(:user) { create(:user) }
-  let(:organization) { create(:organization) }
-  let!(:survey) { create(:survey, organization: organization) }
 
   describe "GET #index" do
     it "assigns all surveys as @surveys" do
-      get :index, {organization_id: organization.to_param}, valid_session
+      get :index, {:survey_template_id => survey_template.to_param}, valid_session
       expect(assigns(:surveys)).to eq([survey])
     end
   end
@@ -56,7 +55,7 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new survey as @survey" do
-      get :new, {organization_id: organization.to_param}, valid_session
+      get :new, {:survey_template_id => survey_template.to_param}, valid_session
       expect(assigns(:survey)).to be_a_new(Survey)
     end
   end
@@ -70,32 +69,32 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Survey" do
+      it "creates a new SurveyInstance" do
         expect {
-          post :create, {organization_id: organization.to_param, :survey => valid_attributes}, valid_session
+          post :create, {:survey_template_id => survey_template.to_param, :survey => valid_attributes}, valid_session
         }.to change(Survey, :count).by(1)
       end
 
       it "assigns a newly created survey as @survey" do
-        post :create, {organization_id: organization.to_param, :survey => valid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey => valid_attributes}, valid_session
         expect(assigns(:survey)).to be_a(Survey)
         expect(assigns(:survey)).to be_persisted
       end
 
       it "redirects to the created survey" do
-        post :create, {organization_id: organization.to_param, :survey => valid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey => valid_attributes}, valid_session
         expect(response).to redirect_to(Survey.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey as @survey" do
-        post :create, {organization_id: organization.to_param, :survey => invalid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey => invalid_attributes}, valid_session
         expect(assigns(:survey)).to be_a_new(Survey)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {organization_id: organization.to_param, :survey => invalid_attributes}, valid_session
+        post :create, {:survey_template_id => survey_template.to_param, :survey => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -147,7 +146,7 @@ RSpec.describe SurveysController, type: :controller do
 
     it "redirects to the surveys list" do
       delete :destroy, {:id => survey.to_param}, valid_session
-      expect(response).to redirect_to(organization_surveys_url(organization))
+      expect(response).to redirect_to(survey_template_surveys_path(survey_template))
     end
   end
 

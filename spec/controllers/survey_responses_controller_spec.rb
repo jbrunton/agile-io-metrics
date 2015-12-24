@@ -44,9 +44,9 @@ RSpec.describe SurveyResponsesController, type: :controller do
   }
 
   let(:survey_question) { build(:survey_question, title: 'Some Question') }
-  let(:survey) { create(:survey, survey_questions: [survey_question]) }
-  let(:survey_instance) { create(:survey_instance, survey: survey) }
-  let!(:survey_response) { create(:survey_response, survey_instance: survey_instance) }
+  let(:survey_template) { create(:survey_template, survey_questions: [survey_question]) }
+  let(:survey) { create(:survey, survey_template: survey_template) }
+  let!(:survey_response) { create(:survey_response, survey: survey) }
 
   before(:each) do
     sign_in current_user
@@ -58,15 +58,15 @@ RSpec.describe SurveyResponsesController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns the survey instance" do
-      get :index, { survey_instance_id: survey_instance.to_param }, valid_session
-      expect(assigns(:survey_instance)).to eq(survey_instance)
+    it "assigns the survey" do
+      get :index, { survey_id: survey.to_param }, valid_session
+      expect(assigns(:survey)).to eq(survey)
     end
   end
 
   describe "GET #new" do
     it "assigns a new survey_response as @survey_response" do
-      get :new, { survey_instance_id: survey_instance.to_param }, valid_session
+      get :new, { survey_id: survey.to_param }, valid_session
       expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
     end
   end
@@ -75,40 +75,40 @@ RSpec.describe SurveyResponsesController, type: :controller do
     context "with valid params" do
       it "creates a new SurveyResponse" do
         expect {
-          post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+          post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
         }.to change(SurveyResponse, :count).by(1)
       end
 
       it "assigns a newly created survey_response as @survey_response" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
         expect(assigns(:survey_response)).to be_a(SurveyResponse)
         expect(assigns(:survey_response)).to be_persisted
       end
 
       it "assigns the current user id" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
         expect(assigns(:survey_response).user_id).to eq(current_user.id)
       end
 
       it "creates answers for each question" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
         expect(assigns(:survey_response).survey_answers.first.mood).to eq(expected_mood)
       end
 
       it "redirects to the list of responses" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => valid_attributes }, valid_session
-        expect(response).to redirect_to(survey_instance_survey_responses_path(survey_instance))
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
+        expect(response).to redirect_to(survey_survey_responses_path(survey))
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved survey_response as @survey_response" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes }, valid_session
+        post :create, { :survey_id => survey.to_param, :survey_response => invalid_attributes }, valid_session
         expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { :survey_instance_id => survey_instance.to_param, :survey_response => invalid_attributes }, valid_session
+        post :create, { :survey_id => survey.to_param, :survey_response => invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end

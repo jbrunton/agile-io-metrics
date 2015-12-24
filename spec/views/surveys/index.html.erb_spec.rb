@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "surveys/index", type: :view do
-  let(:organization) { create(:organization) }
+  let(:survey_template) { create(:survey_template) }
   let(:surveys) {[
-      create(:survey, organization: organization),
-      create(:survey, organization: organization)
+      create(:survey, survey_template: survey_template),
+      create(:survey, survey_template: survey_template)
   ]}
 
   before(:each) do
+    assign(:survey_template, survey_template)
     assign(:surveys, surveys)
-    assign(:organization, organization)
   end
 
   it "renders a list of surveys" do
@@ -17,7 +17,6 @@ RSpec.describe "surveys/index", type: :view do
 
     surveys.each do |survey|
       assert_select "tr>td", :text => survey.name
-      assert_select "tr>td", :text => survey.description
     end
   end
 end

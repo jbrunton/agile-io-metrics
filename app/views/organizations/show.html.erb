@@ -66,7 +66,7 @@
 
   <ul class="tabs">
     <li class="tab"><a href="#teams">Teams</a></li>
-    <li class="tab"><a href="#surveys">Surveys</a></li>
+    <li class="tab"><a href="#survey_templates">Survey Templates</a></li>
   </ul>
 
   <div id="teams">
@@ -112,13 +112,13 @@
     </table>
   </div>
 
-  <div id="surveys">
+  <div id="survey_templates">
     <table>
       <tr>
         <th>Name</th>
         <th>Description</th>
       </tr>
-      <% @organization.surveys.each do |survey| %>
+      <% @organization.survey_templates.each do |survey| %>
           <tr>
             <td><%= link_to survey.name, survey %></td>
             <td><%= survey.description %></td>

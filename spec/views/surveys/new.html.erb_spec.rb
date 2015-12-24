@@ -1,22 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe "surveys/new", type: :view do
-  let(:organization) { create(:organization) }
-  let(:survey) { build(:survey, organization: organization) }
+  let(:survey_template) { create(:survey_template) }
+  let(:survey) { build(:survey, survey_template: survey_template) }
 
   before(:each) do
+    assign(:survey_template, survey_template)
     assign(:survey, survey)
-    assign(:record, [organization, survey])
+    assign(:record, [survey_template, survey])
   end
 
   it "renders new survey form" do
     render
 
-    assert_select "form[action=?][method=?]", organization_surveys_path(organization), "post" do
+    assert_select "form[action=?][method=?]", survey_template_surveys_path(survey_template), "post" do
 
       assert_select "input#survey_name[name=?]", "survey[name]"
-
-      assert_select "textarea#survey_description[name=?]", "survey[description]"
     end
   end
 end

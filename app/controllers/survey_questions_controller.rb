@@ -4,8 +4,8 @@ class SurveyQuestionsController < ApplicationController
   # POST /survey_questions
   # POST /survey_questions.json
   def create
-    @survey = Survey.find(params[:survey_id])
-    @survey_question = @survey.survey_questions.build(survey_question_params)
+    survey_template = SurveyTemplate.find(params[:survey_template_id])
+    @survey_question = survey_template.survey_questions.build(survey_question_params)
 
     respond_to do |format|
       if @survey_question.save
@@ -48,6 +48,6 @@ class SurveyQuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_question_params
-      params.require(:survey_question).permit(:title, :text, :survey_id)
+      params.require(:survey_question).permit(:title, :text, :survey_template_id)
     end
 end

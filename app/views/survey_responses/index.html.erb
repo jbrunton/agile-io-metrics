@@ -6,16 +6,16 @@
     <tr>
       <th>Question</th>
       <th colspan="2">Average</th>
-      <th colspan="<%= @survey_instance.survey_responses.length %>">
+      <th colspan="<%= @survey.survey_responses.length %>">
         Individual Responses
       </th>
     </tr>
   </thead>
 
   <tbody>
-    <% analysis = @survey_instance.analyze %>
+    <% analysis = @survey.analyze %>
 
-    <% @survey_instance.survey.survey_questions.each do |question| %>
+    <% @survey.survey_template.survey_questions.each do |question| %>
         <% rating = analysis[question] %>
         <tr>
           <td><%= question.title %></td>
@@ -26,7 +26,7 @@
             <% end %>
           </td>
 
-          <% @survey_instance.survey_responses.each do |response| %>
+          <% @survey.survey_responses.each do |response| %>
               <td><%= mood_img(response.answer_for(question).try(:mood)) %></td>
           <% end %>
         </tr>

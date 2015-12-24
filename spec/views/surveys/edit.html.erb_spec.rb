@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "surveys/edit", type: :view do
-  let(:organization) { create(:organization) }
-  let(:survey) { create(:survey, organization: organization) }
+  let(:survey_template) { create(:survey_template) }
+  let(:survey) { create(:survey, survey_template: survey_template) }
 
   before(:each) do
+    assign(:survey_template, survey_template)
     assign(:survey, survey)
     assign(:record, survey)
   end
@@ -15,8 +16,6 @@ RSpec.describe "surveys/edit", type: :view do
     assert_select "form[action=?][method=?]", survey_path(survey), "post" do
 
       assert_select "input#survey_name[name=?]", "survey[name]"
-
-      assert_select "textarea#survey_description[name=?]", "survey[description]"
     end
   end
 end
