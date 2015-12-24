@@ -17,4 +17,8 @@ class SurveyResponse < ActiveRecord::Base
   def self.build_from(survey_instance, survey_response_params, user)
     survey_instance.survey_responses.build(survey_response_params.merge(user_id: user.id))
   end
+
+  def answer_for(question)
+    survey_answers.find_by(survey_question_id: question.id)
+  end
 end

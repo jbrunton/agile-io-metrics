@@ -10,4 +10,14 @@ class Mood < ActiveRecord::Base
   BAD = Mood.find_or_create_by(name: 'bad') do |mood|
     mood.weight = 0.0;
   end
+
+  def self.classify(rating)
+    if rating > 0.66
+      Mood::GOOD
+    elsif rating > 0.33
+      Mood::MEH
+    else
+      Mood::BAD
+    end
+  end
 end
