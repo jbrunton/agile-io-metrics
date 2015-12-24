@@ -29,7 +29,7 @@ RSpec.describe SurveyResponsesController, type: :controller do
   # SurveyResponse. As you add validations to SurveyResponse, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {}
+    {survey_response: {survey_answers_attributes: {}}}
   }
 
   let(:invalid_attributes) {
