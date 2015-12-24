@@ -1,5 +1,5 @@
 class Mood < ActiveRecord::Base
-  HAPPY = Mood.find_or_create_by(name: 'happy') do |mood|
+  GOOD = Mood.find_or_create_by(name: 'good') do |mood|
     mood.weight = 1.0;
   end
 
@@ -7,7 +7,7 @@ class Mood < ActiveRecord::Base
     mood.weight = 0.5;
   end
 
-  SAD = Mood.find_or_create_by(name: 'sad') do |mood|
+  BAD = Mood.find_or_create_by(name: 'bad') do |mood|
     mood.weight = 0.0;
   end
 end
