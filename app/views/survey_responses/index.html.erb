@@ -16,25 +16,18 @@
     <% analysis = @survey_instance.analyze %>
 
     <% @survey_instance.survey.survey_questions.each do |question| %>
+        <% rating = analysis[question] %>
         <tr>
           <td><%= question.title %></td>
-          <td>
-            <% rating = analysis[question] %>
-            <% unless rating.nil? %>
-                <img src="/moods/<%= Mood.classify(rating).name %>.png"/>
-            <% end %>
-          </td>
+          <td><%= mood_img(rating) %></td>
           <td>
             <% unless rating.nil? %>
                 <span><%= sprintf('%.2f', rating) %></span>
             <% end %>
           </td>
 
-          <% @survey_responses.each do |response| %>
-              <% answer = response.answer_for(question) %>
-              <% unless answer.nil? || answer.mood.nil? %>
-                  <td><img src=<%= "/moods/#{answer.mood.name}.png" %>/></td>
-              <% end %>
+          <% @survey_instance.survey_responses.each do |response| %>
+              <td><%= mood_img(response.answer_for(question).try(:mood)) %></td>
           <% end %>
         </tr>
     <% end %>
