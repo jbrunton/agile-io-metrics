@@ -35,6 +35,7 @@ class SurveyTemplatesController < ApplicationController
         format.html { redirect_to @survey_template, notice: 'Template was successfully created.' }
         format.json { render :show, status: :created, location: @survey_template }
       else
+        @record = [@organization, @survey_template]
         format.html { render :new }
         format.json { render json: @survey_template.errors, status: :unprocessable_entity }
       end
@@ -49,6 +50,7 @@ class SurveyTemplatesController < ApplicationController
         format.html { redirect_to @survey_template, notice: 'Template was successfully updated.' }
         format.json { render :show, status: :ok, location: @survey_template }
       else
+        @record = @survey_template
         format.html { render :edit }
         format.json { render json: @survey_template.errors, status: :unprocessable_entity }
       end
