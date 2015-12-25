@@ -44,7 +44,7 @@ admin = create(:user, email: 'admin@example.com')
   create :survey_question, survey_template: survey_template, title: 'Fun',
       text: 'Our Team is having so much fun that it hardly seems like work coming here on Monday morning.'
 
-  survey = create(:survey, survey_template: survey_template)
+  survey = create(:survey, survey_template: survey_template, name: 'Squad Health Check - 1 Jun 2015')
 
   org.teams.each do |team|
     team.members.each do |user|
