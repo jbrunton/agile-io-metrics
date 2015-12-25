@@ -5,10 +5,11 @@ Rails.application.routes.draw do
   resources :users
 
   resources :organizations do
-    get 'trends/:survey_template_id', action: 'trends', as: 'trends', on: :member
-
     resources :survey_templates, shallow: true do
+      get 'trends(/:team_id)', action: 'trends', as: 'trends', on: :member
+
       resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
+
       resources :surveys, shallow: true do
         resources :survey_responses, shallow: true, only: [:index, :new, :create] do
           get 'team/:team_id', action: 'team', as: 'team', on: :collection

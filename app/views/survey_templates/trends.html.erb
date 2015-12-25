@@ -1,6 +1,10 @@
-<% breadcrumb :organization_trends, @survey_template %>
-
-<h5>Trends for <b><%= @organization.name %> <%= @survey_template.name %></b></h5>
+<% if @team.nil? %>
+    <% breadcrumb :organization_trends, @survey_template %>
+    <h5>Trends for <b><%= @organization.name %> <%= @survey_template.name %></b></h5>
+<% else %>
+    <% breadcrumb :team_trends, @team, @survey_template %>
+    <h5>Trends for <b><%= @team.name %> <%= @survey_template.name %></b></h5>
+<% end %>
 
 <table>
   <tr>
@@ -17,7 +21,7 @@
 
           <% @surveys.each do |survey| %>
               <td>
-                <%= mood_img(survey.rating_for(question)) %>
+                <%= mood_img(survey.rating_for(question, @team)) %>
               </td>
           <% end %>
         </tr>

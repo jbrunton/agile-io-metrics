@@ -1,6 +1,6 @@
 class SurveyTemplatesController < ApplicationController
   layout 'blank', only: [:show]
-  before_action :set_survey_template, only: [:show, :edit, :update, :destroy]
+  before_action :set_survey_template, only: [:show, :edit, :update, :destroy, :trends]
   before_action :set_organization, only: [:new, :create, :index]
 
   # GET /survey_templates
@@ -13,6 +13,14 @@ class SurveyTemplatesController < ApplicationController
   # GET /survey_templates/1.json
   def show
   end
+
+  # GET /survey_templates/1/trends
+  # GET /survey_templates/1/trends.json
+  def trends
+    @surveys = @survey_template.surveys.order(:created_at)
+    @team = Team.find(params[:team_id]) if params[:team_id]
+  end
+
 
   # GET /survey_templates/new
   def new

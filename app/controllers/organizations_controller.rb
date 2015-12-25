@@ -11,15 +11,6 @@ class OrganizationsController < ApplicationController
     @organizations = Organization.all
   end
 
-  # GET /organizations/1/trends
-  # GET /organizations/1/trends.json
-  def trends
-    @organization = Organization.find(params[:id])
-    @survey_template = SurveyTemplate.find(params[:survey_template_id])
-    @surveys = @survey_template.surveys.order(:created_at)
-    authorize @organization, :show?
-  end
-
   # GET /organizations/1
   # GET /organizations/1.json
   def show
