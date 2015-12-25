@@ -13,21 +13,35 @@ RSpec.describe Survey, type: :model do
       create(:survey_answer, survey_question: question, mood: Mood::BAD)
   ])}
 
-  describe "#analyse" do
-    it "returns a hash of ratings for each question" do
-      survey.survey_responses << good_response
+  describe "#rating_for" do
+    context "when given just a question" do
+      it "returns the rating for the given question" do
+        survey.survey_responses << good_response
+        expect(survey.rating_for(question)).to eq(Mood::GOOD.weight)
+      end
 
-      survey.survey_answers.reload
-      expect(survey.analyze).to eq(question => Mood::GOOD.weight)
+      it "computes the mean rating for each response" do
+        survey.survey_responses << good_response
+        survey.survey_responses << bad_response
+
+        expected_rating = (Mood::GOOD.weight + Mood::BAD.weight) / 2.0
+        expect(survey.rating_for(question)).to eq(expected_rating)
+      end
     end
 
-    it "computes the mean rating for each response" do
-      survey.survey_responses << good_response
-      survey.survey_responses << bad_response
+    context "when given a team" do
+      let(:team) { create(:team) }
 
-      survey.survey_answers.reload
-      expected_rating = (Mood::GOOD.weight + Mood::BAD.weight) / 2.0
-      expect(survey.analyze).to eq(question => expected_rating)
+      before(:each) do
+        good_response.user.add_role :member, team
+      end
+
+      it "returns the rating for just that team" do
+        survey.survey_responses << good_response
+        survey.survey_responses << bad_response
+
+        expect(survey.rating_for(question, team)).to eq(Mood::GOOD.weight)
+      end
     end
   end
 end
