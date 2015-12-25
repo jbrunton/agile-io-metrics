@@ -1,15 +1,12 @@
 <% breadcrumb :survey, @survey %>
 
-   <p id="notice"><%= notice %></p>
+<%= header_for(@survey) %>
 
 <p>
-  <strong>Name:</strong>
-  <%= @survey.name %>
+  <strong>Template:</strong>
+  <%= link_to @survey.survey_template.name, @survey.survey_template %>
 </p>
 
-<p>
-  <strong>Survey:</strong>
-  <%= @survey.survey_template %>
+<p class="center-align">
+  <%= link_to 'Take the survey', new_survey_survey_response_path(@survey), class: 'btn' %>
 </p>
-
-<%= link_to 'Edit', edit_survey_path(@survey) %> |
