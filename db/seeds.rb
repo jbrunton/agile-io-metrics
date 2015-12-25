@@ -22,7 +22,7 @@ admin = create(:user, email: 'admin@example.com')
     admin.add_role :admin, team
   end
 
-  survey_template = create(:survey_template, organization: org)
+  survey_template = create(:survey_template, organization: org, name: 'Squad Health Check')
   create :survey_question, survey_template: survey_template, title: 'Support',
       text: 'Awesome: We always get great support & help when we ask for it! OR: We keep getting stuck because we can’t get the support & help that we ask for.'
   create :survey_question, survey_template: survey_template, title: 'Teamwork',
