@@ -43,5 +43,19 @@ admin = create(:user, email: 'admin@example.com')
       text: 'In cooperation with the ScrumMaster or Agile Coach we have crafted ourselves a rock solid process that yields high value stream of features at a steady pace Iteration by Iteration. We do not fear outside interferences, the process does not slow us down, it is not in our way, it is there to serve us so that we can serve the customer.'
   create :survey_question, survey_template: survey_template, title: 'Fun',
       text: 'Our Team is having so much fun that it hardly seems like work coming here on Monday morning.'
+
+  survey = create(:survey, survey_template: survey_template)
+
+  org.teams.each do |team|
+    team.members.each do |user|
+      survey_response = create(:survey_response, survey: survey, user: user)
+      survey_template.survey_questions.each do |question|
+        create(:survey_answer,
+            survey_response: survey_response,
+            survey_question: question,
+            mood: [Mood::GOOD, Mood::MEH, Mood::BAD][rand(3)])
+      end
+    end
+  end
 end
 
