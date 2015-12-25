@@ -37,8 +37,18 @@ crumb :survey_responses do |survey|
 end
 
 crumb :team_survey_responses do |survey, team|
-  link "#{team.name}", team_survey_survey_responses_path(survey, team.id)
+  link team.name, team_survey_survey_responses_path(survey, team.id)
   parent :survey_responses, survey
+end
+
+crumb :organization_trends do |survey_template|
+  link 'Trends', trends_organization_path(survey_template.organization, survey_template.id)
+  parent :survey_template, survey_template
+end
+
+crumb :team_trends do |team, survey_template|
+  link team.name, trends_team_path(team, survey_template.id)
+  parent :organization_trends, survey_template
 end
 
 # crumb :projects do
