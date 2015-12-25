@@ -10,11 +10,11 @@ include FactoryGirl::Syntax::Methods
 
 admin = create(:user, email: 'admin@example.com')
 
-2.times do
-  org = create(:organization)
+['Organization A', 'Organization B'].each do |org_name|
+  org = create(:organization, name: org_name)
 
-  ['Team A', 'Team B'].each do |team_name|
-    team = create(:team, organization: org)
+  ['Team A', 'Team B', 'Team C'].each do |team_name|
+    team = create(:team, name: team_name, organization: org)
     3.times do
       user = create(:user)
       user.add_role :member, team
@@ -46,14 +46,17 @@ admin = create(:user, email: 'admin@example.com')
 
   survey = create(:survey, survey_template: survey_template, name: 'Squad Health Check - 1 Jun 2015')
 
-  org.teams.each do |team|
-    team.members.each do |user|
+  org.teams.each_with_index do |team, team_index|
+    team.members.each_with_index do |user, user_index|
       survey_response = create(:survey_response, survey: survey, user: user)
-      survey_template.survey_questions.each do |question|
+      survey_template.survey_questions.each_with_index do |question, question_index|
+        rating = rand(3).to_f / 2 +
+            (user_index % 3).to_f / 2 - 0.5 +
+            2 * question_index.to_f / survey_template.survey_questions.length;
         create(:survey_answer,
             survey_response: survey_response,
             survey_question: question,
-            mood: [Mood::GOOD, Mood::MEH, Mood::BAD][rand(3)])
+            mood: [Mood::BAD, Mood::MEH, Mood::GOOD][[rating.to_i, 2].min])
       end
     end
   end
