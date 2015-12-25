@@ -10,11 +10,11 @@ include FactoryGirl::Syntax::Methods
 
 admin = create(:user, email: 'admin@example.com')
 
-2.times do
-  org = create(:organization)
+['Organization A', 'Organization B'].each do |org_name|
+  org = create(:organization, name: org_name)
 
-  ['Team A', 'Team B'].each do |team_name|
-    team = create(:team, organization: org)
+  ['Team A', 'Team B', 'Team C'].each do |team_name|
+    team = create(:team, name: team_name, organization: org)
     3.times do
       user = create(:user)
       user.add_role :member, team
@@ -43,5 +43,22 @@ admin = create(:user, email: 'admin@example.com')
       text: 'In cooperation with the ScrumMaster or Agile Coach we have crafted ourselves a rock solid process that yields high value stream of features at a steady pace Iteration by Iteration. We do not fear outside interferences, the process does not slow us down, it is not in our way, it is there to serve us so that we can serve the customer.'
   create :survey_question, survey_template: survey_template, title: 'Fun',
       text: 'Our Team is having so much fun that it hardly seems like work coming here on Monday morning.'
+
+  survey = create(:survey, survey_template: survey_template, name: 'Squad Health Check - 1 Jun 2015')
+
+  org.teams.each_with_index do |team, team_index|
+    team.members.each_with_index do |user, user_index|
+      survey_response = create(:survey_response, survey: survey, user: user)
+      survey_template.survey_questions.each_with_index do |question, question_index|
+        rating = rand(3).to_f / 2 +
+            (user_index % 3).to_f / 2 - 0.5 +
+            2 * question_index.to_f / survey_template.survey_questions.length;
+        create(:survey_answer,
+            survey_response: survey_response,
+            survey_question: question,
+            mood: [Mood::BAD, Mood::MEH, Mood::GOOD][[rating.to_i, 2].min])
+      end
+    end
+  end
 end
 

@@ -4,13 +4,29 @@ class Survey < ActiveRecord::Base
   has_many :survey_answers, through: :survey_responses
   validates :name, presence: true
 
-  def analyze
-    answers_by_question = survey_answers.group_by { |answer| answer.survey_question }
-    ratings_by_question = answers_by_question.map do |question, answers|
-      [question, answers.map{ |answer| answer.try(:mood).try(:weight) }.compact]
-    end.to_h
-    ratings_by_question.map do |question, ratings|
-      [question, ratings.reduce(:+) / ratings.length]
-    end.to_h
+  def rating_for(question, team = nil)
+    # TODO: unit tests
+    answers = survey_answers.where(survey_question_id: question.id).select do |answer|
+      team.nil? || answer.survey_response.user.member_of?(team)
+    end
+
+    ratings = answers.map do |answer|
+      answer.try(:mood).try(:weight)
+    end.compact
+
+    ratings.reduce(:+) / ratings.length
+  end
+
+
+  def responses_for(team)
+    # TODO: unit tests
+    survey_responses.select do |response|
+      response.user.member_of?(team)
+    end
+  end
+
+  def teams
+    # TODO: unit tests
+    survey_responses.map{ |response| response.user.teams(:member) }.flatten.uniq
   end
 end

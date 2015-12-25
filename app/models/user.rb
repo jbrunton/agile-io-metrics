@@ -24,7 +24,8 @@ class User < ActiveRecord::Base
     roles
   end
 
-  def teams
+  def teams(role = nil)
+    return Team.with_role(role, self) unless role.nil?
     Team.with_roles([:admin, :member], self).uniq
   end
 

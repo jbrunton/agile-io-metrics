@@ -2,23 +2,24 @@
 
    <p id="notice"><%= notice %></p>
 
-<h1>Listing Survey Responses</h1>
+<h5>Responses for <b><%= @survey.name %></b></h5>
+
 <table class="responses">
   <thead>
     <tr>
       <th>Question</th>
-      <th colspan="2">Average</th>
-      <th colspan="<%= @survey.survey_responses.length %>">
-        Individual Responses
-      </th>
+      <th colspan="2">Org Average</th>
+      <% @survey.teams.each do |team| %>
+        <th>
+          <%= link_to "#{team.name} &raquo;".html_safe, team_survey_survey_responses_path(@survey, team.id) %>
+        </th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% analysis = @survey.analyze %>
-
     <% @survey.survey_template.survey_questions.each do |question| %>
-        <% rating = analysis[question] %>
+        <% rating = @survey.rating_for(question) %>
         <tr>
           <td><%= question.title %></td>
           <td><%= mood_img(rating) %></td>
@@ -28,8 +29,8 @@
             <% end %>
           </td>
 
-          <% @survey.survey_responses.each do |response| %>
-              <td><%= mood_img(response.answer_for(question).try(:mood)) %></td>
+          <% @survey.teams.each do |team| %>
+              <td><%= mood_img(@survey.rating_for(question, team)) %></td>
           <% end %>
         </tr>
     <% end %>

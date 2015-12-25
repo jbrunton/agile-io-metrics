@@ -1,0 +1,36 @@
+<% breadcrumb :team_survey_responses, @survey, @team %>
+
+<p id="notice"><%= notice %></p>
+
+<h5>Responses for <b><%= @team.name %> <%= @survey.name %></b></h5>
+
+<table class="responses">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th colspan="2">Team Average</th>
+      <th colspan="<%= @survey_responses.length %>">
+        Individual Responses
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @survey.survey_template.survey_questions.each do |question| %>
+        <% rating = @survey.rating_for(question, @team) %>
+        <tr>
+          <td><%= question.title %></td>
+          <td><%= mood_img(rating) %></td>
+          <td>
+            <% unless rating.nil? %>
+                <span><%= sprintf('%.2f', rating) %></span>
+            <% end %>
+          </td>
+
+          <% @survey_responses.each do |response| %>
+              <td><%= mood_img(response.answer_for(question).try(:mood)) %></td>
+          <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
