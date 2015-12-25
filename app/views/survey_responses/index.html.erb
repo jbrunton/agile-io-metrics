@@ -7,7 +7,7 @@
   <thead>
     <tr>
       <th>Question</th>
-      <th colspan="2">Average</th>
+      <th colspan="2">Org Average</th>
       <% @survey.teams.each do |team| %>
         <th>
           <%= link_to team.name, team_survey_survey_responses_path(@survey, team.id) %>
