@@ -33,11 +33,11 @@ end
 
 crumb :survey_responses do |survey|
   link 'Responses', survey_survey_responses_path(survey)
-  parent :survey_template, survey.survey_template
+  parent :survey, survey
 end
 
 crumb :team_survey_responses do |survey, team|
-  link "#{team.name}", team_survey_survey_responses_path(survey, team)
+  link "#{team.name}", team_survey_survey_responses_path(survey, team.id)
   parent :survey_responses, survey
 end
 

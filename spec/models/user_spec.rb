@@ -75,11 +75,20 @@ RSpec.describe User, type: :model do
       user.add_role :member, team_one
     end
 
-    it "returns all teams the user belongs to" do
-      user.add_role :admin, team_two
+    context "when given no arguments" do
+      it "returns all teams the user belongs to" do
+        user.add_role :admin, team_two
 
-      expect(user.teams).to include(team_one, team_two)
-      expect(user.teams).not_to include(team_three)
+        expect(user.teams).to include(team_one, team_two)
+        expect(user.teams).not_to include(team_three)
+      end
+    end
+
+    context "when given a specific role" do
+      it "returns all teams for which the user has that role" do
+        user.add_role :admin, team_two
+        expect(user.teams(:member)).to include(team_one)
+      end
     end
 
     it "removes duplicates from the list" do

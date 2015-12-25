@@ -15,10 +15,8 @@
   </thead>
 
   <tbody>
-    <% analysis = @survey.analyze %>
-
     <% @survey.survey_template.survey_questions.each do |question| %>
-        <% rating = analysis[question] %>
+        <% rating = @survey.rating_for(question, @team) %>
         <tr>
           <td><%= question.title %></td>
           <td><%= mood_img(rating) %></td>

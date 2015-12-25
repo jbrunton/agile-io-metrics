@@ -5,7 +5,7 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses
   # GET /survey_responses.json
   def index
-
+    @teams = @survey.teams
   end
 
   # GET /survey_responses/team/1

@@ -8,17 +8,17 @@
     <tr>
       <th>Question</th>
       <th colspan="2">Average</th>
-      <th colspan="<%= @survey.survey_responses.length %>">
-        Individual Responses
-      </th>
+      <% @survey.teams.each do |team| %>
+        <th>
+          <%= link_to team.name, team_survey_survey_responses_path(@survey, team.id) %>
+        </th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% analysis = @survey.analyze %>
-
     <% @survey.survey_template.survey_questions.each do |question| %>
-        <% rating = analysis[question] %>
+        <% rating = @survey.rating_for(question) %>
         <tr>
           <td><%= question.title %></td>
           <td><%= mood_img(rating) %></td>
@@ -28,8 +28,8 @@
             <% end %>
           </td>
 
-          <% @survey.survey_responses.each do |response| %>
-              <td><%= mood_img(response.answer_for(question).try(:mood)) %></td>
+          <% @survey.teams.each do |team| %>
+              <td><%= mood_img(@survey.rating_for(question, team)) %></td>
           <% end %>
         </tr>
     <% end %>
