@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :users
 
   resources :organizations do
+    get 'trends/:survey_template_id', action: 'trends', as: 'trends', on: :member
+
     resources :survey_templates, shallow: true do
       resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
       resources :surveys, shallow: true do
@@ -13,8 +15,10 @@ Rails.application.routes.draw do
         end
       end
     end
+
     resources :teams, shallow: true do
       member do
+        get 'trends/:survey_template_id', action: 'trends', as: 'trends'
         delete 'remove_member/:user_id', action: 'remove_member', as: 'remove_member_from'
         delete 'remove_admin/:user_id', action: 'remove_admin', as: 'remove_admin_from'
         post 'add_user', as: 'add_user_to'

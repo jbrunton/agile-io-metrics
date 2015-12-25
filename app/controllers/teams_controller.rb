@@ -10,6 +10,16 @@ class TeamsController < ApplicationController
     @teams = @organization.teams
   end
 
+  # GET /teams/1/trends
+  # GET /teams/1/trends.json
+  def trends
+    @team = Team.find(params[:id])
+    @survey_template = SurveyTemplate.find(params[:survey_template_id])
+    @surveys = @survey_template.surveys.order(:created_at)
+    authorize @team, :show?
+  end
+
+
   # GET /teams/1
   # GET /teams/1.json
   def show

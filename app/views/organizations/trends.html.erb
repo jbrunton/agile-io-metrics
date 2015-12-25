@@ -1,0 +1,24 @@
+<h5>Trends for <b><%= @organization.name %> <%= @survey_template.name %></b></h5>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <% @surveys.each do |survey| %>
+        <th><%= survey.created_at.strftime('%-d %b %y') %></th>
+    <% end %>
+
+    <% @survey_template.survey_questions.each do |question| %>
+        <tr>
+          <td>
+            <%= question.title %>
+          </td>
+
+          <% @surveys.each do |survey| %>
+              <td>
+                <%= mood_img(survey.rating_for(question)) %>
+              </td>
+          <% end %>
+        </tr>
+    <% end %>
+  </tr>
+</table>
