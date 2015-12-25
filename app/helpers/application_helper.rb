@@ -29,6 +29,18 @@ module ApplicationHelper
     tag :img, src: "/moods/#{mood.name}.png"
   end
 
+  def header_for(record)
+    content_tag :div, class: 'row' do
+      title = content_tag :div, class: 'col s10' do
+        content_tag :h3, record.name
+      end
+      edit_link = content_tag :div, class: 'col s2' do
+        content_tag :a, 'Edit', href: edit_polymorphic_path(record), class: 'btn-flat right waves-effect waves-teal'
+      end
+      title + edit_link
+    end
+  end
+
 private
   def form_input_tag(object, method)
     object_name = object_name_for(object)
