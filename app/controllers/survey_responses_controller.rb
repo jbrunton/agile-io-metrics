@@ -5,6 +5,14 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses
   # GET /survey_responses.json
   def index
+
+  end
+
+  # GET /survey_responses/team/1
+  # GET /survey_responses/team/1.json
+  def team
+    @team = Team.find(params[:team_id])
+    @survey_responses = @survey.responses_for(@team)
   end
 
   # GET /survey_responses/new

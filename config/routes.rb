@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     resources :survey_templates, shallow: true do
       resources :survey_questions, shallow: true, only: [:create, :update, :destroy]
       resources :surveys, shallow: true do
-        resources :survey_responses, shallow: true, only: [:index, :new, :create]
+        resources :survey_responses, shallow: true, only: [:index, :new, :create] do
+          get 'team/:team_id', action: 'team', as: 'team', on: :collection
+        end
       end
     end
     resources :teams, shallow: true do

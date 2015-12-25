@@ -13,4 +13,10 @@ class Survey < ActiveRecord::Base
       [question, ratings.reduce(:+) / ratings.length]
     end.to_h
   end
+
+  def responses_for(team)
+    survey_responses.select do |response|
+      response.user.member_of?(team)
+    end
+  end
 end
