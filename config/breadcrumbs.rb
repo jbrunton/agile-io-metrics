@@ -21,6 +21,21 @@ crumb :team do |team|
   parent :teams, team.organization
 end
 
+crumb :survey_template do |survey_template|
+  link survey_template.name, survey_template_path(survey_template)
+  parent :organization, survey_template.organization
+end
+
+crumb :survey do |survey|
+  link survey.name, survey_path(survey)
+  parent :survey_template, survey.survey_template
+end
+
+crumb :survey_responses do |survey|
+  link 'Responses', survey_survey_responses_path(survey)
+  parent :survey_template, survey.survey_template
+end
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end
