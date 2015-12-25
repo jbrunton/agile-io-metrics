@@ -135,7 +135,7 @@
           <tr>
             <td><%= link_to survey_template.name, survey_template %></td>
             <td><%= survey_template.description %></td>
-            <td><%= link_to 'Trends', trends_organization_path(@organization, survey_template.id) %></td>
+            <td><%= link_to 'Trends', trends_survey_template_path(survey_template) %></td>
           </tr>
       <% end %>
     </table>
