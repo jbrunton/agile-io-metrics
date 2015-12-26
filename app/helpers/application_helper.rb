@@ -35,7 +35,9 @@ module ApplicationHelper
         content_tag :h3, record.name
       end
       edit_link = content_tag :div, class: 'col s2' do
-        content_tag :a, 'Edit', href: edit_polymorphic_path(record), class: 'btn btn-flat right waves-effect waves-teal'
+        content_tag :a, 'Edit',
+            href: edit_polymorphic_path(record),
+            class: 'btn btn-flat right waves-effect waves-teal'
       end
       title + edit_link
     end

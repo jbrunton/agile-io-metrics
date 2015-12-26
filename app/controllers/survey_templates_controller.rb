@@ -21,7 +21,6 @@ class SurveyTemplatesController < ApplicationController
     @team = Team.find(params[:team_id]) if params[:team_id]
   end
 
-
   # GET /survey_templates/new
   def new
     @survey_template = SurveyTemplate.new
