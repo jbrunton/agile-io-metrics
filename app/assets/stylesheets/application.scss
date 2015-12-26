@@ -2,6 +2,7 @@
 
 $primary-color: color("purple", "base") !default;
 $secondary-color: color("orange", "base") !default;
+$footer-text-color: color("purple", "lighten-4") !default;
 
 $roboto-font-path: 'materialize/font/roboto/';
 $icons-font-path: 'materialize/font/material-design-icons/';
@@ -25,4 +26,27 @@ $icons-font-path: 'materialize/font/material-design-icons/';
   padding: 20px 0;
   border-bottom: 1px solid $table-border-color;
   margin-bottom: 10px;
+}
+
+table tr td {
+  vertical-align: top;
+}
+
+table.answers {
+  td {
+    padding: 0 10px;
+  }
+}
+
+.slider .slides {
+  background-color: $primary-color;
+}
+
+footer {
+  p {
+    color: $footer-text-color;
+  }
+  a, h5 {
+    @extend .white-text;
+  }
 }

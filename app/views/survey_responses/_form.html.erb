@@ -19,6 +19,9 @@
               <%= answer.survey_question.title %>
             </td>
             <td>
+              <%= answer.survey_question.text %>
+            </td>
+            <td>
               <%= f.fields_for :survey_answers, answer do |a| -%>
                   <table class="answers">
                     <tr>

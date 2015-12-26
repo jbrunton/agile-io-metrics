@@ -1,0 +1,19 @@
+<h4>Try it out</h4>
+
+<p>
+  Try <%= link_to 'signing in', new_user_session_path %> as <b>user_1@example.com</b> to try out the survey and view results, or <b>admin@example.com</b> to
+  see how administration functionality works. The password for both is <b>Password1</b>.
+</p>
+
+<p>
+  Once signed in, take a look at:
+  <ul>
+    <li><%= link_to 'Survey results for a single team', team_survey_survey_responses_path(@survey, @team) %></li>
+    <li><%= link_to 'Survey results for a whole organization', survey_survey_responses_path(@survey) %></li>
+    <li><%= link_to 'Organization and team trends', trends_survey_template_path(@survey.survey_template) %></li>
+  </ul>
+</p>
+
+<p>
+  Note that the survey and organization data for these users may be reset from time to time.
+</p>
