@@ -2,13 +2,9 @@ crumb :root do
   link 'Home', root_path
 end
 
-crumb :organizations do
-  link 'Organizations', organizations_path
-end
-
 crumb :organization do |organization|
   link organization.name, organization_path(organization)
-  parent :organizations
+  parent :root
 end
 
 crumb :teams do |organization|
