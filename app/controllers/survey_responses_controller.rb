@@ -6,13 +6,7 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses.json
   def index
     include_options = {
-      survey_responses: [
-        :user,
-        survey_answers: [
-          :mood,
-          :survey_response
-        ]
-      ]
+      survey_responses: Survey::RELATIONS_FOR_REPORTS
     }
     @survey = Survey.includes(include_options).find(params[:survey_id])
     @teams = @survey.teams

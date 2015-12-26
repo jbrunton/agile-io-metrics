@@ -4,6 +4,14 @@ class Survey < ActiveRecord::Base
   has_many :survey_answers, through: :survey_responses
   validates :name, presence: true
 
+  RELATIONS_FOR_REPORTS = [
+    :user,
+    survey_answers: [
+      :mood,
+      :survey_response
+    ]
+  ]
+
   def rating_for(question, team = nil)
     # TODO: unit tests
     answers = survey_answers.where(survey_question_id: question.id).select do |answer|
@@ -20,7 +28,7 @@ class Survey < ActiveRecord::Base
 
   def responses_for(team)
     # TODO: unit tests
-    survey_responses.select do |response|
+    survey_responses.includes(RELATIONS_FOR_REPORTS).select do |response|
       response.user.member_of?(team)
     end
   end
