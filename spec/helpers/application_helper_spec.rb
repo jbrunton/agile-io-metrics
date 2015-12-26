@@ -43,7 +43,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       survey = create(:survey, name: 'Some Survey')
       expect(helper.header_for(survey)).to eq '<div class="row">' +
         '<div class="col s10"><h3>Some Survey</h3></div>' +
-        '<div class="col s2"><a href="/surveys/1/edit" class="btn-flat right waves-effect waves-teal">Edit</a></div>' +
+        '<div class="col s2"><a href="/surveys/1/edit" class="btn btn-flat right waves-effect waves-teal">Edit</a></div>' +
         '</div>'
     end
   end

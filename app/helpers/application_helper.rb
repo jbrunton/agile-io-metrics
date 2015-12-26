@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def header_for(record)
-    content_tag :div, class: 'row header' do
+    content_tag :div, class: 'row' do
       title = content_tag :div, class: 'col s10' do
         content_tag :h3, record.name
       end
