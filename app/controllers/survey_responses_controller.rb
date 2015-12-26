@@ -1,10 +1,20 @@
 class SurveyResponsesController < ApplicationController
-  before_action :set_survey
+  before_action :set_survey, except: [:index]
   before_action :authenticate_user!
 
   # GET /survey_responses
   # GET /survey_responses.json
   def index
+    include_options = {
+      survey_responses: [
+        :user,
+        survey_answers: [
+          :mood,
+          :survey_response
+        ]
+      ]
+    }
+    @survey = Survey.includes(include_options).find(params[:survey_id])
     @teams = @survey.teams
   end
 
