@@ -26,3 +26,17 @@ $icons-font-path: 'materialize/font/material-design-icons/';
   border-bottom: 1px solid $table-border-color;
   margin-bottom: 10px;
 }
+
+table tr td {
+  vertical-align: top;
+}
+
+table.answers {
+  td {
+    padding: 0 10px;
+  }
+}
+
+.slider .slides {
+  background-color: $primary-color;
+}
