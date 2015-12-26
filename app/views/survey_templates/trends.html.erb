@@ -1,6 +1,24 @@
+<script>
+  $(function () {
+    $('#select-team').on('change', function (e) {
+      var teamId = $(e.target).val();
+      window.location = window.location + '/' + teamId;
+    });
+  });
+</script>
+
 <% if @team.nil? %>
     <% breadcrumb :organization_trends, @survey_template %>
     <h5>Trends for <b><%= @organization.name %> <%= @survey_template.name %></b></h5>
+
+    <div class="input-field col s12">
+      <select id="select-team">
+        <option value="" disabled selected>Drill down to team</option>
+        <% @survey_template.organization.teams.each do |team| %>
+            <option value="<%= team.id %>"><%= team.name %></option>
+        <% end %>
+      </select>
+    </div>
 <% else %>
     <% breadcrumb :team_trends, @team, @survey_template %>
     <h5>Trends for <b><%= @team.name %> <%= @survey_template.name %></b></h5>
