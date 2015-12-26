@@ -39,8 +39,8 @@ private
   def header_edit_link_tag(record)
     content_tag :div, class: 'col s2' do
       link_options = {
-          href: edit_polymorphic_path(record),
-          class: 'btn btn-flat right waves-effect waves-teal'
+        href: edit_polymorphic_path(record),
+        class: 'btn btn-flat right waves-effect waves-teal'
       }
       content_tag :a, 'Edit', link_options
     end
