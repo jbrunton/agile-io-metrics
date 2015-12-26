@@ -11,7 +11,7 @@
   <body>
 
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper container">
         <a href="/" class="brand-logo">agileplanning.io | metrics</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <% if user_signed_in? %>
@@ -54,4 +54,37 @@
     </div>
 
   </body>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5>agileplanning.io | metrics</h5>
+          <p>
+            An app for automating Spotify style <a href="https://labs.spotify.com/2014/09/16/squad-health-check-model/">squad health checks</a>.
+          </p>
+          <p>
+            Please note: this app is currently in <b>alpha</b>. Please only try it if you're interested in contributing
+            (whether product ideas or pull requests). While in alpha, this app may prove unstable, and your data may be
+            lost.
+          </p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5>About the app</h5>
+          <ul>
+            <li><a href="https://github.com/jbrunton/agileplanning-io-metrics">Project page on Github</a></li>
+            <li><a href="https://github.com/jbrunton/agileplanning-io-metrics/issues">Raise an issue</a></li>
+            <li><a href="/try">Try it out</a></li>
+            <li><a href="https://labs.spotify.com/2014/09/16/squad-health-check-model/">Spotify's squad health check model</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        Made by <a href="https://github.com/jbrunton">jbrunton</a>
+      </div>
+    </div>
+  </footer>
+
 </html>

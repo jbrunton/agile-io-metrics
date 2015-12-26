@@ -10,7 +10,7 @@
     "name": "bower-rails generated vendor assets",
     "dependencies": {
       // "three.js"    : "https://raw.github.com/mrdoob/three.js/master/build/three.js"
-      "materialize": "https://github.com/Dogfalo/materialize.git"
+      "materialize": "https://github.com/Dogfalo/materialize.git#v0.97.5"
     }
   }
 }
