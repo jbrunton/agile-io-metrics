@@ -6,25 +6,25 @@ RSpec.describe Survey, type: :model do
   let(:survey) { create(:survey, survey_template: survey_template) }
 
   let(:good_response) { create(:survey_response, survey_answers: [
-      create(:survey_answer, survey_question: question, mood: Mood::GOOD)
+      create(:survey_answer, survey_question: question, mood: Mood.GOOD)
   ])}
 
   let(:bad_response) { create(:survey_response, survey_answers: [
-      create(:survey_answer, survey_question: question, mood: Mood::BAD)
+      create(:survey_answer, survey_question: question, mood: Mood.BAD)
   ])}
 
   describe "#rating_for" do
     context "when given just a question" do
       it "returns the rating for the given question" do
         survey.survey_responses << good_response
-        expect(survey.rating_for(question)).to eq(Mood::GOOD.weight)
+        expect(survey.rating_for(question)).to eq(Mood.GOOD.weight)
       end
 
       it "computes the mean rating for each response" do
         survey.survey_responses << good_response
         survey.survey_responses << bad_response
 
-        expected_rating = (Mood::GOOD.weight + Mood::BAD.weight) / 2.0
+        expected_rating = (Mood.GOOD.weight + Mood.BAD.weight) / 2.0
         expect(survey.rating_for(question)).to eq(expected_rating)
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe Survey, type: :model do
         survey.survey_responses << good_response
         survey.survey_responses << bad_response
 
-        expect(survey.rating_for(question, team)).to eq(Mood::GOOD.weight)
+        expect(survey.rating_for(question, team)).to eq(Mood.GOOD.weight)
       end
     end
   end

@@ -30,7 +30,7 @@
                       <td><img src="/moods/bad.png"></img></td>
                     </tr>
                     <tr>
-                      <% [Mood::GOOD, Mood::MEH, Mood::BAD].each_with_index do |mood| %>
+                      <% Mood.all.each_with_index do |mood| %>
                           <td>
                             <% button_id = "mood-#{mood.name}-#{answer.survey_question.id}" %>
                             <% button_name = "survey_response[survey_answers_attributes][#{index}][mood_id]" %>

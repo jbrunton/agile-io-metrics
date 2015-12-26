@@ -61,7 +61,7 @@ admin = create(:user, email: 'admin@example.com')
           create(:survey_answer,
               survey_response: survey_response,
               survey_question: question,
-              mood: [Mood::BAD, Mood::MEH, Mood::GOOD][[rating.to_i, 2].min])
+              mood: [Mood.BAD, Mood.MEH, Mood.GOOD][[rating.to_i, 2].min])
         end
       end
     end
