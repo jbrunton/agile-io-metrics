@@ -12,6 +12,7 @@ admin = create(:user, email: 'admin@example.com')
 
 ['Organization A', 'Organization B'].each do |org_name|
   org = create(:organization, name: org_name)
+  admin.add_role :admin, org
 
   ['Team A', 'Team B', 'Team C'].each do |team_name|
     team = create(:team, name: team_name, organization: org)

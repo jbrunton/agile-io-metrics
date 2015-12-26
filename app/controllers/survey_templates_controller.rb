@@ -17,8 +17,19 @@ class SurveyTemplatesController < ApplicationController
   # GET /survey_templates/1/trends
   # GET /survey_templates/1/trends.json
   def trends
-    @surveys = @survey_template.surveys.order(:created_at)
     @team = Team.find(params[:team_id]) if params[:team_id]
+    if @team.nil?
+      include_options = {
+        survey_responses: {
+          survey_answers: [:mood]
+        }
+      }
+    else
+      include_options = {
+        survey_responses: Survey::RELATIONS_FOR_REPORTS
+      }
+    end
+    @surveys = @survey_template.surveys.includes(include_options).order(:created_at)
   end
 
   # GET /survey_templates/new
