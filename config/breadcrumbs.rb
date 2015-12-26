@@ -43,7 +43,7 @@ crumb :organization_trends do |survey_template|
 end
 
 crumb :team_trends do |team, survey_template|
-  link team.name, trends_team_path(team, survey_template.id)
+  link team.name, trends_survey_template_path(survey_template, team)
   parent :organization_trends, survey_template
 end
 
