@@ -1,0 +1,52 @@
+<script>
+  $(function () {
+    $('#select-team').on('change', function (e) {
+      var teamId = $(e.target).val();
+      var newPath = '<%= trends_survey_template_path(@survey_template) %>';
+      if (teamId != '') {
+        newPath += '/' + teamId;
+      }
+      window.location = newPath;
+    });
+  });
+</script>
+
+<% if @team.nil? %>
+    <% breadcrumb :organization_trends, @survey_template %>
+    <h5>Trends for <b><%= @organization.name %> <%= @survey_template.name %></b></h5>
+<% else %>
+    <% breadcrumb :team_trends, @team, @survey_template %>
+    <h5>Trends for <b><%= @team.name %> <%= @survey_template.name %></b></h5>
+<% end %>
+
+<div class="input-field col s12">
+  <select id="select-team">
+    <option <%= @team.nil? ? 'selected disabled' : '' %> value=""><% if @team.nil? %>Drill down to team<% else %>Organization Trends<% end %></option>
+    <% @survey_template.organization.teams.each do |team| %>
+        <option <%= @team.try(:id) == team.id ? 'selected' : '' %> value="<%= team.id %>"><%= team.name %></option>
+    <% end %>
+  </select>
+</div>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <% @surveys.each do |survey| %>
+        <th><%= survey.created_at.strftime('%-d %b %y') %></th>
+    <% end %>
+
+    <% @survey_template.survey_questions.each do |question| %>
+        <tr>
+          <td>
+            <%= question.title %>
+          </td>
+
+          <% @surveys.each do |survey| %>
+              <td>
+                <%= mood_img(survey.rating_for(question, @team)) %>
+              </td>
+          <% end %>
+        </tr>
+    <% end %>
+  </tr>
+</table>

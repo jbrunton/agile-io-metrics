@@ -9,5 +9,6 @@
 
 <p class="center-align">
   <%= link_to 'Take the survey', new_survey_survey_response_path(@survey), class: 'btn' %>
-  <%= link_to 'View results', survey_survey_responses_path(@survey), class: 'btn-flat' %>
+  <%= link_to 'View results', survey_survey_responses_path(@survey), class: 'btn btn-flat' %>
+  <%= link_to 'View trends', trends_survey_template_path(@survey.survey_template), class: 'btn btn-flat' %>
 </p>

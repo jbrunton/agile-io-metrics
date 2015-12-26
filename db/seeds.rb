@@ -44,19 +44,24 @@ admin = create(:user, email: 'admin@example.com')
   create :survey_question, survey_template: survey_template, title: 'Fun',
       text: 'Our Team is having so much fun that it hardly seems like work coming here on Monday morning.'
 
-  survey = create(:survey, survey_template: survey_template, name: 'Squad Health Check - 1 Jun 2015')
+  [DateTime.new(2015, 6, 1), DateTime.new(2015, 7, 1), DateTime.new(2015, 8, 1)].each do |survey_date|
+    survey = create(:survey,
+        survey_template: survey_template,
+        name: "Squad Health Check - #{survey_date.strftime('%-d %b %Y')}",
+        created_at: survey_date)
 
-  org.teams.each_with_index do |team, team_index|
-    team.members.each_with_index do |user, user_index|
-      survey_response = create(:survey_response, survey: survey, user: user)
-      survey_template.survey_questions.each_with_index do |question, question_index|
-        rating = rand(3).to_f / 2 +
-            (user_index % 3).to_f / 2 - 0.5 +
-            2 * question_index.to_f / survey_template.survey_questions.length;
-        create(:survey_answer,
-            survey_response: survey_response,
-            survey_question: question,
-            mood: [Mood::BAD, Mood::MEH, Mood::GOOD][[rating.to_i, 2].min])
+    org.teams.each_with_index do |team|
+      team.members.each_with_index do |user, user_index|
+        survey_response = create(:survey_response, survey: survey, user: user)
+        survey_template.survey_questions.each_with_index do |question, question_index|
+          rating = rand(3).to_f / 2 +
+              (user_index % 3).to_f / 2 - 0.5 +
+              2 * question_index.to_f / survey_template.survey_questions.length;
+          create(:survey_answer,
+              survey_response: survey_response,
+              survey_question: question,
+              mood: [Mood::BAD, Mood::MEH, Mood::GOOD][[rating.to_i, 2].min])
+        end
       end
     end
   end

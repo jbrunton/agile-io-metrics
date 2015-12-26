@@ -2,13 +2,9 @@ crumb :root do
   link 'Home', root_path
 end
 
-crumb :organizations do
-  link 'Organizations', organizations_path
-end
-
 crumb :organization do |organization|
   link organization.name, organization_path(organization)
-  parent :organizations
+  parent :root
 end
 
 crumb :teams do |organization|
@@ -37,8 +33,18 @@ crumb :survey_responses do |survey|
 end
 
 crumb :team_survey_responses do |survey, team|
-  link "#{team.name}", team_survey_survey_responses_path(survey, team.id)
+  link team.name, team_survey_survey_responses_path(survey, team.id)
   parent :survey_responses, survey
+end
+
+crumb :organization_trends do |survey_template|
+  link 'Trends', trends_survey_template_path(survey_template)
+  parent :survey_template, survey_template
+end
+
+crumb :team_trends do |team, survey_template|
+  link team.name, trends_team_path(team, survey_template.id)
+  parent :organization_trends, survey_template
 end
 
 # crumb :projects do

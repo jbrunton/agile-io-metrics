@@ -51,14 +51,7 @@
 <div class="page-content">
   <%= breadcrumbs %>
 
-  <div class="row">
-    <div class="col s10">
-      <h3><%= @organization.name %></h3>
-    </div>
-    <div class="col s2">
-      <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn-flat right waves-effect waves-teal' %>
-    </div>
-  </div>
+  <%= header_for(@organization) %>
 
   <p>
     <strong>Name:</strong>
@@ -70,7 +63,7 @@
   <ul class="tabs">
     <li class="tab"><a href="#teams">Teams</a></li>
     <li class="tab"><a href="#surveys">Surveys</a></li>
-    <li class="tab"><a href="#templates">Templates</a></li>
+    <li class="tab"><a href="#templates">Trends & Templates</a></li>
   </ul>
 
   <div id="teams">
@@ -136,11 +129,13 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
+        <th></th>
       </tr>
-      <% @organization.survey_templates.each do |survey| %>
+      <% @organization.survey_templates.each do |survey_template| %>
           <tr>
-            <td><%= link_to survey.name, survey %></td>
-            <td><%= survey.description %></td>
+            <td><%= link_to survey_template.name, survey_template %></td>
+            <td><%= survey_template.description %></td>
+            <td><%= link_to 'Trends', trends_survey_template_path(survey_template) %></td>
           </tr>
       <% end %>
     </table>
