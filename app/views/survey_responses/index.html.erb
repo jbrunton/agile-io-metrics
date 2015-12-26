@@ -8,10 +8,14 @@
   <thead>
     <tr>
       <th>Question</th>
-      <th colspan="2">Org Average</th>
+      <th colspan="2">
+        Org Average
+        (<%= link_to 'Trends ', trends_survey_template_path(@survey.survey_template) %>)
+      </th>
       <% @survey.teams.each do |team| %>
         <th>
-          <%= link_to "#{team.name} &raquo;".html_safe, team_survey_survey_responses_path(@survey, team.id) %>
+          <%= link_to team.name, team_survey_survey_responses_path(@survey, team.id) %>
+          (<%= link_to 'Trends', trends_survey_template_path(@survey.survey_template, team) %>)
         </th>
       <% end %>
     </tr>
