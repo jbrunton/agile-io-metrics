@@ -26,7 +26,7 @@ RSpec.describe UsersController, type: :controller do
   let(:valid_session) { {} }
 
   let(:current_user) { create(:user) }
-  before do
+  before(:each) do
     sign_in current_user
   end
 

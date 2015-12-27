@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   layout 'blank'
 
+  before_action :authenticate_user!
   after_action :verify_authorized, only: [:show]
 
   # GET /users/1
