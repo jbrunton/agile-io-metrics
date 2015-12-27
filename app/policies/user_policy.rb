@@ -1,5 +1,6 @@
 class UserPolicy < ApplicationPolicy
   def show?
-    record.id == user.try(:id)
+    user.try(:id) == record.id ||
+      !(user.organizations & record.organizations).empty?
   end
 end

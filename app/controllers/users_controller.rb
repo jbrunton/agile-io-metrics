@@ -1,18 +1,18 @@
 class UsersController < ApplicationController
   layout 'blank'
 
-  before_action :set_user, only: [:show]
-  after_action :verify_authorized
+  after_action :verify_authorized, only: [:show]
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @user = User.find(params[:id])
     authorize @user
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # GET /profile
+  def profile
+    @user = User.find(current_user.id)
+    render 'show'
+  end
 end
