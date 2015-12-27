@@ -2,6 +2,8 @@ class SurveyTemplatesController < ApplicationController
   layout 'blank', only: [:show]
   before_action :set_survey_template, only: [:show, :edit, :update, :destroy, :trends]
   before_action :set_organization, only: [:new, :create, :index]
+  before_action :authenticate_user!
+  after_action :verify_authorized
 
   # GET /survey_templates
   # GET /survey_templates.json
@@ -89,6 +91,7 @@ class SurveyTemplatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey_template
       @survey_template = SurveyTemplate.find(params[:id])
+      authorize @survey_template
       @organization = @survey_template.organization
     end
 

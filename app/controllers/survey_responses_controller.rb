@@ -1,6 +1,7 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey, except: [:index]
   before_action :authenticate_user!
+  after_action :verify_authorized
 
   # GET /survey_responses
   # GET /survey_responses.json

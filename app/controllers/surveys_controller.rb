@@ -1,6 +1,8 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
   before_action :set_survey_template, only: [:index, :create, :new]
+  before_action :authenticate_user!
+  after_action :verify_authorized
 
   # GET /surveys
   # GET /surveys.json
@@ -68,6 +70,7 @@ class SurveysController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
       @survey = Survey.find(params[:id])
+      authorize @survey
       @survey_template = @survey.survey_template
     end
 
