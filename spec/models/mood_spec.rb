@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Mood, type: :model do
+  describe ".GOOD, .MEH, .BAD" do
+    it "defines constants for each mood" do
+      expect(Mood.GOOD.weight).to eq(1.0)
+      expect(Mood.MEH.weight).to eq(0.5)
+      expect(Mood.BAD.weight).to eq(0.0)
+    end
+  end
+
   describe "#classify" do
     it "classifies ratings > 0.66 as good" do
       expect(Mood.classify(1.0)).to eq(Mood.GOOD)

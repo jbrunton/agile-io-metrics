@@ -1,18 +1,18 @@
 class Mood < ActiveRecord::Base
   def self.GOOD
-    @good ||= Mood.find_or_create_by(name: 'good') do |mood|
+    Mood.where(name: 'good').first_or_create! do |mood|
       mood.weight = 1.0;
     end
   end
 
   def self.MEH
-    @meh ||= Mood.find_or_create_by(name: 'meh') do |mood|
+    Mood.where(name: 'meh').first_or_create do |mood|
       mood.weight = 0.5;
     end
   end
 
   def self.BAD
-    @bad ||= Mood.find_or_create_by(name: 'bad') do |mood|
+    Mood.where(name: 'bad').first_or_create! do |mood|
       mood.weight = 0.0;
     end
   end
