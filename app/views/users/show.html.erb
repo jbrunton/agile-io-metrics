@@ -8,7 +8,9 @@
       <% end %>
     </div>
     <div class="col s2">
-      <%= link_to 'Edit', edit_user_registration_path, class: 'btn-flat right waves-effect waves-teal' %>
+      <% if current_user.id == @user.id %>
+        <%= link_to 'Edit', edit_user_registration_path, class: 'btn-flat right waves-effect waves-teal' %>
+      <% end %>
     </div>
   </div>
 
