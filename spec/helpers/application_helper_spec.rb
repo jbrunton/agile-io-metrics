@@ -30,7 +30,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it "returns a mood image when given a mood" do
-      expect(helper.mood_img(Mood::GOOD)).to eq('<img src="/moods/good.png" />')
+      expect(helper.mood_img(Mood.GOOD)).to eq('<img src="/moods/good.png" />')
     end
 
     it "returns a mood image based on a rating" do

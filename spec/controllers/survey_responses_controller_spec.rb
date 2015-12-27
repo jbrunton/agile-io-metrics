@@ -21,7 +21,7 @@ require 'rails_helper'
 RSpec.describe SurveyResponsesController, type: :controller do
   let(:current_user) { create(:user) }
 
-  let(:expected_mood) { Mood::GOOD }
+  let(:expected_mood) { Mood.GOOD }
 
   # This should return the minimal set of attributes required to create a valid
   # SurveyResponse. As you add validations to SurveyResponse, be sure to
