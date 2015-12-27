@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
   get 'try', to: 'home#try'
+  get 'profile', to: 'users#profile'
 
   devise_for :users
   resources :users

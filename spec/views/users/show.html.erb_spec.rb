@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "users/show", type: :view do
+  let(:current_user) { create(:user) }
   before(:each) do
-    @user = assign(:user, create(:user))
+    sign_in current_user
+    @user = assign(:user, current_user)
   end
 
   it "renders attributes in <p>" do
