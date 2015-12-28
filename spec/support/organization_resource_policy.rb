@@ -1,6 +1,10 @@
 RSpec.shared_examples 'OrganizationResourcePolicy' do |options|
 
-  permissions :show?, *(options[:extra_read_actions] || []) do
+  options ||= {}
+  options[:extra_read_actions] ||= []
+  options[:extra_write_actions] ||= []
+
+  permissions :show?, *options[:extra_read_actions] do
     it "denies access if the user isn't a member" do
       expect(subject).not_to permit(user, record)
     end
@@ -16,7 +20,7 @@ RSpec.shared_examples 'OrganizationResourcePolicy' do |options|
     end
   end
 
-  permissions :new?, :edit?, :update?, :create?, :destroy?, *(options[:extra_write_actions] || []) do
+  permissions :new?, :edit?, :update?, :create?, :destroy?, *options[:extra_write_actions] do
     it "denies access if the user isn't a member" do
       expect(subject).not_to permit(user, record)
     end
