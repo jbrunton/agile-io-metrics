@@ -22,6 +22,16 @@ RSpec.describe ApplicationHelper, type: :helper do
           '<label for="organization_name" data-error="can&#39;t be blank">Name</label>'.html_safe
       expect(html).to eq(expected_html)
     end
+
+    it "allows the type to be specified" do
+      organization = build(:organization, name: 'My Org')
+
+      html = helper.form_input(organization, :name, type: :password)
+
+      expected_html = '<input id="organization_name" name="organization[name]" type="password" class="validate" value="My Org" />' +
+        '<label for="organization_name">Name</label>'.html_safe
+      expect(html).to eq(expected_html)
+    end
   end
 
   describe "#mood_img" do

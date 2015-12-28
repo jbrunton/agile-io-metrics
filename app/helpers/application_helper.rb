@@ -6,8 +6,8 @@ module ApplicationHelper
     link_to(text, path, options)
   end
 
-  def form_input(object, method)
-    input_tag = form_input_tag(object, method)
+  def form_input(object, method, options = {})
+    input_tag = form_input_tag(object, method, options)
     label_tag = form_label_tag(object, method)
 
     [input_tag, label_tag].join.html_safe
@@ -52,13 +52,13 @@ private
     end
   end
 
-  def form_input_tag(object, method)
+  def form_input_tag(object, method, options)
     object_name = object_name_for(object)
     classes = 'validate'
     classes += ' invalid' if object.errors[method].any?
     tag(:input, :id => input_id_for(object, method),
         :name =>  "#{object_name}[#{method}]",
-        :type => 'text',
+        :type => options[:type] || 'text',
         :class => classes,
         :value => object.send(method))
   end
