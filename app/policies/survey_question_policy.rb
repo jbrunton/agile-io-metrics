@@ -1,5 +1,5 @@
-class SurveyQuestionPolicy < SurveyTemplatePolicy
+class SurveyQuestionPolicy < OrganizationResourcePolicy
   def initialize(user, survey_question)
-    super(user, survey_question.survey_template)
+    super OrganizationPolicy.new(user, survey_question.survey_template.organization)
   end
 end

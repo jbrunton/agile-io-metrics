@@ -10,4 +10,8 @@ class OrganizationPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def show_templates?
+    show?
+  end
 end

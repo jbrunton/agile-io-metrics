@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe TeamsController, type: :controller do
+  include_context 'authenticated'
 
   # This should return the minimal set of attributes required to create a valid
   # Team. As you add validations to Team, be sure to
@@ -31,12 +32,10 @@ RSpec.describe TeamsController, type: :controller do
     {name: ''}
   }
 
-  let(:current_user) { create(:user) }
   let(:organization) { create(:organization) }
   let(:team) { create(:team, organization: organization) }
 
-  before do
-    sign_in current_user
+  before(:each) do
     current_user.add_role :admin, organization
     current_user.add_role :admin, team
   end

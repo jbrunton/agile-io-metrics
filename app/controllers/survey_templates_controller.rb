@@ -8,6 +8,7 @@ class SurveyTemplatesController < ApplicationController
   # GET /survey_templates
   # GET /survey_templates.json
   def index
+    authorize @organization, :show_templates?
     @survey_templates = @organization.survey_templates
   end
 
@@ -37,6 +38,7 @@ class SurveyTemplatesController < ApplicationController
   # GET /survey_templates/new
   def new
     @survey_template = SurveyTemplate.new
+    authorize @survey_template
     @record = [@organization, @survey_template]
   end
 
@@ -49,6 +51,7 @@ class SurveyTemplatesController < ApplicationController
   # POST /survey_templates.json
   def create
     @survey_template = @organization.survey_templates.build(survey_template_params)
+    authorize @survey_template
 
     respond_to do |format|
       if @survey_template.save

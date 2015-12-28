@@ -7,6 +7,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.json
   def index
+    authorize @survey_template, :show_surveys?
     @surveys = @survey_template.surveys
   end
 
@@ -17,7 +18,8 @@ class SurveysController < ApplicationController
 
   # GET /surveys/new
   def new
-    @survey = Survey.new
+    @survey = @survey_template.surveys.build
+    authorize @survey
     @record = [@survey_template, @survey]
   end
 
@@ -30,6 +32,7 @@ class SurveysController < ApplicationController
   # POST /surveys.json
   def create
     @survey = @survey_template.surveys.build(survey_params)
+    authorize @survey
 
     respond_to do |format|
       if @survey.save

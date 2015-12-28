@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  resources :organizations do
+  resources :organizations, except: [:index] do
     resources :survey_templates, shallow: true do
       get 'trends(/:team_id)', action: 'trends', as: 'trends', on: :member
 

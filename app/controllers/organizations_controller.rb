@@ -3,13 +3,7 @@ class OrganizationsController < ApplicationController
 
   before_action :set_organization, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
-  after_action :verify_authorized
-
-  # GET /organizations
-  # GET /organizations.json
-  def index
-    @organizations = Organization.all
-  end
+  after_action :verify_authorized, except: [:create, :new]
 
   # GET /organizations/1
   # GET /organizations/1.json
