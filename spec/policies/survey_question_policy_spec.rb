@@ -10,4 +10,6 @@ describe SurveyQuestionPolicy do
   let(:record) { create(:survey_question, survey_template: survey_template) }
 
   it_behaves_like 'OrganizationResourcePolicy'
+
+
 end
