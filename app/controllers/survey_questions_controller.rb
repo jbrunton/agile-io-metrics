@@ -1,11 +1,14 @@
 class SurveyQuestionsController < ApplicationController
   before_action :set_survey_question, only: [:update, :destroy]
+  before_action :authenticate_user!
+  after_action :verify_authorized
 
   # POST /survey_questions
   # POST /survey_questions.json
   def create
     survey_template = SurveyTemplate.find(params[:survey_template_id])
     @survey_question = survey_template.survey_questions.build(survey_question_params)
+    authorize @survey_question
 
     respond_to do |format|
       if @survey_question.save
@@ -44,6 +47,7 @@ class SurveyQuestionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey_question
       @survey_question = SurveyQuestion.find(params[:id])
+      authorize @survey_question
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

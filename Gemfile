@@ -70,5 +70,7 @@ group :development do
   gem 'spring'
   gem 'guard-rspec', require: false
   gem 'bullet'
+
+  gem 'yard'
 end
 

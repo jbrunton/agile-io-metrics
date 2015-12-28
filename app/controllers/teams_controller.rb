@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   layout 'blank', only: [:show]
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_organization, only: [:new, :create, :index]
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
 
   # GET /teams
   # GET /teams.json

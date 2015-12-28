@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe OrganizationsController, type: :controller do
+  include_context 'authenticated'
 
   # This should return the minimal set of attributes required to create a valid
   # Organization. As you add validations to Organization, be sure to
@@ -31,11 +32,9 @@ RSpec.describe OrganizationsController, type: :controller do
     {name: ''}
   }
 
-  let(:current_user) { create(:user) }
   let(:organization) { create(:organization) }
 
-  before do
-    sign_in current_user
+  before(:each) do
     current_user.add_role :admin, organization
   end
 
@@ -43,13 +42,6 @@ RSpec.describe OrganizationsController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # OrganizationsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-
-  describe "GET #index" do
-    it "assigns all organizations as @organizations" do
-      get :index, {}, valid_session
-      expect(assigns(:organizations)).to eq([organization])
-    end
-  end
 
   describe "GET #show" do
     it "assigns the requested organization as @organization" do
