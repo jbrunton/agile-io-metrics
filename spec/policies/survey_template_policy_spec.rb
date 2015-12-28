@@ -9,6 +9,6 @@ describe SurveyTemplatePolicy do
   let(:record) { create(:survey_template, organization: organization) }
 
   it_behaves_like 'OrganizationResourcePolicy', {
-    extra_read_actions: [:trends?]
+    extra_read_actions: [:trends?, :show_surveys?]
   }
 end

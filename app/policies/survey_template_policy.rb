@@ -6,4 +6,9 @@ class SurveyTemplatePolicy < OrganizationResourcePolicy
   def trends?
     show?
   end
+
+  def show_surveys?
+    show?
+  end
+
 end
