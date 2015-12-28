@@ -10,7 +10,6 @@ describe SurveyPolicy do
   let(:record) { create(:survey, survey_template: survey_template) }
 
   it_behaves_like 'OrganizationResourcePolicy', {
-    read: [:show?, :show_responses?, :show_team_responses?],
-    write: [:new?, :create?, :edit?, :update?, :destroy?]
+    extra_read_actions: [:show_responses?, :show_team_responses?]
   }
 end
