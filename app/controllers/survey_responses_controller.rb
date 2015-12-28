@@ -1,6 +1,7 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey, except: [:index]
   before_action :authenticate_user!
+  after_action :verify_authorized
 
   # GET /survey_responses
   # GET /survey_responses.json
@@ -9,6 +10,7 @@ class SurveyResponsesController < ApplicationController
       survey_responses: Survey::RELATIONS_FOR_REPORTS
     }
     @survey = Survey.includes(include_options).find(params[:survey_id])
+    authorize @survey, :show_responses?
     @teams = @survey.teams
   end
 
@@ -16,12 +18,14 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses/team/1.json
   def team
     @team = Team.find(params[:team_id])
+    authorize @survey, :show_team_responses?
     @survey_responses = @survey.responses_for(@team)
   end
 
   # GET /survey_responses/new
   def new
     @survey_response = SurveyResponse.build_for(@survey, current_user)
+    authorize @survey_response
     @record = [@survey, @survey_response]
   end
 
@@ -29,6 +33,7 @@ class SurveyResponsesController < ApplicationController
   # POST /survey_responses.json
   def create
     @survey_response = SurveyResponse.build_from(@survey, survey_response_params, current_user)
+    authorize @survey_response
 
     respond_to do |format|
       if @survey_response.save
@@ -43,10 +48,6 @@ class SurveyResponsesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_survey_response
-      @survey_response = SurveyResponse.find(params[:id])
-    end
 
   def set_survey
     @survey = Survey.find(params[:survey_id])

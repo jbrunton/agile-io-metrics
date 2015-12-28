@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.describe OrganizationsController, type: :routing do
   describe "routing" do
 
-    it "routes to #index" do
-      expect(:get => "/organizations").to route_to("organizations#index")
-    end
-
     it "routes to #new" do
       expect(:get => "/organizations/new").to route_to("organizations#new")
     end

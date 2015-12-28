@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe SurveyTemplatesController, type: :controller do
+  include_context 'authenticated'
 
   # This should return the minimal set of attributes required to create a valid
   # Survey. As you add validations to Survey, be sure to
@@ -36,9 +37,12 @@ RSpec.describe SurveyTemplatesController, type: :controller do
   # SurveysController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  let(:user) { create(:user) }
   let(:organization) { create(:organization) }
   let!(:survey_template) { create(:survey_template, organization: organization) }
+
+  before(:each) do
+    current_user.add_role :admin, organization
+  end
 
   describe "GET #index" do
     it "assigns all surveys as @surveys" do

@@ -2,10 +2,13 @@ class SurveyTemplatesController < ApplicationController
   layout 'blank', only: [:show]
   before_action :set_survey_template, only: [:show, :edit, :update, :destroy, :trends]
   before_action :set_organization, only: [:new, :create, :index]
+  before_action :authenticate_user!
+  after_action :verify_authorized
 
   # GET /survey_templates
   # GET /survey_templates.json
   def index
+    authorize @organization, :show_templates?
     @survey_templates = @organization.survey_templates
   end
 
@@ -35,6 +38,7 @@ class SurveyTemplatesController < ApplicationController
   # GET /survey_templates/new
   def new
     @survey_template = SurveyTemplate.new
+    authorize @survey_template
     @record = [@organization, @survey_template]
   end
 
@@ -47,6 +51,7 @@ class SurveyTemplatesController < ApplicationController
   # POST /survey_templates.json
   def create
     @survey_template = @organization.survey_templates.build(survey_template_params)
+    authorize @survey_template
 
     respond_to do |format|
       if @survey_template.save
@@ -89,6 +94,7 @@ class SurveyTemplatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_survey_template
       @survey_template = SurveyTemplate.find(params[:id])
+      authorize @survey_template
       @organization = @survey_template.organization
     end
 
