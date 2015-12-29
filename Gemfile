@@ -36,6 +36,7 @@ gem 'bower-rails'
 gem 'non-stupid-digest-assets'
 
 gem 'devise'
+gem 'devise_invitable'
 gem 'pundit'
 gem 'rolify'
 
