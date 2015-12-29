@@ -36,6 +36,7 @@ gem 'bower-rails'
 gem 'non-stupid-digest-assets'
 
 gem 'devise'
+gem 'devise_invitable'
 gem 'pundit'
 gem 'rolify'
 
@@ -72,5 +73,6 @@ group :development do
   gem 'bullet'
 
   gem 'yard'
+  gem 'letter_opener'
 end
 

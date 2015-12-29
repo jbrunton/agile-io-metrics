@@ -105,14 +105,13 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     authorize @team, :update?
 
-    @user = User.find_by_email(params[:email])
-    unless @user.nil?
-      roles = []
-      roles << :admin if params[:roles].include? 'admin'
-      roles << :member if params[:roles].include? 'member'
-      roles.each do |role|
-        @user.add_role role, @team
-      end
+    @user = User.find_or_invite(params[:email])
+
+    roles = []
+    roles << :admin if params[:roles].include? 'admin'
+    roles << :member if params[:roles].include? 'member'
+    roles.each do |role|
+      @user.add_role role, @team
     end
 
     respond_to do |format|
