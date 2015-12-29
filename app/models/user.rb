@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   def member_of?(record)
@@ -32,5 +32,11 @@ class User < ActiveRecord::Base
   def organizations
     (Organization.with_roles([:admin], self) +
       teams.map{ |team| team.organization }).uniq
+  end
+
+  def self.find_or_invite(email)
+    user = User.find_by_email(email)
+    user = User.invite!(email: email) if user.nil?
+    user
   end
 end
