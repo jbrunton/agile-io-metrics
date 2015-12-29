@@ -73,5 +73,6 @@ group :development do
   gem 'bullet'
 
   gem 'yard'
+  gem 'letter_opener'
 end
 

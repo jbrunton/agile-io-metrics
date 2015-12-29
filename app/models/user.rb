@@ -33,4 +33,10 @@ class User < ActiveRecord::Base
     (Organization.with_roles([:admin], self) +
       teams.map{ |team| team.organization }).uniq
   end
+
+  def self.find_or_invite(email)
+    user = User.find_by_email(email)
+    user = User.invite!(email: email) if user.nil?
+    user
+  end
 end

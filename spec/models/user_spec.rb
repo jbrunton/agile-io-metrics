@@ -117,4 +117,24 @@ RSpec.describe User, type: :model do
       expect(user.organizations).to eq([org_one])
     end
   end
+
+  describe "#find_or_invite" do
+    let(:email) { 'user@example.com' }
+
+    context "if a user with the given email exists" do
+      let!(:user) { create(:user, email: email) }
+
+      it "returns that user" do
+        expect(User.find_or_invite(email)).to eq(user)
+      end
+    end
+
+    context "if no such user exists" do
+      it "invites that user" do
+        expect(User).to receive(:invite!).with(email: email).and_call_original
+        user = User.find_or_invite(email)
+        expect(user.email).to eq(email)
+      end
+    end
+  end
 end
