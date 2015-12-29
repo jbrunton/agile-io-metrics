@@ -1,6 +1,10 @@
 language: ruby
 rvm:
   - 2.2.1
+sudo: true
+cache:
+  bundler
+  vendor/assets/bower_components
 before_script:
  - npm install bower
  - rake bower:install
