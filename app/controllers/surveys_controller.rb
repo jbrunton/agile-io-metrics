@@ -36,6 +36,7 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       if @survey.save
+        @survey.notify_recipients
         format.html { redirect_to @survey, notice: 'Survey was successfully created.' }
         format.json { render :show, status: :created, location: @survey }
       else
