@@ -52,7 +52,7 @@ class SurveysController < ApplicationController
     respond_to do |format|
       if @survey.update(survey_params)
         format.html { redirect_to @survey, notice: 'Survey was successfully updated.' }
-        format.json { render :show, status: :ok, location: survey }
+        format.json { render :show, status: :ok, location: @survey }
       else
         format.html { render :edit }
         format.json { render json: @survey.errors, status: :unprocessable_entity }
