@@ -90,6 +90,11 @@ RSpec.describe SurveysController, type: :controller do
         post :create, {:survey_template_id => survey_template.to_param, :survey => valid_attributes}, valid_session
         expect(response).to redirect_to(Survey.last)
       end
+
+      it "notifies recipients of the survey" do
+        expect_any_instance_of(Survey).to receive(:notify_recipients)
+        post :create, {:survey_template_id => survey_template.to_param, :survey => valid_attributes}, valid_session
+      end
     end
 
     context "with invalid params" do
@@ -101,6 +106,11 @@ RSpec.describe SurveysController, type: :controller do
       it "re-renders the 'new' template" do
         post :create, {:survey_template_id => survey_template.to_param, :survey => invalid_attributes}, valid_session
         expect(response).to render_template("new")
+      end
+
+      it "does not send any notifications" do
+        expect_any_instance_of(Survey).not_to receive(:notify_recipients)
+        post :create, {:survey_template_id => survey_template.to_param, :survey => invalid_attributes}, valid_session
       end
     end
   end
