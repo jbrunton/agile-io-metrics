@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_secure_token :unique_identifier
+
   def member_of?(record)
     if record.class == Organization
       record.teams.any?{ |team| member_of?(team) || admin_of?(team) }

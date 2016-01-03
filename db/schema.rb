@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20151229095025) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
+    t.string   "unique_identifier"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "encrypted_password",     default: "", null: false
