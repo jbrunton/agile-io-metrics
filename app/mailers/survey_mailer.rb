@@ -1,3 +1,4 @@
+# Mailer class for all survey-related notifications
 class SurveyMailer < ApplicationMailer
   def notify_survey(user, survey)
     @user = user
