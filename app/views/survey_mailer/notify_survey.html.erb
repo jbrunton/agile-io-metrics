@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>You've been asked to complete <%= @survey.name %></h1>
+    <p>
+      <%= link_to 'Click here to complete the survey.', new_survey_survey_response_url(@survey) %>
+    </p>
+    <p>Thanks for participating!</p>
+  </body>
+</html>

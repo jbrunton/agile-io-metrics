@@ -37,4 +37,10 @@ class Survey < ActiveRecord::Base
     # TODO: unit tests
     survey_responses.map{ |response| response.user.teams(:member) }.flatten.uniq
   end
+
+  def notify_recipients
+    survey_template.recipients.each do |user|
+      SurveyMailer.notify_survey(user, self).deliver_now
+    end
+  end
 end
