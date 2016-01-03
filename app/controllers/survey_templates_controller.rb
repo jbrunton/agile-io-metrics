@@ -37,7 +37,7 @@ class SurveyTemplatesController < ApplicationController
 
   # GET /survey_templates/new
   def new
-    @survey_template = SurveyTemplate.new
+    @survey_template = @organization.survey_templates.build
     authorize @survey_template
     @record = [@organization, @survey_template]
   end
