@@ -5,6 +5,6 @@ class SurveyTemplate < ActiveRecord::Base
   has_many :surveys
 
   def recipients
-    organization.teams.map{ |team| team.members }.flatten.uniq
+    organization.teams.map(&:members).flatten.uniq
   end
 end
