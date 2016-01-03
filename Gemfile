@@ -53,6 +53,7 @@ gem 'gretel'
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
+  gem 'timecop'
 end
 
 group :development, :test do

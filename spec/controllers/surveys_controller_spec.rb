@@ -63,6 +63,13 @@ RSpec.describe SurveysController, type: :controller do
       get :new, {:survey_template_id => survey_template.to_param}, valid_session
       expect(assigns(:survey)).to be_a_new(Survey)
     end
+
+    it "gives the new survey a sensible name" do
+      Timecop.freeze(Date.new(2001, 1, 1)) do
+        get :new, {:survey_template_id => survey_template.to_param}, valid_session
+        expect(assigns(:survey).name).to eq("#{survey_template.name} - 1 Jan 2001")
+      end
+    end
   end
 
   describe "GET #edit" do
