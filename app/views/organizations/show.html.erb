@@ -142,3 +142,25 @@
   </div>
 
 </div>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">add</i>
+  </a>
+  <ul>
+    <li>
+      <a href="<%= new_organization_survey_template_path(@organization) %>" class="btn-floating blue tooltipped" data-position="left" data-tooltip="new template">
+        <i class="material-icons">add_box</i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating green tooltipped" data-position="left" data-tooltip="send survey">
+        <i class="material-icons">forum</i>
+      </a>
+    </li>
+    <li>
+      <a href="<%= new_organization_team_path(@organization) %>" class="btn-floating yellow darken-2 tooltipped" data-position="left" data-tooltip="add team">
+        <i class="material-icons">group_add</i>
+      </a>
+    </li>
+</div>
