@@ -1,6 +1,6 @@
 # Authorization policy for {SurveyResponse}.
 class SurveyResponsePolicy < ApplicationPolicy
   def create?
-    true
+    record.survey.survey_template.recipients.include?(user)
   end
 end
