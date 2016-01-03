@@ -44,4 +44,20 @@ RSpec.describe Survey, type: :model do
       end
     end
   end
+
+  describe "#norify_recipients" do
+    let(:organization) { create(:organization) }
+    let(:team) { create(:team, organization: organization) }
+    let(:recipient) { create(:user) }
+    let(:survey) { create(:survey, survey_template: create(:survey_template, organization: organization)) }
+
+    before(:each) do
+      recipient.add_role :member, team
+    end
+
+    it "notifies each recipient" do
+      expect(SurveyMailer).to receive(:notify_survey).with(recipient, survey).and_call_original
+      survey.notify_recipients
+    end
+  end
 end
