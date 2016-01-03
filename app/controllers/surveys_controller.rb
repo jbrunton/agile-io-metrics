@@ -19,7 +19,7 @@ class SurveysController < ApplicationController
   # GET /surveys/new
   def new
     @survey = @survey_template.surveys.build
-    @survey.name = DateTime.now.strftime("#{@survey_template.name} - %-d %b %Y")
+    @survey.name = Time.zone.now.strftime("#{@survey_template.name} - %-d %b %Y")
     authorize @survey
     @record = [@survey_template, @survey]
   end
