@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_from_token!
-    user = user_token && User.find_by_unique_identifier(user_token.to_s)
+    user = auth_token && User.find_by_auth_token(auth_token.to_s)
     sign_in(user, store: false) if user
   end
 
-  def user_token
-    @user_token ||= params[:user_token].presence
+  def auth_token
+    @auth_token ||= params[:auth_token].presence
   end
 end

@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_secure_token :unique_identifier
+  has_secure_token :auth_token
 
   def member_of?(record)
     if record.class == Organization

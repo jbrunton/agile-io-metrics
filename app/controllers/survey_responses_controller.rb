@@ -1,6 +1,6 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey, except: [:index]
-  before_action :authenticate_user_from_token!, except: [:thankyou]
+  before_action :authenticate_user_from_token!, only: [:new, :create]
   before_action :authenticate_user!, except: [:thankyou]
   after_action :verify_authorized, except: [:thankyou]
 
