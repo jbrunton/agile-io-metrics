@@ -49,6 +49,8 @@ RSpec.describe SurveyResponsesController, type: :controller do
   let!(:survey_response) { create(:survey_response, survey: survey) }
 
   before(:each) do
+    team = create(:team, organization: survey_template.organization)
+    current_user.add_role :member, team
     sign_in current_user
   end
 
@@ -95,9 +97,9 @@ RSpec.describe SurveyResponsesController, type: :controller do
         expect(assigns(:survey_response).survey_answers.first.mood).to eq(expected_mood)
       end
 
-      it "redirects to the list of responses" do
+      it "redirects to the thankyou page" do
         post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
-        expect(response).to redirect_to(survey_survey_responses_path(survey))
+        expect(response).to redirect_to(thankyou_survey_survey_responses_path(survey))
       end
     end
 
