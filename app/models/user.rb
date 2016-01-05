@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   has_secure_token :auth_token
 
+  has_many :survey_responses
+
   def member_of?(record)
     if record.class == Organization
       record.teams.any?{ |team| member_of?(team) || admin_of?(team) }

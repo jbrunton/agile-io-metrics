@@ -68,7 +68,9 @@ class SurveyResponsesController < ApplicationController
   end
 
   def already_responded?
-    SurveyResponse.where(user_id: current_user.id, survey_id: @survey.id).count > 0
+    current_user.survey_responses
+      .where(survey: @survey)
+      .count > 0
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
