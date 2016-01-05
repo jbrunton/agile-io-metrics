@@ -72,11 +72,11 @@ private
     redirect_to thankyou_survey_survey_responses_path(@survey), notice: opts[:notice]
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def survey_response_params
-      params.require(:survey_response).permit(
-          :survey_answers_attributes => [:mood_id, :survey_question_id]
-      )
-      #params.require(:survey_response).permit(:user_id, :survey_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def survey_response_params
+    params.require(:survey_response).permit(
+        :survey_answers_attributes => [:mood_id, :survey_question_id]
+    )
+    #params.require(:survey_response).permit(:user_id, :survey_id)
+  end
 end

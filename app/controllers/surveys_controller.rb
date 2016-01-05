@@ -71,20 +71,20 @@ class SurveysController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_survey
-      @survey = Survey.find(params[:id])
-      authorize @survey
-      @survey_template = @survey.survey_template
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_survey
+    @survey = Survey.find(params[:id])
+    authorize @survey
+    @survey_template = @survey.survey_template
+  end
 
   def set_survey_template
     @survey_template = SurveyTemplate.find(params[:survey_template_id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def survey_params
-      params.require(:survey).permit(:name, :survey_template_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def survey_params
+    params.require(:survey).permit(:name, :survey_template_id)
+  end
 end
