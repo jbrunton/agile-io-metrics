@@ -3,3 +3,6 @@ Metrics/MethodLength:
 
 Metrics/AbcSize:
   Max: 20
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
