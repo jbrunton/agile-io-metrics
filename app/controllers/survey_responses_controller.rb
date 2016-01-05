@@ -1,7 +1,8 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey, except: [:index]
-  before_action :authenticate_user!
-  after_action :verify_authorized
+  before_action :authenticate_user_from_token!, except: [:thankyou]
+  before_action :authenticate_user!, except: [:thankyou]
+  after_action :verify_authorized, except: [:thankyou]
 
   # GET /survey_responses
   # GET /survey_responses.json
@@ -12,6 +13,9 @@ class SurveyResponsesController < ApplicationController
     @survey = Survey.includes(include_options).find(params[:survey_id])
     authorize @survey, :show_responses?
     @teams = @survey.teams
+  end
+
+  def thankyou
   end
 
   # GET /survey_responses/team/1
@@ -37,7 +41,7 @@ class SurveyResponsesController < ApplicationController
 
     respond_to do |format|
       if @survey_response.save
-        format.html { redirect_to survey_survey_responses_path(@survey), notice: 'Survey response was successfully created.' }
+        format.html { redirect_to thankyou_survey_survey_responses_path(@survey), notice: 'Survey response was successfully created.' }
         format.json { render status: :created, location: @survey_response }
       else
         @record = [@survey, @survey_response]

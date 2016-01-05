@@ -1,0 +1,10 @@
+<h3>Thanks for your response</h3>
+
+<p>Thanks for taking the time to respond to <b><%= @survey.name %></b>.</p>
+
+<p>You can view the results below.</p>
+
+<p class="center-align">
+  <%= link_to 'View results', survey_survey_responses_path(@survey), class: 'btn' %>
+  <%= link_to 'View trends', trends_survey_template_path(@survey.survey_template), class: 'btn btn-flat' %>
+</p>
