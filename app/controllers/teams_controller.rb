@@ -128,20 +128,20 @@ class TeamsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      @team = Team.find(params[:id])
-      @organization = @team.organization
-      authorize @team
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_team
+    @team = Team.find(params[:id])
+    @organization = @team.organization
+    authorize @team
+  end
 
   def set_organization
     @organization = Organization.find(params[:organization_id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def team_params
-      params.require(:team).permit(:name, :organization_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def team_params
+    params.require(:team).permit(:name, :organization_id)
+  end
 end

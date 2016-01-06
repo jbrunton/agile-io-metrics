@@ -7,4 +7,13 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_to root_path, :alert => 'You are not authorized to perform this action.'
   end
+
+  def authenticate_user_from_token!
+    user = auth_token && User.find_by_auth_token(auth_token.to_s)
+    sign_in(user, store: false) if user
+  end
+
+  def auth_token
+    @auth_token ||= params[:auth_token].presence
+  end
 end

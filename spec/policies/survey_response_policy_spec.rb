@@ -11,8 +11,18 @@ describe SurveyResponsePolicy do
   let(:record) { create(:survey_response, survey: survey) }
 
   permissions :new?, :create? do
-    it "allows access to everyone" do
+    it "allows access to team members" do
+      user.add_role :member, team
       expect(subject).to permit(user, record)
+    end
+
+    it "disallows access to admins" do
+      user.add_role :admin, team
+      expect(subject).not_to permit(user, record)
+    end
+
+    it "disallows access to everyone else" do
+      expect(subject).not_to permit(user, record)
     end
   end
 

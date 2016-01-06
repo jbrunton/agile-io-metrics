@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :surveys, shallow: true do
         resources :survey_responses, shallow: true, only: [:index, :new, :create] do
           get 'team/:team_id', action: 'team', as: 'team', on: :collection
+          get 'thankyou', on: :collection
         end
       end
     end

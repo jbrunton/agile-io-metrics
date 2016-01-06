@@ -1,4 +1,6 @@
 <%= form_for(@record) do |f| %>
+    <%= hidden_field_tag :auth_token, params[:auth_token] %>
+
     <% if @survey_response.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@survey_response.errors.count, "error") %> prohibited this survey_response from being

@@ -49,6 +49,8 @@ RSpec.describe SurveyResponsesController, type: :controller do
   let!(:survey_response) { create(:survey_response, survey: survey) }
 
   before(:each) do
+    team = create(:team, organization: survey_template.organization)
+    current_user.add_role :member, team
     sign_in current_user
   end
 
@@ -65,9 +67,27 @@ RSpec.describe SurveyResponsesController, type: :controller do
   end
 
   describe "GET #new" do
-    it "assigns a new survey_response as @survey_response" do
-      get :new, { survey_id: survey.to_param }, valid_session
-      expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
+    context "if not responded" do
+      it "assigns a new survey_response as @survey_response" do
+        get :new, { survey_id: survey.to_param }, valid_session
+        expect(assigns(:survey_response)).to be_a_new(SurveyResponse)
+      end
+    end
+
+    context "if already responded" do
+      before(:each) do
+        create(:survey_response, user: current_user, survey: survey)
+      end
+
+      it "redirects to the thankyou page" do
+        get :new, { survey_id: survey.to_param }, valid_session
+        expect(response).to redirect_to(thankyou_survey_survey_responses_path(survey))
+      end
+
+      it "sets a notice" do
+        get :new, { survey_id: survey.to_param }, valid_session
+        expect(flash[:notice]).to eq("You've already responded to this survey.")
+      end
     end
   end
 
@@ -95,9 +115,9 @@ RSpec.describe SurveyResponsesController, type: :controller do
         expect(assigns(:survey_response).survey_answers.first.mood).to eq(expected_mood)
       end
 
-      it "redirects to the list of responses" do
+      it "redirects to the thankyou page" do
         post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
-        expect(response).to redirect_to(survey_survey_responses_path(survey))
+        expect(response).to redirect_to(thankyou_survey_survey_responses_path(survey))
       end
     end
 
@@ -110,6 +130,28 @@ RSpec.describe SurveyResponsesController, type: :controller do
       it "re-renders the 'new' template" do
         post :create, { :survey_id => survey.to_param, :survey_response => invalid_attributes }, valid_session
         expect(response).to render_template("new")
+      end
+    end
+
+    context "if already responded" do
+      before(:each) do
+        create(:survey_response, user: current_user, survey: survey)
+      end
+
+      it "does not create a response" do
+        expect {
+          post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
+        }.not_to change(SurveyResponse, :count)
+      end
+
+      it "redirects to the thankyou page" do
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
+        expect(response).to redirect_to(thankyou_survey_survey_responses_path(survey))
+      end
+
+      it "sets a notice" do
+        post :create, { :survey_id => survey.to_param, :survey_response => valid_attributes }, valid_session
+        expect(flash[:notice]).to eq("You've already responded to this survey.")
       end
     end
   end

@@ -17,7 +17,7 @@ RSpec.describe SurveyMailer, type: :mailer do
     end
 
     it "links to the survey" do
-      expect(email.body.to_s).to include(new_survey_survey_response_url(survey))
+      expect(email.body.to_s).to include(new_survey_survey_response_url(survey, auth_token: user.auth_token))
     end
   end
 end
