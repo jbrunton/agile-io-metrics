@@ -43,7 +43,11 @@ class SurveyResponsesController < ApplicationController
   # POST /survey_responses
   # POST /survey_responses.json
   def create
-    @survey_response = SurveyResponse.build_from(@survey, survey_response_params, current_user)
+    @survey_response = SurveyResponse.build_from(
+        @survey,
+        survey_response_params,
+        current_user)
+
     authorize @survey_response
 
     if already_responded?
@@ -69,14 +73,13 @@ private
   end
 
   def redirect_to_thankyou(opts = {})
-    redirect_to thankyou_survey_survey_responses_path(@survey), notice: opts[:notice]
+    redirect_to thankyou_survey_survey_responses_path(@survey),
+        notice: opts[:notice]
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def survey_response_params
     params.require(:survey_response).permit(
-        :survey_answers_attributes => [:mood_id, :survey_question_id]
+      :survey_answers_attributes => [:mood_id, :survey_question_id]
     )
-    #params.require(:survey_response).permit(:user_id, :survey_id)
   end
 end
