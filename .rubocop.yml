@@ -6,3 +6,6 @@ Metrics/AbcSize:
 
 Style/AccessModifierIndentation:
   EnforcedStyle: outdent
+
+Style/Documentation:
+  enabled: false
