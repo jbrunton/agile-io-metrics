@@ -73,8 +73,8 @@ private
   end
 
   def redirect_to_thankyou(opts = {})
-    redirect_to thankyou_survey_survey_responses_path(@survey),
-        notice: opts[:notice]
+    thankyou_path = thankyou_survey_survey_responses_path(@survey)
+    redirect_to thankyou_path, notice: opts[:notice]
   end
 
   def survey_response_params
